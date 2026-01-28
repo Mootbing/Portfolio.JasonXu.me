@@ -25,7 +25,7 @@ function TimelineNode() {
 
     const check = () => {
       const rect = el.getBoundingClientRect();
-      setVisible(rect.top < window.innerHeight * 0.6);
+      setVisible(rect.top < window.innerHeight * 0.5);
     };
 
     check();
