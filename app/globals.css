@@ -1,0 +1,144 @@
+@import "tailwindcss";
+
+/* CSS Variables */
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+/* Global Styles */
+* {
+  cursor: none;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Custom Blob Cursor */
+.blob-cursor {
+  position: fixed;
+  width: 20px;
+  height: 20px;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  transition: background-color 0.2s ease, border-radius 0.2s ease;
+}
+
+.blob-cursor.hover-header,
+.blob-cursor.hover-button {
+  background: rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
+}
+
+.blob-cursor.hover-contact {
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 0;
+}
+
+.blob-cursor.hover-skill {
+  background: rgba(0, 0, 0, 0.02);
+  border-radius: 50%;
+}
+
+.blob-cursor.hover-underline {
+  background: #333;
+  border-radius: 2px;
+  height: 3px !important;
+  box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.08);
+  transition: background 0.2s, border-radius 0.2s, height 0.2s;
+}
+
+/* Inverted state cursor colors */
+body.inverted .blob-cursor {
+  background: rgba(204, 204, 204, 0.2);
+}
+
+body.inverted .blob-cursor.hover-header,
+body.inverted .blob-cursor.hover-button {
+  background: rgba(204, 204, 204, 0.15);
+}
+
+body.inverted .blob-cursor.hover-contact {
+  background: rgba(204, 204, 204, 0.3);
+}
+
+body.inverted .blob-cursor.hover-skill {
+  background: rgba(204, 204, 204, 0.05);
+}
+
+body.inverted .blob-cursor.hover-underline {
+  background: #cccccc;
+  box-shadow: 0 0 8px 2px rgba(204, 204, 204, 0.15);
+}
+
+/* Navigation Links */
+.nav-link {
+  text-decoration: none;
+  color: inherit;
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  transition: transform 0.2s ease;
+  transform-origin: center;
+}
+
+.nav-link:hover {
+  transform: scale(1.02);
+}
+
+/* Inline Content Links */
+.inline-link {
+  color: #000;
+  text-decoration: none;
+  display: inline-block;
+  font-weight: 500;
+  transition: transform 0.2s ease, color 0.3s ease;
+  transform-origin: left center;
+}
+
+body.inverted .inline-link {
+  color: #cccccc;
+}
+
+/* Blinking Cursor Animation */
+@keyframes blink {
+  0%, 50% {
+    opacity: 1;
+  }
+  51%, 100% {
+    opacity: 0;
+  }
+}
+
+.animate-blink {
+  animation: blink 1s step-end infinite;
+}
+
+/* Text Selection Highlight */
+::selection {
+  background: #000000;
+  color: #ffffff;
+}
+
+body.inverted ::selection {
+  background: #ffffff;
+  color: #000000;
+}
