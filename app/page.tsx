@@ -86,7 +86,7 @@ export default function Home() {
               lineHeight: 1.7,
             }}
           >
-            Doing it for the love of the game
+            Done for the love of the game
           </p>
 
         </motion.div>

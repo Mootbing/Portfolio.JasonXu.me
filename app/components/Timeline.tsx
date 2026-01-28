@@ -2,7 +2,8 @@
 
 import { useRef } from "react";
 import { motion, useScroll, useSpring, useInView } from "framer-motion";
-import PolaroidCard from "./PolaroidCard";
+import PolaroidStack from "./PolaroidCard";
+import type { PolaroidItem } from "./PolaroidCard";
 
 interface TimelineProject {
   id: string;
@@ -10,7 +11,7 @@ interface TimelineProject {
   title: string;
   description: string;
   tags: string[];
-  imageSrc?: string;
+  polaroids: PolaroidItem[];
 }
 
 const PROJECTS: TimelineProject[] = [
@@ -21,6 +22,11 @@ const PROJECTS: TimelineProject[] = [
     description:
       "At 15, received my first significant offer — proof that age is just a number when you ship real products.",
     tags: ["Entrepreneurship", "Growth"],
+    polaroids: [
+      { caption: "The Offer" },
+      { caption: "Early Days" },
+      { caption: "First Build" },
+    ],
   },
   {
     id: "02",
@@ -29,6 +35,11 @@ const PROJECTS: TimelineProject[] = [
     description:
       "Built a project with enough impact that the United Nations acquired it. Global reach, teenage builder.",
     tags: ["Impact", "Global"],
+    polaroids: [
+      { caption: "UN Partnership" },
+      { caption: "Global Impact" },
+      { caption: "The Project" },
+    ],
   },
   {
     id: "03",
@@ -37,6 +48,11 @@ const PROJECTS: TimelineProject[] = [
     description:
       "Received international acclaim for this project. A story told through code, design, and relentless ambition.",
     tags: ["Design", "Development", "Storytelling"],
+    polaroids: [
+      { caption: "17.JasonXu.me" },
+      { caption: "The Design" },
+      { caption: "International Press" },
+    ],
   },
   {
     id: "04",
@@ -45,6 +61,11 @@ const PROJECTS: TimelineProject[] = [
     description:
       "Crossed one million views across all social platforms. Building in public, sharing the journey.",
     tags: ["Content", "Social", "Growth"],
+    polaroids: [
+      { caption: "1M+ Views" },
+      { caption: "Building in Public" },
+      { caption: "The Community" },
+    ],
   },
   {
     id: "05",
@@ -53,6 +74,11 @@ const PROJECTS: TimelineProject[] = [
     description:
       "Became the second founding engineer at Icon.com, helping scale to $12M+ ARR. From side projects to real infrastructure.",
     tags: ["Startup", "Engineering", "Scale"],
+    polaroids: [
+      { caption: "Icon.com" },
+      { caption: "The Team" },
+      { caption: "$12M+ ARR" },
+    ],
   },
   {
     id: "06",
@@ -61,12 +87,17 @@ const PROJECTS: TimelineProject[] = [
     description:
       "20 years old. University of Pennsylvania. Still building, still chasing, still shipping.",
     tags: ["Present", "Penn", "Building"],
+    polaroids: [
+      { caption: "Penn" },
+      { caption: "What's Next" },
+      { caption: "The Journey" },
+    ],
   },
 ];
 
-function TimelineNode({ index }: { index: number }) {
+function TimelineNode() {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const isInView = useInView(ref, { once: true, margin: "-50%" });
 
   return (
     <motion.div
@@ -75,8 +106,7 @@ function TimelineNode({ index }: { index: number }) {
       initial={{ scale: 0, opacity: 0 }}
       animate={isInView ? { scale: 1, opacity: 1 } : undefined}
       transition={{
-        duration: 0.4,
-        delay: index * 0.05,
+        duration: 0.5,
         ease: [0.25, 0.46, 0.45, 0.94],
       }}
     >
@@ -91,6 +121,99 @@ function TimelineNode({ index }: { index: number }) {
   );
 }
 
+function TextContent({
+  project,
+  align,
+  isInView,
+}: {
+  project: TimelineProject;
+  align: "left" | "right";
+  isInView: boolean;
+}) {
+  const isRight = align === "right";
+
+  return (
+    <div className={`max-w-sm ${isRight ? "" : "text-right"}`}>
+      <motion.p
+        initial={{ opacity: 0, x: -20, scale: 0.95 }}
+        animate={isInView ? { opacity: 1, x: 0, scale: 1 } : undefined}
+        transition={{
+          duration: 0.5,
+          ease: [0.25, 0.46, 0.45, 0.94],
+          delay: 0.1,
+        }}
+        className="text-sm mb-2"
+        style={{
+          fontFamily: "var(--font-montserrat), sans-serif",
+          fontWeight: 300,
+          color: "#666666",
+          letterSpacing: "0.1em",
+        }}
+      >
+        {project.year}
+      </motion.p>
+      <motion.h3
+        initial={{ opacity: 0, x: -30, scale: 0.95 }}
+        animate={isInView ? { opacity: 1, x: 0, scale: 1 } : undefined}
+        transition={{
+          duration: 0.5,
+          ease: [0.25, 0.46, 0.45, 0.94],
+          delay: 0.2,
+        }}
+        className="text-xl md:text-2xl mb-3 leading-tight"
+        style={{
+          fontFamily: "var(--font-playfair), serif",
+          fontWeight: 300,
+          color: "#333333",
+        }}
+      >
+        {project.title}
+      </motion.h3>
+      <motion.p
+        initial={{ opacity: 0, x: -30, scale: 0.95 }}
+        animate={isInView ? { opacity: 1, x: 0, scale: 1 } : undefined}
+        transition={{
+          duration: 0.5,
+          ease: [0.25, 0.46, 0.45, 0.94],
+          delay: 0.3,
+        }}
+        className="text-base mb-4"
+        style={{
+          fontFamily: "var(--font-montserrat), sans-serif",
+          fontWeight: 300,
+          color: "#666666",
+          lineHeight: 1.7,
+        }}
+      >
+        {project.description}
+      </motion.p>
+      <motion.div
+        initial={{ opacity: 0, x: -20, scale: 0.95 }}
+        animate={isInView ? { opacity: 1, x: 0, scale: 1 } : undefined}
+        transition={{
+          duration: 0.5,
+          ease: [0.25, 0.46, 0.45, 0.94],
+          delay: 0.4,
+        }}
+        className={`flex flex-wrap gap-2 ${isRight ? "" : "justify-end"}`}
+      >
+        {project.tags.map((tag) => (
+          <span
+            key={tag}
+            className="text-xs px-3 py-1 rounded-full transition-all duration-200"
+            style={{
+              background: "rgba(0, 0, 0, 0.05)",
+              color: "#333333",
+            }}
+          >
+            {tag}
+          </span>
+        ))}
+      </motion.div>
+    </div>
+  );
+}
+
 function TimelineEntry({
   project,
   index,
@@ -99,161 +222,42 @@ function TimelineEntry({
   index: number;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
   const isLeft = index % 2 === 0;
 
   return (
-    <div ref={ref} className="relative grid grid-cols-[1fr_auto_1fr] gap-6 md:gap-12 items-center min-h-[320px]">
+    <div
+      ref={ref}
+      className="relative grid grid-cols-[1fr_auto_1fr] gap-6 md:gap-12 items-center min-h-[320px]"
+    >
       {/* Left content */}
-      <div
-        className={`flex ${isLeft ? "justify-end" : "justify-end"}`}
-      >
+      <div className="flex justify-end">
         {isLeft ? (
-          <motion.div
-            initial={{ opacity: 0, x: -60 }}
-            animate={isInView ? { opacity: 1, x: 0 } : undefined}
-            transition={{
-              duration: 0.6,
-              ease: [0.25, 0.46, 0.45, 0.94],
-              delay: 0.1,
-            }}
-            className="max-w-sm text-right"
-          >
-            <p
-              className="text-sm mb-2"
-              style={{
-                fontFamily: "var(--font-montserrat), sans-serif",
-                fontWeight: 300,
-                color: "#666666",
-                letterSpacing: "0.1em",
-              }}
-            >
-              {project.year}
-            </p>
-            <h3
-              className="text-xl md:text-2xl mb-3 leading-tight"
-              style={{
-                fontFamily: "var(--font-playfair), serif",
-                fontWeight: 300,
-                color: "#333333",
-              }}
-            >
-              {project.title}
-            </h3>
-            <p
-              className="text-base mb-4"
-              style={{
-                fontFamily: "var(--font-montserrat), sans-serif",
-                fontWeight: 300,
-                color: "#666666",
-                lineHeight: 1.7,
-              }}
-            >
-              {project.description}
-            </p>
-            <div className="flex flex-wrap gap-2 justify-end">
-              {project.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="text-xs px-3 py-1 rounded-full transition-all duration-200"
-                  style={{
-                    background: "rgba(0, 0, 0, 0.05)",
-                    color: "#333333",
-                  }}
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-          </motion.div>
+          <TextContent project={project} align="left" isInView={isInView} />
         ) : (
-          <div className="flex justify-end">
-            <PolaroidCard
-              caption={project.title}
-              side="left"
-              index={index}
-              imageSrc={project.imageSrc}
-            />
-          </div>
+          <PolaroidStack
+            items={project.polaroids}
+            side="left"
+            index={index}
+          />
         )}
       </div>
 
       {/* Center node */}
       <div className="flex items-center justify-center w-4">
-        <TimelineNode index={index} />
+        <TimelineNode />
       </div>
 
       {/* Right content */}
-      <div
-        className={`flex ${isLeft ? "justify-start" : "justify-start"}`}
-      >
+      <div className="flex justify-start">
         {isLeft ? (
-          <div className="flex justify-start">
-            <PolaroidCard
-              caption={project.title}
-              side="right"
-              index={index}
-              imageSrc={project.imageSrc}
-            />
-          </div>
+          <PolaroidStack
+            items={project.polaroids}
+            side="right"
+            index={index}
+          />
         ) : (
-          <motion.div
-            initial={{ opacity: 0, x: 60 }}
-            animate={isInView ? { opacity: 1, x: 0 } : undefined}
-            transition={{
-              duration: 0.6,
-              ease: [0.25, 0.46, 0.45, 0.94],
-              delay: 0.1,
-            }}
-            className="max-w-sm"
-          >
-            <p
-              className="text-sm mb-2"
-              style={{
-                fontFamily: "var(--font-montserrat), sans-serif",
-                fontWeight: 300,
-                color: "#666666",
-                letterSpacing: "0.1em",
-              }}
-            >
-              {project.year}
-            </p>
-            <h3
-              className="text-xl md:text-2xl mb-3 leading-tight"
-              style={{
-                fontFamily: "var(--font-playfair), serif",
-                fontWeight: 300,
-                color: "#333333",
-              }}
-            >
-              {project.title}
-            </h3>
-            <p
-              className="text-base mb-4"
-              style={{
-                fontFamily: "var(--font-montserrat), sans-serif",
-                fontWeight: 300,
-                color: "#666666",
-                lineHeight: 1.7,
-              }}
-            >
-              {project.description}
-            </p>
-            <div className="flex flex-wrap gap-2">
-              {project.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="text-xs px-3 py-1 rounded-full transition-all duration-200"
-                  style={{
-                    background: "rgba(0, 0, 0, 0.05)",
-                    color: "#333333",
-                  }}
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-          </motion.div>
+          <TextContent project={project} align="right" isInView={isInView} />
         )}
       </div>
     </div>
@@ -264,7 +268,7 @@ export default function Timeline() {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start end", "end start"],
+    offset: ["start center", "end center"],
   });
 
   const smoothProgress = useSpring(scrollYProgress, {

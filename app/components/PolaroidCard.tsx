@@ -1,89 +1,230 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { useRef, useState, useCallback, useEffect } from "react";
+import {
+  motion,
+  useInView,
+  useMotionValue,
+  useTransform,
+  animate,
+  type PanInfo,
+} from "framer-motion";
 
-interface PolaroidCardProps {
+export interface PolaroidItem {
   imageSrc?: string;
   caption: string;
-  rotation?: number;
+}
+
+interface PolaroidStackProps {
+  items: PolaroidItem[];
   side: "left" | "right";
   index: number;
 }
 
-export default function PolaroidCard({
-  imageSrc,
-  caption,
-  rotation,
-  side,
-  index,
-}: PolaroidCardProps) {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+const DRAG_THRESHOLD = 60;
 
-  const cardRotation =
-    rotation ?? (Math.random() * 4 - 2) * (index % 2 === 0 ? 1 : -1);
+// Deterministic pseudo-random rotation based on index to avoid hydration mismatch
+const ROTATIONS = [1.8, -0.8, 0.6, -0.4, 0.2, -0.5, 1.2, -1.4, 0.9, -1.1];
+
+function SinglePolaroid({
+  item,
+  rotation,
+  stackOffset,
+  zIndex,
+  isDraggable,
+  side,
+  onSwipe,
+}: {
+  item: PolaroidItem;
+  rotation: number;
+  stackOffset: number;
+  zIndex: number;
+  isDraggable: boolean;
+  side: "left" | "right";
+  onSwipe: () => void;
+}) {
+  const x = useMotionValue(0);
+  const baseTilt = (side === "left" ? -1 : 1) * 3;
+  const dragRotate = useTransform(x, [-200, 0, 200], [-12 + baseTilt, baseTilt, 12 + baseTilt]);
+  const sideMultiplier = side === "left" ? -1 : 1;
+  const isFirstRender = useRef(true);
+  const prevStackOffset = useRef(stackOffset);
+
+  const getTargetX = useCallback(
+    (offset: number) => (offset === 0 ? 0 : offset * 8 * sideMultiplier),
+    [sideMultiplier]
+  );
+
+  // Animate x when stack position changes (e.g. card moves from front to back)
+  useEffect(() => {
+    const targetX = getTargetX(stackOffset);
+    if (isFirstRender.current) {
+      x.set(targetX);
+      isFirstRender.current = false;
+    } else if (prevStackOffset.current !== stackOffset) {
+      animate(x, targetX, {
+        type: "spring",
+        stiffness: 400,
+        damping: 30,
+        mass: 0.4,
+      });
+    }
+    prevStackOffset.current = stackOffset;
+  }, [stackOffset, x, getTargetX]);
+
+  const handleDragEnd = useCallback(
+    (_: unknown, info: PanInfo) => {
+      if (Math.abs(info.offset.x) > DRAG_THRESHOLD) {
+        const direction = info.offset.x > 0 ? 1 : -1;
+        animate(x, direction * 350, {
+          type: "spring",
+          stiffness: 300,
+          damping: 30,
+        });
+        // Fire early so the card redirects mid-flight instead of pausing at 350px
+        setTimeout(() => onSwipe(), 150);
+      } else {
+        animate(x, 0, {
+          type: "spring",
+          stiffness: 800,
+          damping: 40,
+        });
+      }
+    },
+    [x, onSwipe]
+  );
 
   return (
     <motion.div
-      ref={ref}
-      initial={{
-        opacity: 0,
-        x: side === "left" ? -120 : 120,
-        rotate: cardRotation + (side === "left" ? -8 : 8),
+      className="absolute top-0 left-0"
+      style={{
+        x,
+        rotate: isDraggable ? dragRotate : undefined,
+        zIndex,
+        cursor: isDraggable ? "grab" : "default",
       }}
-      animate={
-        isInView
-          ? {
-              opacity: 1,
-              x: 0,
-              rotate: cardRotation,
-            }
-          : undefined
-      }
+      initial={false}
+      animate={{
+        y: stackOffset * 4,
+        scale: 1 - stackOffset * 0.04,
+        rotate: isDraggable
+          ? baseTilt
+          : rotation + stackOffset * 3 * sideMultiplier,
+        opacity: 1,
+      }}
       transition={{
-        duration: 0.7,
-        ease: [0.25, 0.46, 0.45, 0.94],
-        delay: 0.15,
+        type: "spring",
+        stiffness: 400,
+        damping: 30,
+        mass: 0.4,
       }}
-      className="inline-block"
-      style={{ rotate: `${cardRotation}deg` }}
+      drag={isDraggable ? "x" : false}
+      dragConstraints={{ left: -200, right: 200 }}
+      dragElastic={0.05}
+      onDragEnd={isDraggable ? handleDragEnd : undefined}
+      whileDrag={{ cursor: "grabbing", scale: 1.03 }}
     >
       <div
-        className="bg-white p-3 pb-14 shadow-md transition-transform duration-200 hover:scale-105"
+        className="bg-white p-3 pb-14 shadow-md select-none"
         style={{
           boxShadow:
             "0 4px 14px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.06)",
         }}
       >
-        {/* Photo area */}
-        <div className="w-56 h-56 md:w-64 md:h-64 overflow-hidden">
-          {imageSrc ? (
+        <div className="w-56 h-56 md:w-64 md:h-64 overflow-hidden pointer-events-none">
+          {item.imageSrc ? (
             <img
-              src={imageSrc}
-              alt={caption}
+              src={item.imageSrc}
+              alt={item.caption}
               className="w-full h-full object-cover"
+              draggable={false}
             />
           ) : (
             <div
-              className="w-full h-full transition-colors duration-200"
-              style={{ background: "rgba(0, 0, 0, 0.05)" }}
+              className="w-full h-full"
+              style={{
+                background: `rgba(0, 0, 0, ${0.03 + stackOffset * 0.02})`,
+              }}
             />
           )}
         </div>
-
-        {/* Caption */}
         <p
-          className="mt-3 text-center text-sm"
+          className="mt-3 text-center text-sm pointer-events-none"
           style={{
             fontFamily: "var(--font-montserrat), sans-serif",
             fontWeight: 300,
             color: "#666666",
           }}
         >
-          {caption}
+          {item.caption}
         </p>
       </div>
+    </motion.div>
+  );
+}
+
+export default function PolaroidStack({
+  items,
+  side,
+  index,
+}: PolaroidStackProps) {
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const [cardOrder, setCardOrder] = useState(() =>
+    Array.from({ length: items.length }, (_, i) => i)
+  );
+
+  const baseRotation = ROTATIONS[index % ROTATIONS.length];
+
+  const handleDismiss = useCallback(() => {
+    setCardOrder((prev) => {
+      const next = [...prev];
+      const first = next.shift()!;
+      next.push(first);
+      return next;
+    });
+  }, []);
+
+  const visibleCount = Math.min(items.length, 3);
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{
+        opacity: 0,
+        scale: 0.7,
+        rotate: baseRotation + (side === "left" ? -12 : 12),
+      }}
+      animate={isInView ? { opacity: 1, scale: 1, rotate: 0 } : undefined}
+      transition={{
+        duration: 0.8,
+        ease: [0.25, 0.46, 0.45, 0.94],
+        delay: 0.25,
+      }}
+      className="relative"
+      style={{ width: "fit-content", height: "fit-content" }}
+    >
+      {/* Invisible spacer to hold layout */}
+      <div className="invisible">
+        <div className="bg-white p-3 pb-14">
+          <div className="w-56 h-56 md:w-64 md:h-64" />
+          <p className="mt-3 text-sm">&nbsp;</p>
+        </div>
+      </div>
+
+      {/* Stacked cards */}
+      {cardOrder.slice(0, visibleCount).map((itemIndex, stackPos) => (
+        <SinglePolaroid
+          key={`card-${itemIndex}`}
+          item={items[itemIndex]}
+          rotation={baseRotation}
+          stackOffset={stackPos}
+          zIndex={visibleCount - stackPos}
+          isDraggable={stackPos === 0 && items.length > 1}
+          side={side}
+          onSwipe={handleDismiss}
+        />
+      ))}
     </motion.div>
   );
 }
