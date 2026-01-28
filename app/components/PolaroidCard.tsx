@@ -11,7 +11,7 @@ import {
 } from "framer-motion";
 
 export interface PolaroidItem {
-  imageSrc?: string;
+  image: string;
   caption: string;
 }
 
@@ -132,9 +132,9 @@ function SinglePolaroid({
         }}
       >
         <div className="w-56 h-56 md:w-64 md:h-64 overflow-hidden pointer-events-none">
-          {item.imageSrc ? (
+          {item.image ? (
             <img
-              src={item.imageSrc}
+              src={item.image}
               alt={item.caption}
               className="w-full h-full object-cover"
               draggable={false}

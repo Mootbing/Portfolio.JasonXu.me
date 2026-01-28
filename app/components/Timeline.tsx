@@ -1,9 +1,10 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useSpring, useInView } from "framer-motion";
 import PolaroidStack from "./PolaroidCard";
 import type { PolaroidItem } from "./PolaroidCard";
+import PROJECTS from "../../public/data/Work.json";
 
 interface TimelineProject {
   id: string;
@@ -14,97 +15,30 @@ interface TimelineProject {
   polaroids: PolaroidItem[];
 }
 
-const PROJECTS: TimelineProject[] = [
-  {
-    id: "01",
-    year: "2021",
-    title: "First $150k Offer",
-    description:
-      "At 15, received my first significant offer — proof that age is just a number when you ship real products.",
-    tags: ["Entrepreneurship", "Growth"],
-    polaroids: [
-      { caption: "The Offer" },
-      { caption: "Early Days" },
-      { caption: "First Build" },
-    ],
-  },
-  {
-    id: "02",
-    year: "2022",
-    title: "United Nations Acquisition",
-    description:
-      "Built a project with enough impact that the United Nations acquired it. Global reach, teenage builder.",
-    tags: ["Impact", "Global"],
-    polaroids: [
-      { caption: "UN Partnership" },
-      { caption: "Global Impact" },
-      { caption: "The Project" },
-    ],
-  },
-  {
-    id: "03",
-    year: "2023",
-    title: "17.JasonXu.me",
-    description:
-      "Received international acclaim for this project. A story told through code, design, and relentless ambition.",
-    tags: ["Design", "Development", "Storytelling"],
-    polaroids: [
-      { caption: "17.JasonXu.me" },
-      { caption: "The Design" },
-      { caption: "International Press" },
-    ],
-  },
-  {
-    id: "04",
-    year: "2024",
-    title: "1M+ Views",
-    description:
-      "Crossed one million views across all social platforms. Building in public, sharing the journey.",
-    tags: ["Content", "Social", "Growth"],
-    polaroids: [
-      { caption: "1M+ Views" },
-      { caption: "Building in Public" },
-      { caption: "The Community" },
-    ],
-  },
-  {
-    id: "05",
-    year: "2025",
-    title: "Icon.com — #2 Founding Engineer",
-    description:
-      "Became the second founding engineer at Icon.com, helping scale to $12M+ ARR. From side projects to real infrastructure.",
-    tags: ["Startup", "Engineering", "Scale"],
-    polaroids: [
-      { caption: "Icon.com" },
-      { caption: "The Team" },
-      { caption: "$12M+ ARR" },
-    ],
-  },
-  {
-    id: "06",
-    year: "Now",
-    title: "Writing the Next Chapter",
-    description:
-      "20 years old. University of Pennsylvania. Still building, still chasing, still shipping.",
-    tags: ["Present", "Penn", "Building"],
-    polaroids: [
-      { caption: "Penn" },
-      { caption: "What's Next" },
-      { caption: "The Journey" },
-    ],
-  },
-];
-
 function TimelineNode() {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-50%" });
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    const check = () => {
+      const rect = el.getBoundingClientRect();
+      setVisible(rect.top < window.innerHeight * 0.6);
+    };
+
+    check();
+    window.addEventListener("scroll", check, { passive: true });
+    return () => window.removeEventListener("scroll", check);
+  }, []);
 
   return (
     <motion.div
       ref={ref}
-      className="absolute left-1/2 -translate-x-1/2 z-10"
+      className="absolute left-1/2 -translate-x-1/2 z-0"
       initial={{ scale: 0, opacity: 0 }}
-      animate={isInView ? { scale: 1, opacity: 1 } : undefined}
+      animate={visible ? { scale: 1, opacity: 1 } : { scale: 0, opacity: 0 }}
       transition={{
         duration: 0.5,
         ease: [0.25, 0.46, 0.45, 0.94],
@@ -200,10 +134,15 @@ function TextContent({
         {project.tags.map((tag) => (
           <span
             key={tag}
-            className="text-xs px-3 py-1 rounded-full transition-all duration-200"
+            className="inline-flex items-center whitespace-nowrap"
             style={{
               background: "rgba(0, 0, 0, 0.05)",
+              padding: "8px 14px",
+              borderRadius: "20px",
               color: "#333333",
+              fontSize: "0.9em",
+              transition: "transform 0.2s ease, background-color 0.2s ease, color 0.2s ease",
+              transformOrigin: "center",
             }}
           >
             {tag}
