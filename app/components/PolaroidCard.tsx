@@ -53,6 +53,7 @@ function SinglePolaroid({
   photoIndex: number;
 }) {
   const x = useMotionValue(0);
+  const rotateValue = useMotionValue(0);
   const baseTilt = (side === "left" ? -1 : 1) * 3;
   const dragRotate = useTransform(x, [-300, 0, 300], [-12 + baseTilt, baseTilt, 12 + baseTilt]);
   const sideMultiplier = side === "left" ? -1 : 1;
@@ -81,6 +82,48 @@ function SinglePolaroid({
     prevStackOffset.current = stackOffset;
   }, [stackOffset, x, getTargetX]);
 
+  // Keep rotation in a single MotionValue to avoid snapping when isDraggable changes
+  const isFirstRotate = useRef(true);
+  const prevIsDraggable = useRef(isDraggable);
+  useEffect(() => {
+    if (isDraggable) {
+      // Sync rotation with drag-based rotation
+      if (isFirstRotate.current) {
+        rotateValue.set(dragRotate.get());
+        isFirstRotate.current = false;
+      }
+      const unsub = dragRotate.on("change", (v) => rotateValue.set(v));
+      return unsub;
+    } else {
+      const target = rotation + stackOffset * 3 * sideMultiplier;
+      if (isFirstRotate.current || !prevIsDraggable.current) {
+        // First render or was already non-draggable — set directly or animate position change
+        if (isFirstRotate.current) {
+          rotateValue.set(target);
+          isFirstRotate.current = false;
+        } else {
+          const controls = animate(rotateValue, target, {
+            type: "spring",
+            stiffness: 400,
+            damping: 30,
+            mass: 0.4,
+          });
+          return () => controls.stop();
+        }
+      } else {
+        // Was draggable, now isn't — animate from current rotation to target
+        const controls = animate(rotateValue, target, {
+          type: "spring",
+          stiffness: 400,
+          damping: 30,
+          mass: 0.4,
+        });
+        return () => controls.stop();
+      }
+    }
+    prevIsDraggable.current = isDraggable;
+  }, [isDraggable, dragRotate, rotation, stackOffset, sideMultiplier, rotateValue]);
+
   const handleDragEnd = useCallback(
     (_: unknown, info: PanInfo) => {
       if (Math.abs(info.offset.x) > DRAG_THRESHOLD) {
@@ -108,7 +151,7 @@ function SinglePolaroid({
       className="absolute top-0 left-0"
       style={{
         x,
-        rotate: isDraggable ? dragRotate : undefined,
+        rotate: rotateValue,
         zIndex,
         cursor: isDraggable ? "grab" : "default",
       }}
@@ -116,9 +159,6 @@ function SinglePolaroid({
       animate={{
         y: stackOffset * 4,
         scale: 1 - stackOffset * 0.04,
-        rotate: isDraggable
-          ? baseTilt
-          : rotation + stackOffset * 3 * sideMultiplier,
         opacity: 1,
       }}
       transition={{
