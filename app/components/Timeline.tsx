@@ -80,6 +80,26 @@ function TextContent({
 
   return (
     <div className={`max-w-sm ${isRight ? "text-right" : ""}`}>
+      {project.year && (
+        <motion.span
+          initial={{ opacity: 0, x: -30, scale: 0.95 }}
+          animate={isInView ? { opacity: 1, x: 0, scale: 1 } : undefined}
+          transition={{
+            duration: 0.5,
+            ease: [0.25, 0.46, 0.45, 0.94],
+            delay: 0.1,
+          }}
+          className="block mb-1 text-sm tracking-widest uppercase"
+          style={{
+            fontFamily: "var(--font-montserrat), sans-serif",
+            fontWeight: 300,
+            color: "#999999",
+            letterSpacing: "0.1em",
+          }}
+        >
+          {project.year}
+        </motion.span>
+      )}
       <motion.h3
         initial={{ opacity: 0, x: -30, scale: 0.95 }}
         animate={isInView ? { opacity: 1, x: 0, scale: 1 } : undefined}
@@ -180,7 +200,7 @@ function TimelineEntry({
               side="left"
               index={index}
               year={project.year}
-              projectId={project.id}
+              title={project.title}
             />
           )}
         </div>
@@ -202,7 +222,7 @@ function TimelineEntry({
                 side="right"
                 index={index}
                 year={project.year}
-                projectId={project.id}
+                title={project.title}
               />
             </div>
           </div>
@@ -212,7 +232,7 @@ function TimelineEntry({
             side="right"
             index={index}
             year={project.year}
-            projectId={project.id}
+            title={project.title}
           />
         ) : (
           <TextContent project={project} isInView={isInView} />

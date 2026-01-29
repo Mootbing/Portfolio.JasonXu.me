@@ -21,7 +21,7 @@ interface PolaroidStackProps {
   side: "left" | "right";
   index: number;
   year?: string;
-  projectId?: string;
+  title?: string;
 }
 
 const DRAG_THRESHOLD = 60;
@@ -38,7 +38,7 @@ function SinglePolaroid({
   side,
   onSwipe,
   year,
-  projectId,
+  title,
   photoIndex,
 }: {
   item: PolaroidItem;
@@ -49,7 +49,7 @@ function SinglePolaroid({
   side: "left" | "right";
   onSwipe: () => void;
   year?: string;
-  projectId?: string;
+  title?: string;
   photoIndex: number;
 }) {
   const x = useMotionValue(0);
@@ -204,28 +204,16 @@ function SinglePolaroid({
               draggable={false}
             />
           )}
-          {projectId && (
-            <span
-              className="absolute top-2 left-2 text-xs pointer-events-none"
-              style={{
-                fontFamily: "monospace",
-                color: "#000000",
-                letterSpacing: "0.05em",
-              }}
-            >
-              {projectId.padStart(3, "0")}-{photoIndex + 1}.RAW
-            </span>
-          )}
-          {year && (
+          {year && title && (
             <span
               className="absolute bottom-2 right-2 text-xs pointer-events-none"
               style={{
                 fontFamily: "monospace",
-                color: "#000000",
+                color: "#ff0000",
                 letterSpacing: "0.05em",
               }}
             >
-              {year}
+              {year}-{String(photoIndex + 1).padStart(3, "0")}.DNG
             </span>
           )}
         </div>
@@ -249,7 +237,7 @@ export default function PolaroidStack({
   side,
   index,
   year,
-  projectId,
+  title,
 }: PolaroidStackProps) {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
@@ -307,7 +295,7 @@ export default function PolaroidStack({
           side={side}
           onSwipe={handleDismiss}
           year={year}
-          projectId={projectId}
+          title={title}
           photoIndex={itemIndex}
         />
       ))}

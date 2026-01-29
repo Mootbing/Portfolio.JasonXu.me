@@ -27,7 +27,7 @@
     "id": "03",
     "year": "2025.11",
     "title": "Cow Farm Simulator",
-    "description": "My favorite past time is revamping old scratch games :)",
+    "description": "Breed & manage your herd of cows. Remastered Scratch game from 2018",
     "tags": ["Next.js", "Supabase", "Figma"],
     "polaroids": [
       { "image": "", "overlay": "", "caption": "Cow Farm" },
@@ -39,7 +39,7 @@
     "id": "04",
     "year": "2025.11",
     "title": "Bullhorn Aerosystems",
-    "description": "Accidently open-sourced Gotham by Palantir. Originally written as a 3d-engine for ATC simulations & trainings",
+    "description": "Accidently open-sourced Gotham by Palantir. Originally a 3d-engine for ATC simulations & trainings",
     "tags": ["Next.js", "API"],
     "polaroids": [
       { "image": "", "overlay": "", "caption": "Bullhorn" },
@@ -51,7 +51,7 @@
     "id": "05",
     "year": "2025.09",
     "title": "Linge",
-    "description": "Tinder + Hinge = Linge. Swipe for your weekly coffee chat matches",
+    "description": "Tinder + Hinge = Linge. Swipe through weekly coffee chat matches",
     "tags": ["Flutter", "Supabase", "Clado"],
     "polaroids": [
       { "image": "", "overlay": "", "caption": "Linge" },
@@ -63,7 +63,7 @@
     "id": "06",
     "year": "2025.08",
     "title": "BrowserBase Clone",
-    "description": "BrowserBase but powered by screenshots instead of DOM elements in a chrome extension. Was faster than most web browsing models at the time. Got to meet Paul Klein",
+    "description": "Browserbase but powered by screenshots instead of DOM elements in chrome extension. Was faster than most web browsing models at the time. Got to meet Paul Klein",
     "tags": ["Extension", "OpenAI"],
     "polaroids": [
       { "image": "", "overlay": "", "caption": "Browser Clone" },
@@ -99,7 +99,7 @@
     "id": "09",
     "year": "2025.06",
     "title": "Iron Empire",
-    "description": "Cloned my childhood's favorite game (中华铁路 @ QQ) with differing train stats and infinite stations",
+    "description": "Cloned my childhood's favorite game (中华铁路 @ QQ)",
     "tags": ["Next.js", "Supabase", "Google Maps API"],
     "polaroids": [
       { "image": "", "overlay": "", "caption": "Iron Empire" },
@@ -123,7 +123,7 @@
     "id": "11",
     "year": "2025.01",
     "title": "Poke",
-    "description": "Soft-\"where\" to poke, your friends based on physical proximity and calendar availability",
+    "description": "Soft-\"where\" to nudge your friends to hang out based on physical proximity and calendar availability",
     "tags": ["Expo", "Supabase"],
     "polaroids": [
       { "image": "", "overlay": "", "caption": "Poke" },
@@ -135,7 +135,7 @@
     "id": "12",
     "year": "2025.01",
     "title": "Repository Analyzer",
-    "description": "Creates line-by-line breakdown of repository able to be posted in a Readme.MD file",
+    "description": "Creates line-by-line breakdown of codebase to be summarized in a Readme.md file attachment",
     "tags": ["Python"],
     "polaroids": [
       { "image": "", "overlay": "", "caption": "Repo Analyzer" },
@@ -147,7 +147,7 @@
     "id": "13",
     "year": "2024.10",
     "title": "Black Hole Racing Game",
-    "description": "Unreal Engine 5 game for UPenn Perelman School of Medicine patient recovery",
+    "description": "Unreal game for UPenn Perelman School of Medicine patient recovery",
     "tags": ["UE5", "C++"],
     "polaroids": [
       { "image": "", "overlay": "", "caption": "Black Hole" },
@@ -183,7 +183,7 @@
     "id": "16",
     "year": "2023.09",
     "title": "The Verse",
-    "description": "Story website for VR/AR startup",
+    "description": "Landing page for a VR&AR startup promsing space travel",
     "tags": ["Figma"],
     "polaroids": [
       { "image": "", "overlay": "", "caption": "The Verse" },
@@ -195,8 +195,8 @@
     "id": "17",
     "year": "2023.08",
     "title": "Slate",
-    "description": "Stress-relieving writing app",
-    "tags": ["Electron"],
+    "description": "Stress-relieving writing app to learn Electron.js",
+    "tags": ["Electron.js"],
     "polaroids": [
       { "image": "", "overlay": "", "caption": "Slate" },
       { "image": "", "overlay": "", "caption": "Writing App" },
@@ -219,7 +219,7 @@
     "id": "19",
     "year": "2023.07",
     "title": "Xatalyst Labs",
-    "description": "R&D for pose-tracking mobile apps",
+    "description": "R&D for pose-tracking mobile workout app",
     "tags": ["Expo", "Firebase"],
     "polaroids": [
       { "image": "", "overlay": "", "caption": "Xatalyst Labs" },
@@ -244,7 +244,7 @@
     "year": "2023.07",
     "title": "Yaemage",
     "description": "Lazy-loading SVG library used in 17.JasonXu.me & The Verse",
-    "tags": [],
+    "tags": ["JS", "SVG"],
     "polaroids": [
       { "image": "", "overlay": "", "caption": "Yaemage" },
       { "image": "", "overlay": "", "caption": "SVG Library" },
@@ -255,7 +255,7 @@
     "id": "22",
     "year": "2023.07",
     "title": "Now Playing Wallpaper",
-    "description": "Musical Windows wallpaper (w/ Lively.js SDK)",
+    "description": "Music Windows wallpaper (w/ Lively.js SDK)",
     "tags": ["JS"],
     "polaroids": [
       { "image": "", "overlay": "", "caption": "Now Playing" },
@@ -267,7 +267,7 @@
     "id": "23",
     "year": "2023.06",
     "title": "DINO",
-    "description": "Front-end website for Web3 startup",
+    "description": "Landing page for Web3 startup",
     "tags": ["Next.js", "Figma"],
     "polaroids": [
       { "image": "", "overlay": "", "caption": "DINO" },
@@ -279,7 +279,7 @@
     "id": "24",
     "year": "2023.05",
     "title": "Simpact",
-    "description": "Genshin Impact with guns. Yes I was that Degen",
+    "description": "Genshin Impact with guns. Yes, I know, I was that degen",
     "tags": ["UE5", "C++", "Blender"],
     "polaroids": [
       { "image": "", "overlay": "", "caption": "Simpact" },
@@ -315,7 +315,7 @@
     "id": "27",
     "year": "2023.03",
     "title": "MyTube",
-    "description": "Can't control myself so I deleted shorts, recommendations, and autoplay",
+    "description": "Can't control myself so I deleted shorts, recommendations, and autoplay from YouTube UI",
     "tags": ["JS"],
     "polaroids": [
       { "image": "", "overlay": "", "caption": "MyTube" },
@@ -327,7 +327,7 @@
     "id": "28",
     "year": "2023.03",
     "title": "Azure Speech Recognition",
-    "description": "Rewrote Exo Azure speech recognition to allow for continuous recognition",
+    "description": "Rewrote Microsoft's Azure speech recognition on Expo to allow continuous recognition",
     "tags": ["Expo", "Azure"],
     "polaroids": [
       { "image": "", "overlay": "", "caption": "Azure Speech" },
@@ -363,7 +363,7 @@
     "id": "31",
     "year": "2022.11",
     "title": "Holes",
-    "description": "Flashcard generator powered by GPT3 as demo to faculty on abilities of GPT",
+    "description": "Flashcard generator powered by GPT-3 as demo to faculty on abilities of ChatGPT in the classroom",
     "tags": ["React", "Figma"],
     "polaroids": [
       { "image": "", "overlay": "", "caption": "Holes" },
@@ -375,7 +375,7 @@
     "id": "32",
     "year": "2022.09",
     "title": "Liquify",
-    "description": "Created dynamic water bottles with attachment system & companion app",
+    "description": "Created dynamic hardware water bottles with attachment system & companion app",
     "tags": ["3D Printing", "CAD", "Expo"],
     "polaroids": [
       { "image": "", "overlay": "", "caption": "Liquify" },
@@ -387,7 +387,7 @@
     "id": "33",
     "year": "2022.01",
     "title": "VRChery",
-    "description": "Got gifted VR headsets but had no money to buy games. Wrote a tower defense game to play instead",
+    "description": "Got gifted VR headsets but had no money to buy games. Wrote a tower defense game to play",
     "tags": ["VR/AR", "UE5"],
     "polaroids": [
       { "image": "", "overlay": "", "caption": "VRChery" },
@@ -399,7 +399,7 @@
     "id": "34",
     "year": "2021.09",
     "title": "Murder Mystery Bot",
-    "description": "Discord bot for playing Mafia",
+    "description": "Discord bot for playing Mafia. Complete with room creation & management",
     "tags": ["Python", "Discord.py"],
     "polaroids": [
       { "image": "", "overlay": "", "caption": "Murder Mystery" },
@@ -435,7 +435,7 @@
     "id": "37",
     "year": "2021.07",
     "title": "FreeThem",
-    "description": "Multiplayer prison escape game",
+    "description": "First multiplayer game I wrote about escaping convicts",
     "tags": ["UE4"],
     "polaroids": [
       { "image": "", "overlay": "", "caption": "FreeThem" },
@@ -447,7 +447,7 @@
     "id": "38",
     "year": "2021.06",
     "title": "BSGO",
-    "description": "My cousin's parents banned COD. So I wrote my own",
+    "description": "My cousin's parents banned COD. We wrote our own",
     "tags": ["UE4"],
     "polaroids": [
       { "image": "", "overlay": "", "caption": "BSGO" },
@@ -459,7 +459,7 @@
     "id": "39",
     "year": "2021.04",
     "title": "Textplifier",
-    "description": "Adds Japanese emoticons via iMessage",
+    "description": "Adds Japanese emoticons to iMessage via keybinds",
     "tags": ["Python", "Tkinter"],
     "polaroids": [
       { "image": "", "overlay": "", "caption": "Textplifier" },
@@ -471,8 +471,8 @@
     "id": "40",
     "year": "2021.03",
     "title": "Unholy Mail Bot",
-    "description": "Spams people's mailboxes with STMP servers",
-    "tags": ["Python", "STMP"],
+    "description": "Spams people's mailboxes with SMTP servers",
+    "tags": ["Python", "SMTP"],
     "polaroids": [
       { "image": "", "overlay": "", "caption": "Mail Bot" },
       { "image": "", "overlay": "", "caption": "SMTP" },
@@ -483,7 +483,7 @@
     "id": "41",
     "year": "2021.02",
     "title": "Rolling Ball",
-    "description": "Cash grab mobile game inspired by Going Balls",
+    "description": "Cash-grab style mobile game inspired by Going Balls",
     "tags": ["UE4"],
     "polaroids": [
       { "image": "", "overlay": "", "caption": "Rolling Ball" },
@@ -495,7 +495,7 @@
     "id": "42",
     "year": "2020.11",
     "title": "Subway Chaos",
-    "description": "Overhauled subway directing game from scratch",
+    "description": "Overhauled subway conductor game from scratch",
     "tags": ["UE4"],
     "polaroids": [
       { "image": "", "overlay": "", "caption": "Subway Chaos" },
@@ -519,7 +519,7 @@
     "id": "44",
     "year": "2020.04",
     "title": "Tower of Cowland",
-    "description": "Code.org hour of code turned into a week of code. Cow-themed dungeon crawler",
+    "description": "Code.org hour of code turned into a week of code to write a cow-themed dungeon crawler",
     "tags": ["JS"],
     "polaroids": [
       { "image": "", "overlay": "", "caption": "Cowland" },
@@ -531,7 +531,7 @@
     "id": "45",
     "year": "2019",
     "title": "OpenProcessing",
-    "description": "Learned P5JS from Ubisoft's code{school} game tutorials",
+    "description": "Learned P5JS from Ubisoft's {code}school tutorials",
     "tags": ["P5JS"],
     "polaroids": [
       { "image": "", "overlay": "", "caption": "OpenProcessing" },
@@ -543,7 +543,7 @@
     "id": "46",
     "year": "2019",
     "title": "Project Enkrypto",
-    "description": "Cousin's parents found Project Chatty. Added cipher to Project Chatty",
+    "description": "Cousin's parents found Project Chatty, so I wrote a cipher",
     "tags": ["Python"],
     "polaroids": [
       { "image": "", "overlay": "", "caption": "Enkrypto" },
@@ -555,7 +555,7 @@
     "id": "47",
     "year": "2019",
     "title": "Project Chatty",
-    "description": "Cousin's parents banned iMessage. Wrote it myself via Socket I/O. Wrote some games into it too",
+    "description": "Cousin's parents banned iMessage. Wrote it myself via Socket I/O",
     "tags": ["Python", "Socket"],
     "polaroids": [
       { "image": "", "overlay": "", "caption": "Project Chatty" },
