@@ -12,6 +12,7 @@ import {
 
 export interface PolaroidItem {
   image: string;
+  overlay: string;
   caption: string;
 }
 
@@ -19,6 +20,8 @@ interface PolaroidStackProps {
   items: PolaroidItem[];
   side: "left" | "right";
   index: number;
+  year?: string;
+  projectId?: string;
 }
 
 const DRAG_THRESHOLD = 60;
@@ -34,6 +37,9 @@ function SinglePolaroid({
   isDraggable,
   side,
   onSwipe,
+  year,
+  projectId,
+  photoIndex,
 }: {
   item: PolaroidItem;
   rotation: number;
@@ -42,6 +48,9 @@ function SinglePolaroid({
   isDraggable: boolean;
   side: "left" | "right";
   onSwipe: () => void;
+  year?: string;
+  projectId?: string;
+  photoIndex: number;
 }) {
   const x = useMotionValue(0);
   const baseTilt = (side === "left" ? -1 : 1) * 3;
@@ -131,7 +140,7 @@ function SinglePolaroid({
             "0 4px 14px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.06)",
         }}
       >
-        <div className="w-56 h-56 md:w-64 md:h-64 overflow-hidden pointer-events-none">
+        <div className="w-56 h-56 md:w-64 md:h-64 overflow-hidden pointer-events-none relative">
           {item.image ? (
             <img
               src={item.image}
@@ -146,6 +155,38 @@ function SinglePolaroid({
                 background: `rgba(0, 0, 0, ${0.03 + stackOffset * 0.02})`,
               }}
             />
+          )}
+          {item.overlay && (
+            <img
+              src={item.overlay}
+              alt=""
+              className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+              draggable={false}
+            />
+          )}
+          {projectId && (
+            <span
+              className="absolute top-2 left-2 text-xs pointer-events-none"
+              style={{
+                fontFamily: "monospace",
+                color: "#000000",
+                letterSpacing: "0.05em",
+              }}
+            >
+              {projectId.padStart(3, "0")}-{photoIndex + 1}.RAW
+            </span>
+          )}
+          {year && (
+            <span
+              className="absolute bottom-2 right-2 text-xs pointer-events-none"
+              style={{
+                fontFamily: "monospace",
+                color: "#000000",
+                letterSpacing: "0.05em",
+              }}
+            >
+              {year}
+            </span>
           )}
         </div>
         <p
@@ -167,6 +208,8 @@ export default function PolaroidStack({
   items,
   side,
   index,
+  year,
+  projectId,
 }: PolaroidStackProps) {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
@@ -223,6 +266,9 @@ export default function PolaroidStack({
           isDraggable={stackPos === 0 && items.length > 1}
           side={side}
           onSwipe={handleDismiss}
+          year={year}
+          projectId={projectId}
+          photoIndex={itemIndex}
         />
       ))}
     </motion.div>

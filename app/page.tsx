@@ -56,15 +56,17 @@ export default function Home() {
           </div>
 
           {/* Hero Heading */}
-          <h1
-            className="text-5xl md:text-6xl lg:text-7xl mb-6 leading-tight"
-            style={{
-              ...STYLES.playfair,
-              color: STYLES.colors.primary,
-            }}
-          >
-            Everything I&apos;ve Built
-          </h1>
+          <a href="#timeline" className="no-underline">
+            <h1
+              className="text-5xl md:text-6xl lg:text-7xl mb-6 leading-tight cursor-pointer hover:opacity-80 transition-opacity duration-300"
+              style={{
+                ...STYLES.playfair,
+                color: STYLES.colors.primary,
+              }}
+            >
+              Everything I&apos;ve Built
+            </h1>
+          </a>
 
           {/* Subtitle */}
           <p
@@ -82,7 +84,7 @@ export default function Home() {
       </section>
 
       {/* Timeline Section */}
-      <div style={{ marginTop: "-175px" }}>
+      <div id="timeline" style={{ marginTop: "-175px", scrollMarginTop: "20px" }}>
         <Timeline />
       </div>
 

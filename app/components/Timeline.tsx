@@ -68,24 +68,6 @@ function TextContent({
 
   return (
     <div className={`max-w-sm ${isRight ? "" : "text-right"}`}>
-      <motion.p
-        initial={{ opacity: 0, x: -20, scale: 0.95 }}
-        animate={isInView ? { opacity: 1, x: 0, scale: 1 } : undefined}
-        transition={{
-          duration: 0.5,
-          ease: [0.25, 0.46, 0.45, 0.94],
-          delay: 0.1,
-        }}
-        className="text-sm mb-2"
-        style={{
-          fontFamily: "var(--font-montserrat), sans-serif",
-          fontWeight: 300,
-          color: "#666666",
-          letterSpacing: "0.1em",
-        }}
-      >
-        {project.year}
-      </motion.p>
       <motion.h3
         initial={{ opacity: 0, x: -30, scale: 0.95 }}
         animate={isInView ? { opacity: 1, x: 0, scale: 1 } : undefined}
@@ -178,6 +160,8 @@ function TimelineEntry({
             items={project.polaroids}
             side="left"
             index={index}
+            year={project.year}
+            projectId={project.id}
           />
         )}
       </div>
@@ -194,6 +178,8 @@ function TimelineEntry({
             items={project.polaroids}
             side="right"
             index={index}
+            year={project.year}
+            projectId={project.id}
           />
         ) : (
           <TextContent project={project} align="right" isInView={isInView} />
