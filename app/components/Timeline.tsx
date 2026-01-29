@@ -15,6 +15,18 @@ interface TimelineProject {
   polaroids: PolaroidItem[];
 }
 
+function useIsCompact(breakpoint = 800) {
+  const [compact, setCompact] = useState(false);
+  useEffect(() => {
+    const mql = window.matchMedia(`(max-width: ${breakpoint - 1}px)`);
+    setCompact(mql.matches);
+    const handler = (e: MediaQueryListEvent) => setCompact(e.matches);
+    mql.addEventListener("change", handler);
+    return () => mql.removeEventListener("change", handler);
+  }, [breakpoint]);
+  return compact;
+}
+
 function TimelineNode() {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
@@ -36,7 +48,7 @@ function TimelineNode() {
   return (
     <motion.div
       ref={ref}
-      className="absolute left-1/2 -translate-x-1/2 z-0"
+      className="z-0"
       initial={{ scale: 0, opacity: 0 }}
       animate={visible ? { scale: 1, opacity: 1 } : { scale: 0, opacity: 0 }}
       transition={{
@@ -57,17 +69,17 @@ function TimelineNode() {
 
 function TextContent({
   project,
-  align,
   isInView,
+  align = "left",
 }: {
   project: TimelineProject;
-  align: "left" | "right";
   isInView: boolean;
+  align?: "left" | "right";
 }) {
   const isRight = align === "right";
 
   return (
-    <div className={`max-w-sm ${isRight ? "" : "text-right"}`}>
+    <div className={`max-w-sm ${isRight ? "text-right" : ""}`}>
       <motion.h3
         initial={{ opacity: 0, x: -30, scale: 0.95 }}
         animate={isInView ? { opacity: 1, x: 0, scale: 1 } : undefined}
@@ -111,7 +123,7 @@ function TextContent({
           ease: [0.25, 0.46, 0.45, 0.94],
           delay: 0.4,
         }}
-        className={`flex flex-wrap gap-2 ${isRight ? "" : "justify-end"}`}
+        className={`flex flex-wrap gap-2 ${isRight ? "justify-end" : ""}`}
       >
         {project.tags.map((tag) => (
           <span
@@ -138,42 +150,63 @@ function TextContent({
 function TimelineEntry({
   project,
   index,
+  compact,
 }: {
   project: TimelineProject;
   index: number;
+  compact: boolean;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
-  const isLeft = index % 2 === 0;
+  const isLeft = !compact && index % 2 === 0;
 
   return (
     <div
       ref={ref}
-      className="relative grid grid-cols-[1fr_auto_1fr] gap-6 md:gap-12 items-center min-h-[320px]"
+      className={`relative grid items-center ${
+        compact
+          ? `grid-cols-[auto_1fr] gap-6${index === 0 ? " pt-[175px]" : ""}`
+          : "grid-cols-[1fr_auto_1fr] gap-6 md:gap-12 min-h-[320px]"
+      }`}
     >
-      {/* Left content */}
-      <div className="flex justify-end">
-        {isLeft ? (
-          <TextContent project={project} align="left" isInView={isInView} />
-        ) : (
-          <PolaroidStack
-            items={project.polaroids}
-            side="left"
-            index={index}
-            year={project.year}
-            projectId={project.id}
-          />
-        )}
-      </div>
+      {/* Left content (hidden in compact) */}
+      {!compact && (
+        <div className="flex justify-end">
+          {isLeft ? (
+            <TextContent project={project} isInView={isInView} align="right" />
+          ) : (
+            <PolaroidStack
+              items={project.polaroids}
+              side="left"
+              index={index}
+              year={project.year}
+              projectId={project.id}
+            />
+          )}
+        </div>
+      )}
 
       {/* Center node */}
-      <div className="flex items-center justify-center w-4">
+      <div className="relative flex items-center justify-center w-4">
         <TimelineNode />
       </div>
 
       {/* Right content */}
       <div className="flex justify-start">
-        {isLeft ? (
+        {compact ? (
+          <div className="flex flex-col gap-6">
+            <TextContent project={project} isInView={isInView} />
+            <div className="flex justify-end">
+              <PolaroidStack
+                items={project.polaroids}
+                side="right"
+                index={index}
+                year={project.year}
+                projectId={project.id}
+              />
+            </div>
+          </div>
+        ) : isLeft ? (
           <PolaroidStack
             items={project.polaroids}
             side="right"
@@ -182,7 +215,7 @@ function TimelineEntry({
             projectId={project.id}
           />
         ) : (
-          <TextContent project={project} align="right" isInView={isInView} />
+          <TextContent project={project} isInView={isInView} />
         )}
       </div>
     </div>
@@ -191,6 +224,7 @@ function TimelineEntry({
 
 export default function Timeline() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const compact = useIsCompact();
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start center", "end center"],
@@ -207,30 +241,38 @@ export default function Timeline() {
       ref={containerRef}
       className="relative max-w-6xl mx-auto px-6 md:px-12 py-20"
     >
-      {/* The growing vertical line */}
-      <div className="absolute left-1/2 top-0 bottom-0 -translate-x-1/2 w-px">
-        {/* Background track */}
+      <div className={compact ? "relative max-w-md mx-auto" : "relative"}>
+        {/* The growing vertical line */}
         <div
-          className="absolute inset-0"
-          style={{ background: "rgba(0, 0, 0, 0.06)" }}
-        />
+          className={`absolute top-0 bottom-0 w-px ${
+            compact
+              ? "left-[8px]"
+              : "left-1/2 -translate-x-1/2"
+          }`}
+        >
+          {/* Background track */}
+          <div
+            className="absolute inset-0"
+            style={{ background: "rgba(0, 0, 0, 0.06)" }}
+          />
 
-        {/* Animated fill */}
-        <motion.div
-          className="absolute top-0 left-0 right-0 origin-top"
-          style={{
-            background: "#333333",
-            scaleY: smoothProgress,
-            height: "100%",
-          }}
-        />
-      </div>
+          {/* Animated fill */}
+          <motion.div
+            className="absolute top-0 left-0 right-0 origin-top"
+            style={{
+              background: "#333333",
+              scaleY: smoothProgress,
+              height: "100%",
+            }}
+          />
+        </div>
 
-      {/* Timeline entries */}
-      <div className="relative space-y-8 md:space-y-16">
-        {PROJECTS.map((project, index) => (
-          <TimelineEntry key={project.id} project={project} index={index} />
-        ))}
+        {/* Timeline entries */}
+        <div className="relative space-y-8 md:space-y-16">
+          {PROJECTS.map((project, index) => (
+            <TimelineEntry key={project.id} project={project} index={index} compact={compact} />
+          ))}
+        </div>
       </div>
     </section>
   );

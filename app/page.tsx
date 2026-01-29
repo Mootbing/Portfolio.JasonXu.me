@@ -76,7 +76,7 @@ export default function Home() {
               lineHeight: 1.7,
             }}
           >
-            Pro tip: try swiping on polaroids
+            Try swiping polaroids
           </p>
 
         </div>

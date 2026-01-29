@@ -190,11 +190,11 @@ function SinglePolaroid({
           )}
         </div>
         <p
-          className="mt-3 text-center text-sm pointer-events-none"
+          className="mt-3 text-center text-base pointer-events-none"
           style={{
-            fontFamily: "var(--font-montserrat), sans-serif",
-            fontWeight: 300,
-            color: "#666666",
+            fontFamily: "var(--font-caveat), cursive",
+            fontWeight: 700,
+            color: "#333333",
           }}
         >
           {item.caption}
