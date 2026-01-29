@@ -183,7 +183,7 @@
     "id": "16",
     "year": "2023.09",
     "title": "The Verse",
-    "description": "Scrolling website for VR/AR startup",
+    "description": "Story website for VR/AR startup",
     "tags": ["Figma"],
     "polaroids": [
       { "image": "", "overlay": "", "caption": "The Verse" },
@@ -205,26 +205,26 @@
   },
   {
     "id": "18",
-    "year": "",
-    "title": "Xatalyst Mobile",
-    "description": "",
-    "tags": [],
+    "year": "2023.07",
+    "title": "Simply",
+    "description": "Forked workout app for Empire Dragons NYC rowing team",
+    "tags": ["Expo", "Firebase"],
     "polaroids": [
-      { "image": "", "overlay": "", "caption": "Xatalyst Mobile" },
-      { "image": "", "overlay": "", "caption": "" },
-      { "image": "", "overlay": "", "caption": "" }
+      { "image": "", "overlay": "", "caption": "Simply" },
+      { "image": "", "overlay": "", "caption": "Workout App" },
+      { "image": "", "overlay": "", "caption": "Empire Dragons" }
     ]
   },
   {
     "id": "19",
     "year": "2023.07",
     "title": "Xatalyst Labs",
-    "description": "Workout app used by Empire Dragons NYC rowing team",
+    "description": "R&D for pose-tracking mobile apps",
     "tags": ["Expo", "Firebase"],
     "polaroids": [
       { "image": "", "overlay": "", "caption": "Xatalyst Labs" },
-      { "image": "", "overlay": "", "caption": "Workout App" },
-      { "image": "", "overlay": "", "caption": "Empire Dragons" }
+      { "image": "", "overlay": "", "caption": "Pose Tracking" },
+      { "image": "", "overlay": "", "caption": "R&D" }
     ]
   },
   {
@@ -255,7 +255,7 @@
     "id": "22",
     "year": "2023.07",
     "title": "Now Playing Wallpaper",
-    "description": "Cute musical wallpaper for Lively.js",
+    "description": "Musical Windows wallpaper (w/ Lively.js SDK)",
     "tags": ["JS"],
     "polaroids": [
       { "image": "", "overlay": "", "caption": "Now Playing" },
@@ -278,6 +278,18 @@
   {
     "id": "24",
     "year": "2023.05",
+    "title": "Simpact",
+    "description": "Genshin Impact with guns. Yes I was that Degen",
+    "tags": ["UE5", "C++", "Blender"],
+    "polaroids": [
+      { "image": "", "overlay": "", "caption": "Simpact" },
+      { "image": "", "overlay": "", "caption": "UE5 Shooter" },
+      { "image": "", "overlay": "", "caption": "Blender" }
+    ]
+  },
+  {
+    "id": "25",
+    "year": "2023.05",
     "title": "GNEC Hackathon Website",
     "description": "Website for Global NGO Executive Committee's Hackathon I founded",
     "tags": ["HTML", "CSS", "JS"],
@@ -288,7 +300,7 @@
     ]
   },
   {
-    "id": "25",
+    "id": "26",
     "year": "2023.03",
     "title": "Moot",
     "description": "Didn't want to do homework. Wrote key terms & vocabulary extractor for web pages",
@@ -300,7 +312,7 @@
     ]
   },
   {
-    "id": "26",
+    "id": "27",
     "year": "2023.03",
     "title": "MyTube",
     "description": "Can't control myself so I deleted shorts, recommendations, and autoplay",
@@ -312,7 +324,7 @@
     ]
   },
   {
-    "id": "27",
+    "id": "28",
     "year": "2023.03",
     "title": "Azure Speech Recognition",
     "description": "Rewrote Exo Azure speech recognition to allow for continuous recognition",
@@ -324,7 +336,7 @@
     ]
   },
   {
-    "id": "28",
+    "id": "29",
     "year": "2023.02",
     "title": "SLATE",
     "description": "AR glasses for live transcription and translation",
@@ -336,7 +348,7 @@
     ]
   },
   {
-    "id": "29",
+    "id": "30",
     "year": "2023.01",
     "title": "Journey",
     "description": "Wrote trauma-responsive teaching game for refugee children used by Rotary International",
@@ -348,7 +360,7 @@
     ]
   },
   {
-    "id": "30",
+    "id": "31",
     "year": "2022.11",
     "title": "Holes",
     "description": "Flashcard generator powered by GPT3 as demo to faculty on abilities of GPT",
@@ -360,7 +372,7 @@
     ]
   },
   {
-    "id": "31",
+    "id": "32",
     "year": "2022.09",
     "title": "Liquify",
     "description": "Created dynamic water bottles with attachment system & companion app",
@@ -372,7 +384,79 @@
     ]
   },
   {
-    "id": "32",
+    "id": "33",
+    "year": "2022.01",
+    "title": "VRChery",
+    "description": "Got gifted VR headsets but had no money to buy games. Wrote a tower defense game to play instead",
+    "tags": ["VR/AR", "UE5"],
+    "polaroids": [
+      { "image": "", "overlay": "", "caption": "VRChery" },
+      { "image": "", "overlay": "", "caption": "Tower Defense" },
+      { "image": "", "overlay": "", "caption": "VR Game" }
+    ]
+  },
+  {
+    "id": "34",
+    "year": "2021.09",
+    "title": "Murder Mystery Bot",
+    "description": "Discord bot for playing Mafia",
+    "tags": ["Python", "Discord.py"],
+    "polaroids": [
+      { "image": "", "overlay": "", "caption": "Murder Mystery" },
+      { "image": "", "overlay": "", "caption": "Discord Bot" },
+      { "image": "", "overlay": "", "caption": "Mafia" }
+    ]
+  },
+  {
+    "id": "35",
+    "year": "2021.08",
+    "title": "Ninety Nine",
+    "description": "Socket I/O card game. Rewrite of 2019",
+    "tags": ["Python"],
+    "polaroids": [
+      { "image": "", "overlay": "", "caption": "Ninety Nine" },
+      { "image": "", "overlay": "", "caption": "Card Game" },
+      { "image": "", "overlay": "", "caption": "Socket I/O" }
+    ]
+  },
+  {
+    "id": "36",
+    "year": "2021.08",
+    "title": "LoneCity",
+    "description": "City building game",
+    "tags": ["UE4"],
+    "polaroids": [
+      { "image": "", "overlay": "", "caption": "LoneCity" },
+      { "image": "", "overlay": "", "caption": "City Builder" },
+      { "image": "", "overlay": "", "caption": "UE4" }
+    ]
+  },
+  {
+    "id": "37",
+    "year": "2021.07",
+    "title": "FreeThem",
+    "description": "Multiplayer prison escape game",
+    "tags": ["UE4"],
+    "polaroids": [
+      { "image": "", "overlay": "", "caption": "FreeThem" },
+      { "image": "", "overlay": "", "caption": "Prison Escape" },
+      { "image": "", "overlay": "", "caption": "Multiplayer" }
+    ]
+  },
+  {
+    "id": "38",
+    "year": "2021.06",
+    "title": "BSGO",
+    "description": "My cousin's parents banned COD. So I wrote my own",
+    "tags": ["UE4"],
+    "polaroids": [
+      { "image": "", "overlay": "", "caption": "BSGO" },
+      { "image": "", "overlay": "", "caption": "FPS" },
+      { "image": "", "overlay": "", "caption": "UE4" }
+    ]
+  },
+  {
+    "id": "39",
     "year": "2021.04",
     "title": "Textplifier",
     "description": "Adds Japanese emoticons via iMessage",
@@ -384,7 +468,7 @@
     ]
   },
   {
-    "id": "33",
+    "id": "40",
     "year": "2021.03",
     "title": "Unholy Mail Bot",
     "description": "Spams people's mailboxes with STMP servers",
@@ -393,6 +477,78 @@
       { "image": "", "overlay": "", "caption": "Mail Bot" },
       { "image": "", "overlay": "", "caption": "SMTP" },
       { "image": "", "overlay": "", "caption": "Python" }
+    ]
+  },
+  {
+    "id": "41",
+    "year": "2021.02",
+    "title": "Rolling Ball",
+    "description": "Cash grab mobile game inspired by Going Balls",
+    "tags": ["UE4"],
+    "polaroids": [
+      { "image": "", "overlay": "", "caption": "Rolling Ball" },
+      { "image": "", "overlay": "", "caption": "Mobile Game" },
+      { "image": "", "overlay": "", "caption": "UE4" }
+    ]
+  },
+  {
+    "id": "42",
+    "year": "2020.11",
+    "title": "Subway Chaos",
+    "description": "Overhauled subway directing game from scratch",
+    "tags": ["UE4"],
+    "polaroids": [
+      { "image": "", "overlay": "", "caption": "Subway Chaos" },
+      { "image": "", "overlay": "", "caption": "Subway Game" },
+      { "image": "", "overlay": "", "caption": "UE4" }
+    ]
+  },
+  {
+    "id": "43",
+    "year": "2020.10",
+    "title": "Very Impressive Parkour Game",
+    "description": "Learning Unreal Engine",
+    "tags": ["UE4"],
+    "polaroids": [
+      { "image": "", "overlay": "", "caption": "Parkour Game" },
+      { "image": "", "overlay": "", "caption": "Learning UE" },
+      { "image": "", "overlay": "", "caption": "UE4" }
+    ]
+  },
+  {
+    "id": "44",
+    "year": "2020.04",
+    "title": "Tower of Cowland",
+    "description": "Code.org hour of code turned into a week of code. Cow-themed dungeon crawler",
+    "tags": ["JS"],
+    "polaroids": [
+      { "image": "", "overlay": "", "caption": "Cowland" },
+      { "image": "", "overlay": "", "caption": "Dungeon Crawler" },
+      { "image": "", "overlay": "", "caption": "Code.org" }
+    ]
+  },
+  {
+    "id": "45",
+    "year": "",
+    "title": "OpenProcessing.org",
+    "description": "",
+    "tags": [],
+    "polaroids": [
+      { "image": "", "overlay": "", "caption": "OpenProcessing" },
+      { "image": "", "overlay": "", "caption": "" },
+      { "image": "", "overlay": "", "caption": "" }
+    ]
+  },
+  {
+    "id": "46",
+    "year": "",
+    "title": "Scratch.mit.edu",
+    "description": "",
+    "tags": [],
+    "polaroids": [
+      { "image": "", "overlay": "", "caption": "Scratch" },
+      { "image": "", "overlay": "", "caption": "" },
+      { "image": "", "overlay": "", "caption": "" }
     ]
   }
 ]
