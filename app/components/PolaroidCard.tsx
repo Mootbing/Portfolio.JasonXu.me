@@ -54,7 +54,7 @@ function SinglePolaroid({
 }) {
   const x = useMotionValue(0);
   const baseTilt = (side === "left" ? -1 : 1) * 3;
-  const dragRotate = useTransform(x, [-200, 0, 200], [-12 + baseTilt, baseTilt, 12 + baseTilt]);
+  const dragRotate = useTransform(x, [-300, 0, 300], [-12 + baseTilt, baseTilt, 12 + baseTilt]);
   const sideMultiplier = side === "left" ? -1 : 1;
   const isFirstRender = useRef(true);
   const prevStackOffset = useRef(stackOffset);
@@ -128,7 +128,7 @@ function SinglePolaroid({
         mass: 0.4,
       }}
       drag={isDraggable ? "x" : false}
-      dragConstraints={{ left: -200, right: 200 }}
+      dragConstraints={{ left: -300, right: 300 }}
       dragElastic={0.05}
       onDragEnd={isDraggable ? handleDragEnd : undefined}
       whileDrag={{ cursor: "grabbing", scale: 1.03 }}

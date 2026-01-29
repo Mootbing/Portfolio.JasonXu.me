@@ -16,7 +16,7 @@ interface TimelineProject {
 }
 
 function useIsCompact(breakpoint = 800) {
-  const [compact, setCompact] = useState(false);
+  const [compact, setCompact] = useState<boolean | null>(null);
   useEffect(() => {
     const mql = window.matchMedia(`(max-width: ${breakpoint - 1}px)`);
     setCompact(mql.matches);
@@ -154,7 +154,7 @@ function TimelineEntry({
 }: {
   project: TimelineProject;
   index: number;
-  compact: boolean;
+  compact: boolean | null;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
@@ -240,6 +240,7 @@ export default function Timeline() {
     <section
       ref={containerRef}
       className="relative max-w-6xl mx-auto px-6 md:px-12 py-20"
+      style={{ visibility: compact === null ? "hidden" : "visible" }}
     >
       <div className={compact ? "relative max-w-md mx-auto" : "relative"}>
         {/* The growing vertical line */}
