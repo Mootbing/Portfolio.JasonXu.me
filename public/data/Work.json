@@ -3,7 +3,7 @@
     "id": "01",
     "year": "2026.01",
     "title": "Tracky",
-    "description": "Got inspired by Flighty and decided to build a clone for Amtrak",
+    "description": "Got inspired by Flighty and decided to build a clone for trains (Amtrak)",
     "tags": ["Expo", "RTFS"],
     "polaroids": [
       { "image": "", "overlay": "", "caption": "Tracky" },
@@ -15,7 +15,7 @@
     "id": "02",
     "year": "2025.12",
     "title": "Tryflux.ai",
-    "description": "Built tryFlux.ai as a vibe-coding cli for iMessage agents allowing 1-click deployment",
+    "description": "Vibe-coding cli for iMessage agents with 1-click agent deployment",
     "tags": ["Next.js", "Docker", "GRPC"],
     "polaroids": [
       { "image": "", "overlay": "", "caption": "tryFlux.ai" },
@@ -27,7 +27,7 @@
     "id": "03",
     "year": "2025.11",
     "title": "Cow Farm Simulator",
-    "description": "Rebuilding Scratch game from my childhood. My favorite game",
+    "description": "My favorite past time is revamping old scratch games :)",
     "tags": ["Next.js", "Supabase", "Figma"],
     "polaroids": [
       { "image": "", "overlay": "", "caption": "Cow Farm" },
@@ -39,7 +39,7 @@
     "id": "04",
     "year": "2025.11",
     "title": "Bullhorn Aerosystems",
-    "description": "Built open-source alternative to Gotham (Palantir). Originally written as a 3d-engine for ATC simulations & trainings",
+    "description": "Accidently open-sourced Gotham by Palantir. Originally written as a 3d-engine for ATC simulations & trainings",
     "tags": ["Next.js", "API"],
     "polaroids": [
       { "image": "", "overlay": "", "caption": "Bullhorn" },
@@ -62,9 +62,9 @@
   {
     "id": "06",
     "year": "2025.08",
-    "title": "Browserbase Clone",
-    "description": "Wrote a clone of Browserbase with screenshots & GPT4 instead of Selenium and DOM elements",
-    "tags": ["Chrome Extension", "OpenAI"],
+    "title": "BrowserBase Clone",
+    "description": "BrowserBase but powered by screenshots instead of DOM elements in a chrome extension. Was faster than most web browsing models at the time. Got to meet Paul Klein",
+    "tags": ["Extension", "OpenAI"],
     "polaroids": [
       { "image": "", "overlay": "", "caption": "Browser Clone" },
       { "image": "", "overlay": "", "caption": "GPT-4 Vision" },
@@ -75,7 +75,7 @@
     "id": "07",
     "year": "2025.07",
     "title": "NORMA",
-    "description": "Built an open-source mocap software for pose-tracking & playback. Used by UPenn research staff under Professor Rajapakse",
+    "description": "Open-source mocap software for pose-tracking & 3D playback. Now used & maintained by University of Pennsylvania research staff under Professor Rajapakse",
     "tags": ["Next.js", "Posenet", "Expo"],
     "polaroids": [
       { "image": "", "overlay": "", "caption": "NORMA" },
@@ -87,7 +87,7 @@
     "id": "08",
     "year": "2025.06",
     "title": "YC AI Startup School Search",
-    "description": "Built vector-embedded repository for YCombinator AI Startup School data (speaker transcripts & chat logs)",
+    "description": "Built vector-embedded repository for YCombinator AI Startup School data (speaker transcripts & chat logs). Got 300k+ views on LinkedIn, 500+ registered users, and 1M+ queries (~100k searches)",
     "tags": ["Next.js", "Firebase Auth", "Pinecone"],
     "polaroids": [
       { "image": "", "overlay": "", "caption": "YC Search" },
@@ -99,7 +99,7 @@
     "id": "09",
     "year": "2025.06",
     "title": "Iron Empire",
-    "description": "Built a train game cloning my childhood's favorite (\u4e2d\u534e\u94c1\u8def on QQ)",
+    "description": "Cloned my childhood's favorite game (中华铁路 @ QQ) with differing train stats and infinite stations",
     "tags": ["Next.js", "Supabase", "Google Maps API"],
     "polaroids": [
       { "image": "", "overlay": "", "caption": "Iron Empire" },
@@ -111,7 +111,7 @@
     "id": "10",
     "year": "2025.05",
     "title": "Moonbeam",
-    "description": "What if you had a clear path to your dream job? Search up your dream job and Moonbeam will create a timeline on how to get it based on what your school's alumni have done",
+    "description": "AI career planner. Build timelines on how to get your dream job based on your school's alumni who are there & their former stats",
     "tags": ["Next.js", "Supabase", "Clado"],
     "polaroids": [
       { "image": "", "overlay": "", "caption": "Moonbeam" },
@@ -123,12 +123,276 @@
     "id": "11",
     "year": "2025.01",
     "title": "Poke",
-    "description": "Soft-where to connect with, or \"poke,\" your friends based on physical proximity and calendar availability",
+    "description": "Soft-\"where\" to poke, your friends based on physical proximity and calendar availability",
     "tags": ["Expo", "Supabase"],
     "polaroids": [
       { "image": "", "overlay": "", "caption": "Poke" },
       { "image": "", "overlay": "", "caption": "Proximity" },
       { "image": "", "overlay": "", "caption": "Connect" }
+    ]
+  },
+  {
+    "id": "12",
+    "year": "2025.01",
+    "title": "Repository Analyzer",
+    "description": "Creates line-by-line breakdown of repository able to be posted in a Readme.MD file",
+    "tags": ["Python"],
+    "polaroids": [
+      { "image": "", "overlay": "", "caption": "Repo Analyzer" },
+      { "image": "", "overlay": "", "caption": "Line Breakdown" },
+      { "image": "", "overlay": "", "caption": "README Gen" }
+    ]
+  },
+  {
+    "id": "13",
+    "year": "2024.10",
+    "title": "Black Hole Racing Game",
+    "description": "Unreal Engine 5 game for UPenn Perelman School of Medicine patient recovery",
+    "tags": ["UE5", "C++"],
+    "polaroids": [
+      { "image": "", "overlay": "", "caption": "Black Hole" },
+      { "image": "", "overlay": "", "caption": "UE5 Game" },
+      { "image": "", "overlay": "", "caption": "Patient Recovery" }
+    ]
+  },
+  {
+    "id": "14",
+    "year": "2023.12",
+    "title": "Browser Project",
+    "description": "Wrote glass-morphic browser 3 years before Apple got to it",
+    "tags": ["SwiftUI"],
+    "polaroids": [
+      { "image": "", "overlay": "", "caption": "Browser" },
+      { "image": "", "overlay": "", "caption": "Glass-morphic" },
+      { "image": "", "overlay": "", "caption": "SwiftUI" }
+    ]
+  },
+  {
+    "id": "15",
+    "year": "2023.11",
+    "title": "Smarter",
+    "description": "Answered questions in class faster than teachers finished their sentences",
+    "tags": ["Python", "GPT"],
+    "polaroids": [
+      { "image": "", "overlay": "", "caption": "Smarter" },
+      { "image": "", "overlay": "", "caption": "GPT Powered" },
+      { "image": "", "overlay": "", "caption": "Classroom" }
+    ]
+  },
+  {
+    "id": "16",
+    "year": "2023.09",
+    "title": "The Verse",
+    "description": "Scrolling website for VR/AR startup",
+    "tags": ["Figma"],
+    "polaroids": [
+      { "image": "", "overlay": "", "caption": "The Verse" },
+      { "image": "", "overlay": "", "caption": "VR/AR" },
+      { "image": "", "overlay": "", "caption": "Scroll Site" }
+    ]
+  },
+  {
+    "id": "17",
+    "year": "2023.08",
+    "title": "Slate",
+    "description": "Stress-relieving writing app",
+    "tags": ["Electron"],
+    "polaroids": [
+      { "image": "", "overlay": "", "caption": "Slate" },
+      { "image": "", "overlay": "", "caption": "Writing App" },
+      { "image": "", "overlay": "", "caption": "Electron" }
+    ]
+  },
+  {
+    "id": "18",
+    "year": "",
+    "title": "Xatalyst Mobile",
+    "description": "",
+    "tags": [],
+    "polaroids": [
+      { "image": "", "overlay": "", "caption": "Xatalyst Mobile" },
+      { "image": "", "overlay": "", "caption": "" },
+      { "image": "", "overlay": "", "caption": "" }
+    ]
+  },
+  {
+    "id": "19",
+    "year": "2023.07",
+    "title": "Xatalyst Labs",
+    "description": "Workout app used by Empire Dragons NYC rowing team",
+    "tags": ["Expo", "Firebase"],
+    "polaroids": [
+      { "image": "", "overlay": "", "caption": "Xatalyst Labs" },
+      { "image": "", "overlay": "", "caption": "Workout App" },
+      { "image": "", "overlay": "", "caption": "Empire Dragons" }
+    ]
+  },
+  {
+    "id": "20",
+    "year": "2023.07",
+    "title": "17.JasonXu.me",
+    "description": "Frontend scrolling website that got glazed hella",
+    "tags": ["Next.js", "Figma", "SVGs"],
+    "polaroids": [
+      { "image": "", "overlay": "", "caption": "17.JasonXu.me" },
+      { "image": "", "overlay": "", "caption": "Scrolling Site" },
+      { "image": "", "overlay": "", "caption": "SVG Design" }
+    ]
+  },
+  {
+    "id": "21",
+    "year": "2023.07",
+    "title": "Yaemage",
+    "description": "Lazy-loading SVG library used in 17.JasonXu.me & The Verse",
+    "tags": [],
+    "polaroids": [
+      { "image": "", "overlay": "", "caption": "Yaemage" },
+      { "image": "", "overlay": "", "caption": "SVG Library" },
+      { "image": "", "overlay": "", "caption": "Lazy Loading" }
+    ]
+  },
+  {
+    "id": "22",
+    "year": "2023.07",
+    "title": "Now Playing Wallpaper",
+    "description": "Cute musical wallpaper for Lively.js",
+    "tags": ["JS"],
+    "polaroids": [
+      { "image": "", "overlay": "", "caption": "Now Playing" },
+      { "image": "", "overlay": "", "caption": "Wallpaper" },
+      { "image": "", "overlay": "", "caption": "Lively.js" }
+    ]
+  },
+  {
+    "id": "23",
+    "year": "2023.06",
+    "title": "DINO",
+    "description": "Front-end website for Web3 startup",
+    "tags": ["Next.js", "Figma"],
+    "polaroids": [
+      { "image": "", "overlay": "", "caption": "DINO" },
+      { "image": "", "overlay": "", "caption": "Web3" },
+      { "image": "", "overlay": "", "caption": "Frontend" }
+    ]
+  },
+  {
+    "id": "24",
+    "year": "2023.05",
+    "title": "GNEC Hackathon Website",
+    "description": "Website for Global NGO Executive Committee's Hackathon I founded",
+    "tags": ["HTML", "CSS", "JS"],
+    "polaroids": [
+      { "image": "", "overlay": "", "caption": "GNEC" },
+      { "image": "", "overlay": "", "caption": "Hackathon" },
+      { "image": "", "overlay": "", "caption": "NGO" }
+    ]
+  },
+  {
+    "id": "25",
+    "year": "2023.03",
+    "title": "Moot",
+    "description": "Didn't want to do homework. Wrote key terms & vocabulary extractor for web pages",
+    "tags": ["JS"],
+    "polaroids": [
+      { "image": "", "overlay": "", "caption": "Moot" },
+      { "image": "", "overlay": "", "caption": "Key Terms" },
+      { "image": "", "overlay": "", "caption": "Extractor" }
+    ]
+  },
+  {
+    "id": "26",
+    "year": "2023.03",
+    "title": "MyTube",
+    "description": "Can't control myself so I deleted shorts, recommendations, and autoplay",
+    "tags": ["JS"],
+    "polaroids": [
+      { "image": "", "overlay": "", "caption": "MyTube" },
+      { "image": "", "overlay": "", "caption": "No Shorts" },
+      { "image": "", "overlay": "", "caption": "Focus Mode" }
+    ]
+  },
+  {
+    "id": "27",
+    "year": "2023.03",
+    "title": "Azure Speech Recognition",
+    "description": "Rewrote Exo Azure speech recognition to allow for continuous recognition",
+    "tags": ["Expo", "Azure"],
+    "polaroids": [
+      { "image": "", "overlay": "", "caption": "Azure Speech" },
+      { "image": "", "overlay": "", "caption": "Continuous" },
+      { "image": "", "overlay": "", "caption": "Recognition" }
+    ]
+  },
+  {
+    "id": "28",
+    "year": "2023.02",
+    "title": "SLATE",
+    "description": "AR glasses for live transcription and translation",
+    "tags": ["ESP32", "BLE", "React Native"],
+    "polaroids": [
+      { "image": "", "overlay": "", "caption": "SLATE" },
+      { "image": "", "overlay": "", "caption": "AR Glasses" },
+      { "image": "", "overlay": "", "caption": "Live Translation" }
+    ]
+  },
+  {
+    "id": "29",
+    "year": "2023.01",
+    "title": "Journey",
+    "description": "Wrote trauma-responsive teaching game for refugee children used by Rotary International",
+    "tags": ["Expo", "React Native"],
+    "polaroids": [
+      { "image": "", "overlay": "", "caption": "Journey" },
+      { "image": "", "overlay": "", "caption": "Teaching Game" },
+      { "image": "", "overlay": "", "caption": "Rotary Intl" }
+    ]
+  },
+  {
+    "id": "30",
+    "year": "2022.11",
+    "title": "Holes",
+    "description": "Flashcard generator powered by GPT3 as demo to faculty on abilities of GPT",
+    "tags": ["React", "Figma"],
+    "polaroids": [
+      { "image": "", "overlay": "", "caption": "Holes" },
+      { "image": "", "overlay": "", "caption": "Flashcards" },
+      { "image": "", "overlay": "", "caption": "GPT-3" }
+    ]
+  },
+  {
+    "id": "31",
+    "year": "2022.09",
+    "title": "Liquify",
+    "description": "Created dynamic water bottles with attachment system & companion app",
+    "tags": ["3D Printing", "CAD", "Expo"],
+    "polaroids": [
+      { "image": "", "overlay": "", "caption": "Liquify" },
+      { "image": "", "overlay": "", "caption": "Water Bottle" },
+      { "image": "", "overlay": "", "caption": "3D Printed" }
+    ]
+  },
+  {
+    "id": "32",
+    "year": "2021.04",
+    "title": "Textplifier",
+    "description": "Adds Japanese emoticons via iMessage",
+    "tags": ["Python", "Tkinter"],
+    "polaroids": [
+      { "image": "", "overlay": "", "caption": "Textplifier" },
+      { "image": "", "overlay": "", "caption": "Emoticons" },
+      { "image": "", "overlay": "", "caption": "iMessage" }
+    ]
+  },
+  {
+    "id": "33",
+    "year": "2021.03",
+    "title": "Unholy Mail Bot",
+    "description": "Spams people's mailboxes with STMP servers",
+    "tags": ["Python", "STMP"],
+    "polaroids": [
+      { "image": "", "overlay": "", "caption": "Mail Bot" },
+      { "image": "", "overlay": "", "caption": "SMTP" },
+      { "image": "", "overlay": "", "caption": "Python" }
     ]
   }
 ]
