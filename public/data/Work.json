@@ -3,7 +3,7 @@
     "id": "01",
     "year": "2026.01",
     "title": "Tracky",
-    "description": "Got inspired by Flighty and decided to build a clone for trains (Amtrak).",
+    "description": "Got inspired by Flighty and decided to build a clone for Amtrak",
     "tags": ["Expo", "RTFS"],
     "polaroids": [
       { "image": "", "overlay": "", "caption": "Tracky" },
@@ -15,7 +15,7 @@
     "id": "02",
     "year": "2025.12",
     "title": "Tryflux.ai",
-    "description": "Selected as 1/6 of 1000+ applicants for the Photon Residency program. Built tryFlux.ai in a month with co-residents, generating 1M+ in views across social media and subproducts (Epstein.im).",
+    "description": "Built tryFlux.ai as a vibe-coding cli for iMessage agents allowing 1-click deployment",
     "tags": ["Next.js", "Docker", "GRPC"],
     "polaroids": [
       { "image": "", "overlay": "", "caption": "tryFlux.ai" },
@@ -27,7 +27,7 @@
     "id": "03",
     "year": "2025.11",
     "title": "Cow Farm Simulator",
-    "description": "Rebuilding Scratch game from my childhood. One of my favorite ongoing projects.",
+    "description": "Rebuilding Scratch game from my childhood. My favorite game",
     "tags": ["Next.js", "Supabase", "Figma"],
     "polaroids": [
       { "image": "", "overlay": "", "caption": "Cow Farm" },
@@ -39,7 +39,7 @@
     "id": "04",
     "year": "2025.11",
     "title": "Bullhorn Aerosystems",
-    "description": "Building open-source alternative to Gotham by Palantir. Originally written as a 3D engine for ATC simulations & trainings.",
+    "description": "Built open-source alternative to Gotham (Palantir). Originally written as a 3d-engine for ATC simulations & trainings",
     "tags": ["Next.js", "API"],
     "polaroids": [
       { "image": "", "overlay": "", "caption": "Bullhorn" },
@@ -51,7 +51,7 @@
     "id": "05",
     "year": "2025.09",
     "title": "Linge",
-    "description": "Built as if Tinder & Hinge had a baby. Swipe on your coffee chat matches.",
+    "description": "Tinder + Hinge = Linge. Swipe for your weekly coffee chat matches",
     "tags": ["Flutter", "Supabase", "Clado"],
     "polaroids": [
       { "image": "", "overlay": "", "caption": "Linge" },
@@ -63,8 +63,8 @@
     "id": "06",
     "year": "2025.08",
     "title": "Browserbase Clone",
-    "description": "Wrote a clone of Browserbase with GPT-4 using screenshots instead of Selenium before Browserbase migrated to a hybrid approach. Written as a Chrome extension — was faster than most web models at the time.",
-    "tags": ["Extension", "OpenAI"],
+    "description": "Wrote a clone of Browserbase with screenshots & GPT4 instead of Selenium and DOM elements",
+    "tags": ["Chrome Extension", "OpenAI"],
     "polaroids": [
       { "image": "", "overlay": "", "caption": "Browser Clone" },
       { "image": "", "overlay": "", "caption": "GPT-4 Vision" },
@@ -75,7 +75,7 @@
     "id": "07",
     "year": "2025.07",
     "title": "NORMA",
-    "description": "I built an open-source mocap software for exporting pose-tracked data for anything from surfing pose review to video game character animations. Now used & maintained by University of Pennsylvania research staff under Professor Rajapakse for injury recovery.",
+    "description": "Built an open-source mocap software for pose-tracking & playback. Used by UPenn research staff under Professor Rajapakse",
     "tags": ["Next.js", "Posenet", "Expo"],
     "polaroids": [
       { "image": "", "overlay": "", "caption": "NORMA" },
@@ -87,7 +87,7 @@
     "id": "08",
     "year": "2025.06",
     "title": "YC AI Startup School Search",
-    "description": "Built a vector-embedded repository for YCombinator AI Startup School data (speaker transcripts & chat logs). Launched on LinkedIn to 300k+ views, 500+ registered users, and 1M+ vector queries (100k~ searches).",
+    "description": "Built vector-embedded repository for YCombinator AI Startup School data (speaker transcripts & chat logs)",
     "tags": ["Next.js", "Firebase Auth", "Pinecone"],
     "polaroids": [
       { "image": "", "overlay": "", "caption": "YC Search" },
@@ -99,7 +99,7 @@
     "id": "09",
     "year": "2025.06",
     "title": "Iron Empire",
-    "description": "Built a train game that cloned my childhood favorite (中华铁路 on QQ). Implemented 4 types of trains with differing stats and infinite purchasable stations.",
+    "description": "Built a train game cloning my childhood's favorite (\u4e2d\u534e\u94c1\u8def on QQ)",
     "tags": ["Next.js", "Supabase", "Google Maps API"],
     "polaroids": [
       { "image": "", "overlay": "", "caption": "Iron Empire" },
@@ -111,7 +111,7 @@
     "id": "10",
     "year": "2025.05",
     "title": "Moonbeam",
-    "description": "What if you had a clear path to your dream career? I built a tool allowing you to search up your dream job and orchestrated a timeline on how to get there based on what your school's alumni have done in your situation.",
+    "description": "What if you had a clear path to your dream job? Search up your dream job and Moonbeam will create a timeline on how to get it based on what your school's alumni have done",
     "tags": ["Next.js", "Supabase", "Clado"],
     "polaroids": [
       { "image": "", "overlay": "", "caption": "Moonbeam" },
@@ -123,7 +123,7 @@
     "id": "11",
     "year": "2025.01",
     "title": "Poke",
-    "description": "Software where you can connect with (or poke) your friends based on shared physical proximity and calendar availabilities.",
+    "description": "Soft-where to connect with, or \"poke,\" your friends based on physical proximity and calendar availability",
     "tags": ["Expo", "Supabase"],
     "polaroids": [
       { "image": "", "overlay": "", "caption": "Poke" },
