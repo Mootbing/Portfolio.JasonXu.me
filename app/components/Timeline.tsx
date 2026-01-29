@@ -165,13 +165,13 @@ function TimelineEntry({
       ref={ref}
       className={`relative grid items-center ${
         compact
-          ? `grid-cols-[auto_1fr] gap-6${index === 0 ? " pt-[175px]" : ""}`
+          ? `grid-cols-[auto_1fr] gap-6`
           : "grid-cols-[1fr_auto_1fr] gap-6 md:gap-12 min-h-[320px]"
       }`}
     >
       {/* Left content (hidden in compact) */}
       {!compact && (
-        <div className="flex justify-end">
+        <div className={`flex justify-end`}>
           {isLeft ? (
             <TextContent project={project} isInView={isInView} align="right" />
           ) : (
@@ -192,7 +192,7 @@ function TimelineEntry({
       </div>
 
       {/* Right content */}
-      <div className="flex justify-start">
+      <div className={`flex justify-start ${compact ? "mt-[50px]" : ""}`}>
         {compact ? (
           <div className="flex flex-col gap-6">
             <TextContent project={project} isInView={isInView} />
