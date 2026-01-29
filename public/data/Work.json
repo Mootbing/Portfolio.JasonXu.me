@@ -529,26 +529,50 @@
   },
   {
     "id": "45",
-    "year": "",
-    "title": "OpenProcessing.org",
-    "description": "",
-    "tags": [],
+    "year": "2019",
+    "title": "OpenProcessing",
+    "description": "Learned P5JS from Ubisoft's code{school} game tutorials",
+    "tags": ["P5JS"],
     "polaroids": [
       { "image": "", "overlay": "", "caption": "OpenProcessing" },
-      { "image": "", "overlay": "", "caption": "" },
-      { "image": "", "overlay": "", "caption": "" }
+      { "image": "", "overlay": "", "caption": "P5JS" },
+      { "image": "", "overlay": "", "caption": "Ubisoft" }
     ]
   },
   {
     "id": "46",
-    "year": "",
+    "year": "2019",
+    "title": "Project Enkrypto",
+    "description": "Cousin's parents found Project Chatty. Added cipher to Project Chatty",
+    "tags": ["Python"],
+    "polaroids": [
+      { "image": "", "overlay": "", "caption": "Enkrypto" },
+      { "image": "", "overlay": "", "caption": "Cipher" },
+      { "image": "", "overlay": "", "caption": "Python" }
+    ]
+  },
+  {
+    "id": "47",
+    "year": "2019",
+    "title": "Project Chatty",
+    "description": "Cousin's parents banned iMessage. Wrote it myself via Socket I/O. Wrote some games into it too",
+    "tags": ["Python", "Socket"],
+    "polaroids": [
+      { "image": "", "overlay": "", "caption": "Project Chatty" },
+      { "image": "", "overlay": "", "caption": "Socket I/O" },
+      { "image": "", "overlay": "", "caption": "Python" }
+    ]
+  },
+  {
+    "id": "48",
+    "year": "2013-2020",
     "title": "Scratch.mit.edu",
-    "description": "",
-    "tags": [],
+    "description": "We all start somewhere :)",
+    "tags": ["Scratch"],
     "polaroids": [
       { "image": "", "overlay": "", "caption": "Scratch" },
-      { "image": "", "overlay": "", "caption": "" },
-      { "image": "", "overlay": "", "caption": "" }
+      { "image": "", "overlay": "", "caption": "The Beginning" },
+      { "image": "", "overlay": "", "caption": "2013-2020" }
     ]
   }
 ]
