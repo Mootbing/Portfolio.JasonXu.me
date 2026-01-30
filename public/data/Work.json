@@ -18,9 +18,9 @@
     "description": "Vibe-coding cli for iMessage agents with 1-click agent deployment",
     "tags": ["Next.js", "Docker", "GRPC"],
     "polaroids": [
-      { "image": "", "overlay": "", "caption": "tryFlux.ai" },
-      { "image": "", "overlay": "", "caption": "Photon Residency" },
-      { "image": "", "overlay": "", "caption": "1M+ Views" }
+      { "image": "./images/flux/1.mp4", "overlay": "", "caption": "Gary demoing" },
+      { "image": "./images/flux/2.png", "overlay": "", "caption": "Flux in convos" },
+      { "image": "./images/flux/3.jpg", "overlay": "", "caption": "the Photon Residency <3" }
     ]
   },
   {
@@ -30,9 +30,8 @@
     "description": "Breed & manage your herd of cows. Remastered Scratch game from 2018",
     "tags": ["Next.js", "Supabase", "Figma"],
     "polaroids": [
-      { "image": "", "overlay": "", "caption": "Cow Farm" },
-      { "image": "", "overlay": "", "caption": "The Game" },
-      { "image": "", "overlay": "", "caption": "Scratch Origins" }
+      { "image": "./images/cow-farm-simulator/js.mp4", "overlay": "", "caption": "Moo?" },
+      { "image": "./images/cow-farm-simulator/scratch.mp4", "overlay": "", "caption": "Scratch ver (2018)" }
     ]
   },
   {

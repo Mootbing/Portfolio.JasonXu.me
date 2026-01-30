@@ -25,6 +25,9 @@ interface PolaroidStackProps {
 }
 
 const DRAG_THRESHOLD = 60;
+const VIDEO_EXTENSIONS = [".mp4", ".webm", ".mov", ".ogg"];
+const isVideo = (src: string) =>
+  VIDEO_EXTENSIONS.some((ext) => src.toLowerCase().endsWith(ext));
 
 // Deterministic pseudo-random rotation based on index to avoid hydration mismatch
 const ROTATIONS = [1.8, -0.8, 0.6, -0.4, 0.2, -0.5, 1.2, -1.4, 0.9, -1.1];
@@ -182,12 +185,24 @@ function SinglePolaroid({
       >
         <div className="w-56 h-56 md:w-64 md:h-64 overflow-hidden pointer-events-none relative">
           {item.image ? (
-            <img
-              src={item.image}
-              alt={item.caption}
-              className="w-full h-full object-cover"
-              draggable={false}
-            />
+            isVideo(item.image) ? (
+              <video
+                src={item.image}
+                className="w-full h-full object-cover"
+                autoPlay
+                loop
+                muted
+                playsInline
+                draggable={false}
+              />
+            ) : (
+              <img
+                src={item.image}
+                alt={item.caption}
+                className="w-full h-full object-cover"
+                draggable={false}
+              />
+            )
           ) : (
             <div
               className="w-full h-full"
@@ -206,7 +221,7 @@ function SinglePolaroid({
           )}
           {year && title && (
             <span
-              className="absolute bottom-2 right-2 text-xs pointer-events-none"
+              className="absolute bottom-2 right-2 text-sm pointer-events-none"
               style={{
                 fontFamily: "monospace",
                 color: "#ff0000",
@@ -256,7 +271,7 @@ export default function PolaroidStack({
     });
   }, []);
 
-  const visibleCount = Math.min(items.length, 3);
+  const visibleCount = items.length
 
   return (
     <motion.div
