@@ -4,11 +4,11 @@
     "year": "2026.01",
     "title": "Tracky",
     "description": "Got inspired by Flighty and decided to build a clone for trains (Amtrak)",
-    "tags": ["Expo", "RTFS"],
+    "tags": ["Expo", "GTFS"],
     "polaroids": [
-      { "image": "", "overlay": "", "caption": "Tracky" },
-      { "image": "", "overlay": "", "caption": "Train Tracking" },
-      { "image": "", "overlay": "", "caption": "Amtrak Clone" }
+      { "image": "./images/tracky/train.mov", "overlay": "", "caption": "train tracking" },
+      { "image": "./images/tracky/map.mov", "overlay": "", "caption": "map" },
+      { "image": "./images/tracky/station.mov", "overlay": "", "caption": "station details" }
     ]
   },
   {

@@ -42,7 +42,11 @@ body {
   pointer-events: none;
   transform: translate(-50%, -50%);
   z-index: 9999;
-  transition: background-color 0.2s ease, border-radius 0.2s ease;
+  transition: background-color 0.2s ease, border-radius 0.2s ease, opacity 0.3s ease;
+}
+
+.polaroid-expanded .blob-cursor {
+  opacity: 0;
 }
 
 .blob-cursor.hover-header,
