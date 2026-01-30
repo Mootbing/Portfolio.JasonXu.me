@@ -395,20 +395,8 @@ function ExpandedPolaroidOverlay({
 
   const handlePointerUp = useCallback(() => {
     isDragging.current = false;
-    const vx = velocity.current.x;
-    const vy = velocity.current.y;
-    // Coast with velocity then decelerate — scale velocity to degrees
-    const VELOCITY_SCALE = 800;
-    animate(rotateX, rotateX.get() + vy * VELOCITY_SCALE, {
-      type: "tween",
-      duration: 1.2,
-      ease: [0.16, 1, 0.3, 1],
-    });
-    animate(rotateY, rotateY.get() + vx * VELOCITY_SCALE, {
-      type: "tween",
-      duration: 1.2,
-      ease: [0.16, 1, 0.3, 1],
-    });
+    animate(rotateX, 0, { type: "spring", stiffness: 50, damping: 15 });
+    animate(rotateY, 0, { type: "spring", stiffness: 50, damping: 15 });
   }, [rotateX, rotateY]);
 
   return (
