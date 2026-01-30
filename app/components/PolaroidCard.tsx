@@ -13,9 +13,10 @@ import {
 } from "framer-motion";
 
 export interface PolaroidItem {
-  image: string;
-  overlay: string;
+  frontSquareMedia: string;
+  frontCoverMedia: string;
   caption: string;
+  backCoverMedia?: string;
 }
 
 interface PolaroidStackProps {
@@ -33,6 +34,38 @@ const isVideo = (src: string) =>
 
 // Deterministic pseudo-random rotation based on index to avoid hydration mismatch
 const ROTATIONS = [1.8, -0.8, 0.6, -0.4, 0.2, -0.5, 1.2, -1.4, 0.9, -1.1];
+
+function MediaElement({
+  src,
+  alt,
+  className,
+}: {
+  src: string;
+  alt?: string;
+  className?: string;
+}) {
+  if (isVideo(src)) {
+    return (
+      <video
+        src={src}
+        className={className}
+        autoPlay
+        loop
+        muted
+        playsInline
+        draggable={false}
+      />
+    );
+  }
+  return (
+    <img
+      src={src}
+      alt={alt ?? ""}
+      className={className}
+      draggable={false}
+    />
+  );
+}
 
 function PolaroidContent({
   item,
@@ -58,25 +91,12 @@ function PolaroidContent({
       }}
     >
       <div className={`${sizeClass} overflow-hidden pointer-events-none relative`}>
-        {item.image ? (
-          isVideo(item.image) ? (
-            <video
-              src={item.image}
-              className="w-full h-full object-cover"
-              autoPlay
-              loop
-              muted
-              playsInline
-              draggable={false}
-            />
-          ) : (
-            <img
-              src={item.image}
-              alt={item.caption}
-              className="w-full h-full object-cover"
-              draggable={false}
-            />
-          )
+        {item.frontSquareMedia ? (
+          <MediaElement
+            src={item.frontSquareMedia}
+            alt={item.caption}
+            className="w-full h-full object-cover"
+          />
         ) : (
           <div
             className="w-full h-full"
@@ -85,12 +105,10 @@ function PolaroidContent({
             }}
           />
         )}
-        {item.overlay && (
-          <img
-            src={item.overlay}
-            alt=""
+        {item.frontCoverMedia && (
+          <MediaElement
+            src={item.frontCoverMedia}
             className="absolute inset-0 w-full h-full object-cover pointer-events-none"
-            draggable={false}
           />
         )}
         {year && title && (
@@ -102,7 +120,7 @@ function PolaroidContent({
               letterSpacing: "0.05em",
             }}
           >
-            {year}-{String(photoIndex + 1).padStart(3, "0")}.DNG
+            {year}-{String(photoIndex + 1).padStart(3, "0")}{item.frontSquareMedia ? item.frontSquareMedia.substring(item.frontSquareMedia.lastIndexOf(".")).toUpperCase() : ".DNG"}
           </span>
         )}
       </div>
@@ -129,6 +147,7 @@ function SinglePolaroid({
   side,
   onSwipe,
   onTap,
+  faded,
   year,
   title,
   photoIndex,
@@ -141,6 +160,7 @@ function SinglePolaroid({
   side: "left" | "right";
   onSwipe: () => void;
   onTap?: () => void;
+  faded?: boolean;
   year?: string;
   title?: string;
   photoIndex: number;
@@ -274,8 +294,8 @@ function SinglePolaroid({
       initial={false}
       animate={{
         y: stackOffset * 4,
-        scale: 1 - stackOffset * 0.04,
-        opacity: 1,
+        scale: faded ? 0.92 : 1 - stackOffset * 0.04,
+        opacity: faded ? 0 : 1,
       }}
       transition={{
         type: "spring",
@@ -318,6 +338,8 @@ function ExpandedPolaroidOverlay({
   const rotateY = useMotionValue(0);
   const isDragging = useRef(false);
   const lastPointer = useRef({ x: 0, y: 0 });
+  const lastTime = useRef(0);
+  const velocity = useRef({ x: 0, y: 0 });
 
   const SENSITIVITY = 0.3;
 
@@ -344,6 +366,8 @@ function ExpandedPolaroidOverlay({
     (e: React.PointerEvent) => {
       isDragging.current = true;
       lastPointer.current = { x: e.clientX, y: e.clientY };
+      lastTime.current = Date.now();
+      velocity.current = { x: 0, y: 0 };
       (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
     },
     []
@@ -352,19 +376,39 @@ function ExpandedPolaroidOverlay({
   const handlePointerMove = useCallback(
     (e: React.PointerEvent) => {
       if (!isDragging.current) return;
+      const now = Date.now();
+      const dt = Math.max(now - lastTime.current, 1);
       const dx = e.clientX - lastPointer.current.x;
       const dy = e.clientY - lastPointer.current.y;
       rotateY.set(rotateY.get() + dx * SENSITIVITY);
       rotateX.set(rotateX.get() - dy * SENSITIVITY);
+      // Track velocity (degrees per ms) with smoothing
+      velocity.current = {
+        x: 0.8 * (dx * SENSITIVITY / dt) + 0.2 * velocity.current.x,
+        y: 0.8 * (-dy * SENSITIVITY / dt) + 0.2 * velocity.current.y,
+      };
       lastPointer.current = { x: e.clientX, y: e.clientY };
+      lastTime.current = now;
     },
     [rotateX, rotateY]
   );
 
   const handlePointerUp = useCallback(() => {
     isDragging.current = false;
-    animate(rotateX, 0, { type: "spring", stiffness: 50, damping: 15 });
-    animate(rotateY, 0, { type: "spring", stiffness: 50, damping: 15 });
+    const vx = velocity.current.x;
+    const vy = velocity.current.y;
+    // Coast with velocity then decelerate — scale velocity to degrees
+    const VELOCITY_SCALE = 800;
+    animate(rotateX, rotateX.get() + vy * VELOCITY_SCALE, {
+      type: "tween",
+      duration: 1.2,
+      ease: [0.16, 1, 0.3, 1],
+    });
+    animate(rotateY, rotateY.get() + vx * VELOCITY_SCALE, {
+      type: "tween",
+      duration: 1.2,
+      ease: [0.16, 1, 0.3, 1],
+    });
   }, [rotateX, rotateY]);
 
   return (
@@ -419,7 +463,7 @@ function ExpandedPolaroidOverlay({
 
           {/* Back face */}
           <div
-            className="absolute inset-0 bg-white p-6 flex flex-col items-center justify-center select-none"
+            className="absolute inset-0 bg-white select-none overflow-hidden"
             style={{
               backfaceVisibility: "hidden",
               transform: "rotateY(180deg)",
@@ -427,40 +471,11 @@ function ExpandedPolaroidOverlay({
                 "0 4px 14px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.06)",
             }}
           >
-            <p
-              style={{
-                fontFamily: "var(--font-caveat), cursive",
-                fontWeight: 700,
-                color: "#333",
-                fontSize: "1.4rem",
-              }}
-            >
-              {item.caption}
-            </p>
-            {year && title && (
-              <>
-                <p
-                  style={{
-                    fontFamily: "var(--font-montserrat), sans-serif",
-                    fontWeight: 300,
-                    color: "#666",
-                    fontSize: "0.85rem",
-                    marginTop: "8px",
-                  }}
-                >
-                  {title}
-                </p>
-                <p
-                  style={{
-                    fontFamily: "monospace",
-                    color: "#999",
-                    fontSize: "0.75rem",
-                    marginTop: "4px",
-                  }}
-                >
-                  {year}
-                </p>
-              </>
+            {item.backCoverMedia && (
+              <MediaElement
+                src={item.backCoverMedia}
+                className="w-full h-full object-cover"
+              />
             )}
           </div>
         </motion.div>
@@ -547,6 +562,7 @@ export default function PolaroidStack({
             side={side}
             onSwipe={handleDismiss}
             onTap={stackPos === 0 ? handleTapTopCard : undefined}
+            faded={stackPos === 0 && expandedIndex !== null}
             year={year}
             title={title}
             photoIndex={itemIndex}

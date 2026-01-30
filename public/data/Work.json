@@ -6,9 +6,9 @@
     "description": "Got inspired by Flighty and decided to build a clone for trains (Amtrak)",
     "tags": ["Expo", "GTFS"],
     "polaroids": [
-      { "image": "./images/tracky/train.mov", "overlay": "", "caption": "train tracking" },
-      { "image": "./images/tracky/map.mov", "overlay": "", "caption": "map" },
-      { "image": "./images/tracky/station.mov", "overlay": "", "caption": "station details" }
+      { "frontSquareMedia": "./images/tracky/train.mov", "frontCoverMedia": "", "caption": "train tracking" },
+      { "frontSquareMedia": "./images/tracky/map.mov", "frontCoverMedia": "", "caption": "route maps" },
+      { "frontSquareMedia": "./images/tracky/station.mov", "frontCoverMedia": "", "caption": "stations" }
     ]
   },
   {
@@ -18,9 +18,9 @@
     "description": "Vibe-coding cli for iMessage agents with 1-click agent deployment",
     "tags": ["Next.js", "Docker", "GRPC"],
     "polaroids": [
-      { "image": "./images/flux/1.mp4", "overlay": "", "caption": "Gary demoing" },
-      { "image": "./images/flux/2.png", "overlay": "", "caption": "Flux in convos" },
-      { "image": "./images/flux/3.jpg", "overlay": "", "caption": "the Photon Residency <3" }
+      { "frontSquareMedia": "./images/flux/1.mp4", "frontCoverMedia": "", "caption": "Demo by Gary" },
+      { "frontSquareMedia": "./images/flux/2.png", "frontCoverMedia": "", "caption": "Flux (in convo)" },
+      { "frontSquareMedia": "./images/flux/3.jpg", "frontCoverMedia": "", "caption": "the Photon Residency <3" }
     ]
   },
   {
@@ -30,8 +30,8 @@
     "description": "Breed & manage your herd of cows. Remastered Scratch game from 2018",
     "tags": ["Next.js", "Supabase", "Figma"],
     "polaroids": [
-      { "image": "./images/cow-farm-simulator/js.mp4", "overlay": "", "caption": "Moo?" },
-      { "image": "./images/cow-farm-simulator/scratch.mp4", "overlay": "", "caption": "Scratch ver (2018)" }
+      { "frontSquareMedia": "./images/cow-farm-simulator/js.mp4", "frontCoverMedia": "", "caption": "Revamped :)" },
+      { "frontSquareMedia": "./images/cow-farm-simulator/scratch.mp4", "frontCoverMedia": "", "caption": "Scratch ver (2018)" }
     ]
   },
   {
@@ -41,9 +41,9 @@
     "description": "Accidently open-sourced Gotham by Palantir. Originally a 3d-engine for ATC simulations & trainings",
     "tags": ["Next.js", "API"],
     "polaroids": [
-      { "image": "", "overlay": "", "caption": "Bullhorn" },
-      { "image": "", "overlay": "", "caption": "3D Engine" },
-      { "image": "", "overlay": "", "caption": "ATC Sim" }
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Bullhorn" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "3D Engine" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "ATC Sim" }
     ]
   },
   {
@@ -53,9 +53,9 @@
     "description": "Tinder + Hinge = Linge. Swipe through weekly coffee chat matches",
     "tags": ["Flutter", "Supabase", "Clado"],
     "polaroids": [
-      { "image": "", "overlay": "", "caption": "Linge" },
-      { "image": "", "overlay": "", "caption": "Swipe UI" },
-      { "image": "", "overlay": "", "caption": "Coffee Chats" }
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Linge" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Swipe UI" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Coffee Chats" }
     ]
   },
   {
@@ -65,9 +65,9 @@
     "description": "Browserbase but powered by screenshots instead of DOM elements in chrome extension. Was faster than most web browsing models at the time. Got to meet Paul Klein",
     "tags": ["Extension", "OpenAI"],
     "polaroids": [
-      { "image": "", "overlay": "", "caption": "Browser Clone" },
-      { "image": "", "overlay": "", "caption": "GPT-4 Vision" },
-      { "image": "", "overlay": "", "caption": "Chrome Extension" }
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Browser Clone" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "GPT-4 Vision" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Chrome Extension" }
     ]
   },
   {
@@ -77,9 +77,9 @@
     "description": "Open-source mocap software for pose-tracking & 3D playback. Now used & maintained by University of Pennsylvania research staff under Professor Rajapakse",
     "tags": ["Next.js", "Posenet", "Expo"],
     "polaroids": [
-      { "image": "", "overlay": "", "caption": "NORMA" },
-      { "image": "", "overlay": "", "caption": "Pose Tracking" },
-      { "image": "", "overlay": "", "caption": "UPenn Research" }
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "NORMA" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Pose Tracking" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "UPenn Research" }
     ]
   },
   {
@@ -89,9 +89,9 @@
     "description": "Built vector-embedded repository for YCombinator AI Startup School data (speaker transcripts & chat logs). Got 300k+ views on LinkedIn, 500+ registered users, and 1M+ queries (~100k searches)",
     "tags": ["Next.js", "Firebase Auth", "Pinecone"],
     "polaroids": [
-      { "image": "", "overlay": "", "caption": "YC Search" },
-      { "image": "", "overlay": "", "caption": "Vector DB" },
-      { "image": "", "overlay": "", "caption": "300k+ Views" }
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "YC Search" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Vector DB" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "300k+ Views" }
     ]
   },
   {
@@ -101,9 +101,9 @@
     "description": "Cloned my childhood's favorite game (中华铁路 @ QQ)",
     "tags": ["Next.js", "Supabase", "Google Maps API"],
     "polaroids": [
-      { "image": "", "overlay": "", "caption": "Iron Empire" },
-      { "image": "", "overlay": "", "caption": "Train Game" },
-      { "image": "", "overlay": "", "caption": "Station Map" }
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Iron Empire" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Train Game" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Station Map" }
     ]
   },
   {
@@ -113,9 +113,9 @@
     "description": "AI career planner. Build timelines on how to get your dream job based on your school's alumni who are there & their former stats",
     "tags": ["Next.js", "Supabase", "Clado"],
     "polaroids": [
-      { "image": "", "overlay": "", "caption": "Moonbeam" },
-      { "image": "", "overlay": "", "caption": "Career Path" },
-      { "image": "", "overlay": "", "caption": "Alumni Data" }
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Moonbeam" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Career Path" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Alumni Data" }
     ]
   },
   {
@@ -125,9 +125,9 @@
     "description": "Soft-\"where\" to nudge your friends to hang out based on physical proximity and calendar availability",
     "tags": ["Expo", "Supabase"],
     "polaroids": [
-      { "image": "", "overlay": "", "caption": "Poke" },
-      { "image": "", "overlay": "", "caption": "Proximity" },
-      { "image": "", "overlay": "", "caption": "Connect" }
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Poke" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Proximity" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Connect" }
     ]
   },
   {
@@ -137,9 +137,9 @@
     "description": "Creates line-by-line breakdown of codebase to be summarized in a Readme.md file attachment",
     "tags": ["Python"],
     "polaroids": [
-      { "image": "", "overlay": "", "caption": "Repo Analyzer" },
-      { "image": "", "overlay": "", "caption": "Line Breakdown" },
-      { "image": "", "overlay": "", "caption": "README Gen" }
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Repo Analyzer" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Line Breakdown" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "README Gen" }
     ]
   },
   {
@@ -149,9 +149,9 @@
     "description": "Unreal game for UPenn Perelman School of Medicine patient recovery",
     "tags": ["UE5", "C++"],
     "polaroids": [
-      { "image": "", "overlay": "", "caption": "Black Hole" },
-      { "image": "", "overlay": "", "caption": "UE5 Game" },
-      { "image": "", "overlay": "", "caption": "Patient Recovery" }
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Black Hole" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "UE5 Game" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Patient Recovery" }
     ]
   },
   {
@@ -161,9 +161,9 @@
     "description": "Wrote glass-morphic browser 3 years before Apple got to it",
     "tags": ["SwiftUI"],
     "polaroids": [
-      { "image": "", "overlay": "", "caption": "Browser" },
-      { "image": "", "overlay": "", "caption": "Glass-morphic" },
-      { "image": "", "overlay": "", "caption": "SwiftUI" }
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Browser" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Glass-morphic" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "SwiftUI" }
     ]
   },
   {
@@ -173,9 +173,9 @@
     "description": "Answered questions in class faster than teachers finished their sentences",
     "tags": ["Python", "GPT"],
     "polaroids": [
-      { "image": "", "overlay": "", "caption": "Smarter" },
-      { "image": "", "overlay": "", "caption": "GPT Powered" },
-      { "image": "", "overlay": "", "caption": "Classroom" }
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Smarter" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "GPT Powered" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Classroom" }
     ]
   },
   {
@@ -185,9 +185,9 @@
     "description": "Landing page for a VR&AR startup promsing space travel",
     "tags": ["Figma"],
     "polaroids": [
-      { "image": "", "overlay": "", "caption": "The Verse" },
-      { "image": "", "overlay": "", "caption": "VR/AR" },
-      { "image": "", "overlay": "", "caption": "Scroll Site" }
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "The Verse" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "VR/AR" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Scroll Site" }
     ]
   },
   {
@@ -197,9 +197,9 @@
     "description": "Stress-relieving writing app to learn Electron.js",
     "tags": ["Electron.js"],
     "polaroids": [
-      { "image": "", "overlay": "", "caption": "Slate" },
-      { "image": "", "overlay": "", "caption": "Writing App" },
-      { "image": "", "overlay": "", "caption": "Electron" }
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Slate" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Writing App" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Electron" }
     ]
   },
   {
@@ -209,9 +209,9 @@
     "description": "Forked workout app for Empire Dragons NYC rowing team",
     "tags": ["Expo", "Firebase"],
     "polaroids": [
-      { "image": "", "overlay": "", "caption": "Simply" },
-      { "image": "", "overlay": "", "caption": "Workout App" },
-      { "image": "", "overlay": "", "caption": "Empire Dragons" }
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Simply" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Workout App" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Empire Dragons" }
     ]
   },
   {
@@ -221,9 +221,9 @@
     "description": "R&D for pose-tracking mobile workout app",
     "tags": ["Expo", "Firebase"],
     "polaroids": [
-      { "image": "", "overlay": "", "caption": "Xatalyst Labs" },
-      { "image": "", "overlay": "", "caption": "Pose Tracking" },
-      { "image": "", "overlay": "", "caption": "R&D" }
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Xatalyst Labs" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Pose Tracking" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "R&D" }
     ]
   },
   {
@@ -233,9 +233,9 @@
     "description": "Frontend scrolling website that got glazed hella",
     "tags": ["Next.js", "Figma", "SVGs"],
     "polaroids": [
-      { "image": "", "overlay": "", "caption": "17.JasonXu.me" },
-      { "image": "", "overlay": "", "caption": "Scrolling Site" },
-      { "image": "", "overlay": "", "caption": "SVG Design" }
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "17.JasonXu.me" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Scrolling Site" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "SVG Design" }
     ]
   },
   {
@@ -245,9 +245,9 @@
     "description": "Lazy-loading SVG library used in 17.JasonXu.me & The Verse",
     "tags": ["JS", "SVG"],
     "polaroids": [
-      { "image": "", "overlay": "", "caption": "Yaemage" },
-      { "image": "", "overlay": "", "caption": "SVG Library" },
-      { "image": "", "overlay": "", "caption": "Lazy Loading" }
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Yaemage" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "SVG Library" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Lazy Loading" }
     ]
   },
   {
@@ -257,9 +257,9 @@
     "description": "Music Windows wallpaper (w/ Lively.js SDK)",
     "tags": ["JS"],
     "polaroids": [
-      { "image": "", "overlay": "", "caption": "Now Playing" },
-      { "image": "", "overlay": "", "caption": "Wallpaper" },
-      { "image": "", "overlay": "", "caption": "Lively.js" }
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Now Playing" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Wallpaper" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Lively.js" }
     ]
   },
   {
@@ -269,9 +269,9 @@
     "description": "Landing page for Web3 startup",
     "tags": ["Next.js", "Figma"],
     "polaroids": [
-      { "image": "", "overlay": "", "caption": "DINO" },
-      { "image": "", "overlay": "", "caption": "Web3" },
-      { "image": "", "overlay": "", "caption": "Frontend" }
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "DINO" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Web3" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Frontend" }
     ]
   },
   {
@@ -281,9 +281,9 @@
     "description": "Genshin Impact with guns. Yes, I know, I was that degen",
     "tags": ["UE5", "C++", "Blender"],
     "polaroids": [
-      { "image": "", "overlay": "", "caption": "Simpact" },
-      { "image": "", "overlay": "", "caption": "UE5 Shooter" },
-      { "image": "", "overlay": "", "caption": "Blender" }
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Simpact" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "UE5 Shooter" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Blender" }
     ]
   },
   {
@@ -293,9 +293,9 @@
     "description": "Website for Global NGO Executive Committee's Hackathon I founded",
     "tags": ["HTML", "CSS", "JS"],
     "polaroids": [
-      { "image": "", "overlay": "", "caption": "GNEC" },
-      { "image": "", "overlay": "", "caption": "Hackathon" },
-      { "image": "", "overlay": "", "caption": "NGO" }
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "GNEC" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Hackathon" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "NGO" }
     ]
   },
   {
@@ -305,9 +305,9 @@
     "description": "Didn't want to do homework. Wrote key terms & vocabulary extractor for web pages",
     "tags": ["JS"],
     "polaroids": [
-      { "image": "", "overlay": "", "caption": "Moot" },
-      { "image": "", "overlay": "", "caption": "Key Terms" },
-      { "image": "", "overlay": "", "caption": "Extractor" }
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Moot" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Key Terms" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Extractor" }
     ]
   },
   {
@@ -317,9 +317,9 @@
     "description": "Can't control myself so I deleted shorts, recommendations, and autoplay from YouTube UI",
     "tags": ["JS"],
     "polaroids": [
-      { "image": "", "overlay": "", "caption": "MyTube" },
-      { "image": "", "overlay": "", "caption": "No Shorts" },
-      { "image": "", "overlay": "", "caption": "Focus Mode" }
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "MyTube" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "No Shorts" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Focus Mode" }
     ]
   },
   {
@@ -329,9 +329,9 @@
     "description": "Rewrote Microsoft's Azure speech recognition on Expo to allow continuous recognition",
     "tags": ["Expo", "Azure"],
     "polaroids": [
-      { "image": "", "overlay": "", "caption": "Azure Speech" },
-      { "image": "", "overlay": "", "caption": "Continuous" },
-      { "image": "", "overlay": "", "caption": "Recognition" }
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Azure Speech" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Continuous" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Recognition" }
     ]
   },
   {
@@ -341,9 +341,9 @@
     "description": "AR glasses for live transcription and translation",
     "tags": ["ESP32", "BLE", "React Native"],
     "polaroids": [
-      { "image": "", "overlay": "", "caption": "SLATE" },
-      { "image": "", "overlay": "", "caption": "AR Glasses" },
-      { "image": "", "overlay": "", "caption": "Live Translation" }
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "SLATE" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "AR Glasses" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Live Translation" }
     ]
   },
   {
@@ -353,9 +353,9 @@
     "description": "Wrote trauma-responsive teaching game for refugee children used by Rotary International",
     "tags": ["Expo", "React Native"],
     "polaroids": [
-      { "image": "", "overlay": "", "caption": "Journey" },
-      { "image": "", "overlay": "", "caption": "Teaching Game" },
-      { "image": "", "overlay": "", "caption": "Rotary Intl" }
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Journey" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Teaching Game" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Rotary Intl" }
     ]
   },
   {
@@ -365,9 +365,9 @@
     "description": "Flashcard generator powered by GPT-3 as demo to faculty on abilities of ChatGPT in the classroom",
     "tags": ["React", "Figma"],
     "polaroids": [
-      { "image": "", "overlay": "", "caption": "Holes" },
-      { "image": "", "overlay": "", "caption": "Flashcards" },
-      { "image": "", "overlay": "", "caption": "GPT-3" }
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Holes" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Flashcards" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "GPT-3" }
     ]
   },
   {
@@ -377,9 +377,9 @@
     "description": "Created dynamic hardware water bottles with attachment system & companion app",
     "tags": ["3D Printing", "CAD", "Expo"],
     "polaroids": [
-      { "image": "", "overlay": "", "caption": "Liquify" },
-      { "image": "", "overlay": "", "caption": "Water Bottle" },
-      { "image": "", "overlay": "", "caption": "3D Printed" }
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Liquify" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Water Bottle" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "3D Printed" }
     ]
   },
   {
@@ -389,9 +389,9 @@
     "description": "Got gifted VR headsets but had no money to buy games. Wrote a tower defense game to play",
     "tags": ["VR/AR", "UE5"],
     "polaroids": [
-      { "image": "", "overlay": "", "caption": "VRChery" },
-      { "image": "", "overlay": "", "caption": "Tower Defense" },
-      { "image": "", "overlay": "", "caption": "VR Game" }
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "VRChery" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Tower Defense" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "VR Game" }
     ]
   },
   {
@@ -401,9 +401,9 @@
     "description": "Discord bot for playing Mafia. Complete with room creation & management",
     "tags": ["Python", "Discord.py"],
     "polaroids": [
-      { "image": "", "overlay": "", "caption": "Murder Mystery" },
-      { "image": "", "overlay": "", "caption": "Discord Bot" },
-      { "image": "", "overlay": "", "caption": "Mafia" }
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Murder Mystery" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Discord Bot" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Mafia" }
     ]
   },
   {
@@ -413,9 +413,9 @@
     "description": "Socket I/O card game. Rewrite of 2019",
     "tags": ["Python"],
     "polaroids": [
-      { "image": "", "overlay": "", "caption": "Ninety Nine" },
-      { "image": "", "overlay": "", "caption": "Card Game" },
-      { "image": "", "overlay": "", "caption": "Socket I/O" }
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Ninety Nine" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Card Game" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Socket I/O" }
     ]
   },
   {
@@ -425,9 +425,9 @@
     "description": "City building game",
     "tags": ["UE4"],
     "polaroids": [
-      { "image": "", "overlay": "", "caption": "LoneCity" },
-      { "image": "", "overlay": "", "caption": "City Builder" },
-      { "image": "", "overlay": "", "caption": "UE4" }
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "LoneCity" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "City Builder" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "UE4" }
     ]
   },
   {
@@ -437,9 +437,9 @@
     "description": "First multiplayer game I wrote about escaping convicts",
     "tags": ["UE4"],
     "polaroids": [
-      { "image": "", "overlay": "", "caption": "FreeThem" },
-      { "image": "", "overlay": "", "caption": "Prison Escape" },
-      { "image": "", "overlay": "", "caption": "Multiplayer" }
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "FreeThem" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Prison Escape" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Multiplayer" }
     ]
   },
   {
@@ -449,9 +449,9 @@
     "description": "My cousin's parents banned COD. We wrote our own",
     "tags": ["UE4"],
     "polaroids": [
-      { "image": "", "overlay": "", "caption": "BSGO" },
-      { "image": "", "overlay": "", "caption": "FPS" },
-      { "image": "", "overlay": "", "caption": "UE4" }
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "BSGO" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "FPS" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "UE4" }
     ]
   },
   {
@@ -461,9 +461,9 @@
     "description": "Adds Japanese emoticons to iMessage via keybinds",
     "tags": ["Python", "Tkinter"],
     "polaroids": [
-      { "image": "", "overlay": "", "caption": "Textplifier" },
-      { "image": "", "overlay": "", "caption": "Emoticons" },
-      { "image": "", "overlay": "", "caption": "iMessage" }
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Textplifier" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Emoticons" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "iMessage" }
     ]
   },
   {
@@ -473,9 +473,9 @@
     "description": "Spams people's mailboxes with SMTP servers",
     "tags": ["Python", "SMTP"],
     "polaroids": [
-      { "image": "", "overlay": "", "caption": "Mail Bot" },
-      { "image": "", "overlay": "", "caption": "SMTP" },
-      { "image": "", "overlay": "", "caption": "Python" }
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Mail Bot" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "SMTP" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Python" }
     ]
   },
   {
@@ -485,9 +485,9 @@
     "description": "Cash-grab style mobile game inspired by Going Balls",
     "tags": ["UE4"],
     "polaroids": [
-      { "image": "", "overlay": "", "caption": "Rolling Ball" },
-      { "image": "", "overlay": "", "caption": "Mobile Game" },
-      { "image": "", "overlay": "", "caption": "UE4" }
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Rolling Ball" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Mobile Game" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "UE4" }
     ]
   },
   {
@@ -497,9 +497,9 @@
     "description": "Overhauled subway conductor game from scratch",
     "tags": ["UE4"],
     "polaroids": [
-      { "image": "", "overlay": "", "caption": "Subway Chaos" },
-      { "image": "", "overlay": "", "caption": "Subway Game" },
-      { "image": "", "overlay": "", "caption": "UE4" }
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Subway Chaos" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Subway Game" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "UE4" }
     ]
   },
   {
@@ -509,9 +509,9 @@
     "description": "Learning Unreal Engine",
     "tags": ["UE4"],
     "polaroids": [
-      { "image": "", "overlay": "", "caption": "Parkour Game" },
-      { "image": "", "overlay": "", "caption": "Learning UE" },
-      { "image": "", "overlay": "", "caption": "UE4" }
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Parkour Game" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Learning UE" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "UE4" }
     ]
   },
   {
@@ -521,9 +521,9 @@
     "description": "Code.org hour of code turned into a week of code to write a cow-themed dungeon crawler",
     "tags": ["JS"],
     "polaroids": [
-      { "image": "", "overlay": "", "caption": "Cowland" },
-      { "image": "", "overlay": "", "caption": "Dungeon Crawler" },
-      { "image": "", "overlay": "", "caption": "Code.org" }
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Cowland" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Dungeon Crawler" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Code.org" }
     ]
   },
   {
@@ -533,9 +533,9 @@
     "description": "Learned P5JS from Ubisoft's {code}school tutorials",
     "tags": ["P5JS"],
     "polaroids": [
-      { "image": "", "overlay": "", "caption": "OpenProcessing" },
-      { "image": "", "overlay": "", "caption": "P5JS" },
-      { "image": "", "overlay": "", "caption": "Ubisoft" }
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "OpenProcessing" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "P5JS" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Ubisoft" }
     ]
   },
   {
@@ -545,9 +545,9 @@
     "description": "Cousin's parents found Project Chatty, so I wrote a cipher",
     "tags": ["Python"],
     "polaroids": [
-      { "image": "", "overlay": "", "caption": "Enkrypto" },
-      { "image": "", "overlay": "", "caption": "Cipher" },
-      { "image": "", "overlay": "", "caption": "Python" }
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Enkrypto" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Cipher" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Python" }
     ]
   },
   {
@@ -557,9 +557,9 @@
     "description": "Cousin's parents banned iMessage. Wrote it myself via Socket I/O",
     "tags": ["Python", "Socket"],
     "polaroids": [
-      { "image": "", "overlay": "", "caption": "Project Chatty" },
-      { "image": "", "overlay": "", "caption": "Socket I/O" },
-      { "image": "", "overlay": "", "caption": "Python" }
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Project Chatty" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Socket I/O" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Python" }
     ]
   },
   {
@@ -569,9 +569,9 @@
     "description": "We all start somewhere :)",
     "tags": ["Scratch"],
     "polaroids": [
-      { "image": "", "overlay": "", "caption": "Scratch" },
-      { "image": "", "overlay": "", "caption": "The Beginning" },
-      { "image": "", "overlay": "", "caption": "2013-2020" }
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Scratch" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "The Beginning" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "2013-2020" }
     ]
   }
 ]

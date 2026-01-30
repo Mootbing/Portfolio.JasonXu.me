@@ -49,6 +49,10 @@ body {
   opacity: 0;
 }
 
+.polaroid-expanded * {
+  cursor: default;
+}
+
 .blob-cursor.hover-header,
 .blob-cursor.hover-button {
   background: rgba(0, 0, 0, 0.08);
