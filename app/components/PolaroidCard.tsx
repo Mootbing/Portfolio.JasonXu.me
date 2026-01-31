@@ -218,7 +218,7 @@ function SinglePolaroid({
       const unsub = dragRotate.on("change", (v) => rotateValue.set(v));
       return unsub;
     } else {
-      const target = rotation + stackOffset * 3 * sideMultiplier;
+      const target = rotation + stackOffset * 3 * sideMultiplier + (stackOffset === 0 ? baseTilt : 0);
       if (isFirstRotate.current || !prevIsDraggable.current) {
         // First render or was already non-draggable — set directly or animate position change
         if (isFirstRotate.current) {
@@ -245,7 +245,7 @@ function SinglePolaroid({
       }
     }
     prevIsDraggable.current = isDraggable;
-  }, [isDraggable, dragRotate, rotation, stackOffset, sideMultiplier, rotateValue]);
+  }, [isDraggable, dragRotate, rotation, stackOffset, sideMultiplier, baseTilt, rotateValue]);
 
   const handleDragEnd = useCallback(
     (_: unknown, info: PanInfo) => {
