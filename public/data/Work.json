@@ -16,7 +16,7 @@
     "description": "Vibe-coding cli for iMessage agents with 1-click agent deployment",
     "tags": ["Next.js", "Docker", "GRPC"],
     "polaroids": [
-      { "frontSquareMedia": "./images/flux/1.mp4", "frontCoverMedia": "", "caption": "Demo by Gary" },
+      { "frontSquareMedia": "./images/flux/1.mp4", "frontCoverMedia": "", "caption": "Gary's Demo" },
       { "frontSquareMedia": "./images/flux/2.png", "frontCoverMedia": "", "caption": "Flux (in convo)" },
       { "frontSquareMedia": "./images/flux/3.jpg", "frontCoverMedia": "", "caption": "the Photon Residency <3" }
     ]
