@@ -294,6 +294,7 @@ function SinglePolaroid({
         rotate: rotateValue,
         zIndex,
         cursor: isDraggable ? "grab" : "default",
+        touchAction: isDraggable ? "none" : "auto",
       }}
       onPointerDown={(e) => {
         pointerStart.current = { x: e.clientX, y: e.clientY };
