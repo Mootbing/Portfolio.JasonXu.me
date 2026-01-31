@@ -76,7 +76,7 @@ export default function Home() {
               lineHeight: 1.7,
             }}
           >
-            Try swiping polaroids
+            Try swiping & clicking polaroids
           </p>
 
         </div>

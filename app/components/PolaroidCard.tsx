@@ -39,14 +39,17 @@ function MediaElement({
   src,
   alt,
   className,
+  ref,
 }: {
   src: string;
   alt?: string;
   className?: string;
+  ref?: React.Ref<HTMLVideoElement>;
 }) {
   if (isVideo(src)) {
     return (
       <video
+        ref={ref}
         src={src}
         className={className}
         autoPlay
@@ -74,6 +77,7 @@ function PolaroidContent({
   photoIndex,
   sizeClass,
   stackOffset,
+  videoRef,
 }: {
   item: PolaroidItem;
   year?: string;
@@ -81,6 +85,7 @@ function PolaroidContent({
   photoIndex: number;
   sizeClass: string;
   stackOffset?: number;
+  videoRef?: React.Ref<HTMLVideoElement>;
 }) {
   return (
     <div
@@ -93,6 +98,7 @@ function PolaroidContent({
       <div className={`${sizeClass} overflow-hidden pointer-events-none relative`}>
         {item.frontSquareMedia ? (
           <MediaElement
+            ref={videoRef}
             src={item.frontSquareMedia}
             alt={item.caption}
             className="w-full h-full object-cover"
@@ -151,6 +157,7 @@ function SinglePolaroid({
   year,
   title,
   photoIndex,
+  videoRef,
 }: {
   item: PolaroidItem;
   rotation: number;
@@ -164,6 +171,7 @@ function SinglePolaroid({
   year?: string;
   title?: string;
   photoIndex: number;
+  videoRef?: React.Ref<HTMLVideoElement>;
 }) {
   const x = useMotionValue(0);
   const rotateValue = useMotionValue(0);
@@ -316,6 +324,7 @@ function SinglePolaroid({
         photoIndex={photoIndex}
         sizeClass="w-56 h-56 md:w-64 md:h-64"
         stackOffset={stackOffset}
+        videoRef={videoRef}
       />
     </motion.div>
   );
@@ -326,13 +335,15 @@ function ExpandedPolaroidOverlay({
   year,
   title,
   photoIndex,
+  initialTime,
   onDismiss,
 }: {
   item: PolaroidItem;
   year?: string;
   title?: string;
   photoIndex: number;
-  onDismiss: () => void;
+  initialTime?: number;
+  onDismiss: (currentTime?: number) => void;
 }) {
   const rotateX = useMotionValue(0);
   const rotateY = useMotionValue(0);
@@ -340,17 +351,23 @@ function ExpandedPolaroidOverlay({
   const lastPointer = useRef({ x: 0, y: 0 });
   const lastTime = useRef(0);
   const velocity = useRef({ x: 0, y: 0 });
+  const frontVideoRef = useRef<HTMLVideoElement>(null);
 
   const SENSITIVITY = 0.3;
+
+  const dismissWithTime = useCallback(() => {
+    const time = frontVideoRef.current?.currentTime;
+    onDismiss(time);
+  }, [onDismiss]);
 
   // Escape key handler
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onDismiss();
+      if (e.key === "Escape") dismissWithTime();
     };
     window.addEventListener("keydown", handleKey);
     return () => window.removeEventListener("keydown", handleKey);
-  }, [onDismiss]);
+  }, [dismissWithTime]);
 
   // Body scroll lock + hide blob cursor
   useEffect(() => {
@@ -361,6 +378,19 @@ function ExpandedPolaroidOverlay({
       document.body.classList.remove("polaroid-expanded");
     };
   }, []);
+
+  // Sync video playhead from stack
+  useEffect(() => {
+    const video = frontVideoRef.current;
+    if (!video || initialTime == null) return;
+    const setTime = () => { video.currentTime = initialTime; };
+    if (video.readyState >= 1) {
+      setTime();
+    } else {
+      video.addEventListener("loadedmetadata", setTime, { once: true });
+      return () => video.removeEventListener("loadedmetadata", setTime);
+    }
+  }, [initialTime]);
 
   const handlePointerDown = useCallback(
     (e: React.PointerEvent) => {
@@ -409,7 +439,7 @@ function ExpandedPolaroidOverlay({
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 0.3 }}
-        onClick={onDismiss}
+        onClick={dismissWithTime}
       />
 
       {/* Card container with perspective */}
@@ -446,6 +476,7 @@ function ExpandedPolaroidOverlay({
               title={title}
               photoIndex={photoIndex}
               sizeClass="w-72 h-72 md:w-80 md:h-80"
+              videoRef={frontVideoRef}
             />
           </div>
 
@@ -485,6 +516,8 @@ export default function PolaroidStack({
     Array.from({ length: items.length }, (_, i) => i)
   );
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
+  const [expandedInitialTime, setExpandedInitialTime] = useState<number | undefined>();
+  const topVideoRef = useRef<HTMLVideoElement>(null);
   const [portalTarget, setPortalTarget] = useState<HTMLElement | null>(null);
 
   useEffect(() => {
@@ -503,11 +536,15 @@ export default function PolaroidStack({
   }, []);
 
   const handleTapTopCard = useCallback(() => {
+    setExpandedInitialTime(topVideoRef.current?.currentTime ?? undefined);
     setExpandedIndex(cardOrder[0]);
   }, [cardOrder]);
 
-  const handleDismissExpanded = useCallback(() => {
+  const handleDismissExpanded = useCallback((currentTime?: number) => {
     setExpandedIndex(null);
+    if (currentTime != null && topVideoRef.current) {
+      topVideoRef.current.currentTime = currentTime;
+    }
   }, []);
 
   const visibleCount = items.length;
@@ -554,6 +591,7 @@ export default function PolaroidStack({
             year={year}
             title={title}
             photoIndex={itemIndex}
+            videoRef={stackPos === 0 ? topVideoRef : undefined}
           />
         ))}
       </motion.div>
@@ -569,6 +607,7 @@ export default function PolaroidStack({
                 year={year}
                 title={title}
                 photoIndex={expandedIndex}
+                initialTime={expandedInitialTime}
                 onDismiss={handleDismissExpanded}
               />
             )}

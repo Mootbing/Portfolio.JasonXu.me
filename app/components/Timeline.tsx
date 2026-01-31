@@ -7,12 +7,11 @@ import type { PolaroidItem } from "./PolaroidCard";
 import PROJECTS from "../../public/data/Work.json";
 
 interface TimelineProject {
-  id: string;
   year: string;
   title: string;
   description: string;
   tags: string[];
-  polaroids: PolaroidItem[];
+  polaroids?: PolaroidItem[];
 }
 
 function useIsCompact(breakpoint = 800) {
@@ -194,7 +193,7 @@ function TimelineEntry({
         <div className={`flex justify-end`}>
           {isLeft ? (
             <TextContent project={project} isInView={isInView} align="right" />
-          ) : (
+          ) : project.polaroids?.length ? (
             <PolaroidStack
               items={project.polaroids}
               side="left"
@@ -202,7 +201,7 @@ function TimelineEntry({
               year={project.year}
               title={project.title}
             />
-          )}
+          ) : null}
         </div>
       )}
 
@@ -216,17 +215,19 @@ function TimelineEntry({
         {compact ? (
           <div className="flex flex-col gap-6">
             <TextContent project={project} isInView={isInView} />
-            <div className="flex justify-end">
-              <PolaroidStack
-                items={project.polaroids}
-                side="right"
-                index={index}
-                year={project.year}
-                title={project.title}
-              />
-            </div>
+            {project.polaroids?.length ? (
+              <div className="flex justify-end">
+                <PolaroidStack
+                  items={project.polaroids}
+                  side="right"
+                  index={index}
+                  year={project.year}
+                  title={project.title}
+                />
+              </div>
+            ) : null}
           </div>
-        ) : isLeft ? (
+        ) : isLeft && project.polaroids?.length ? (
           <PolaroidStack
             items={project.polaroids}
             side="right"
@@ -291,7 +292,7 @@ export default function Timeline() {
         {/* Timeline entries */}
         <div className="relative space-y-8 md:space-y-16">
           {PROJECTS.map((project, index) => (
-            <TimelineEntry key={project.id} project={project} index={index} compact={compact} />
+            <TimelineEntry key={`${project.year}-${project.title}`} project={project} index={index} compact={compact} />
           ))}
         </div>
       </div>
