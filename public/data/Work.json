@@ -41,25 +41,23 @@
     ]
   },
   {
-    "year": "2025.09",
-    "title": "Linge",
-    "description": "Tinder + Hinge = Linge. Swipe through weekly coffee chat matches",
-    "tags": ["Flutter", "Supabase", "Clado"],
-    "polaroids": [
-      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Linge" },
-      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Swipe UI" },
-      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Coffee Chats" }
-    ]
-  },
-  {
     "year": "2025.08",
     "title": "BrowserBase Clone",
     "description": "Browserbase but powered by screenshots instead of DOM elements in chrome extension. Was faster than most web browsing models at the time. Got to meet Paul Klein",
     "tags": ["Extension", "OpenAI"],
     "polaroids": [
-      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Browser Clone" },
-      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "GPT-4 Vision" },
-      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Chrome Extension" }
+      { "frontSquareMedia": "./images/browserbase/browse.mp4", "frontCoverMedia": "", "caption": "Browsing Agent (Real-time)" }
+    ]
+  },  
+  {
+    "year": "2025.07",
+    "title": "Linge",
+    "description": "Tinder + Hinge = Linge. Swipe through weekly coffee chat matches",
+    "tags": ["Flutter", "Supabase", "Clado"],
+    "polaroids": [
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Linge" },
+      { "frontSquareMedia": "./images/linge/cheng.MOV", "frontCoverMedia": "", "caption": "Wrote entire product on overnight train" },
+      { "frontSquareMedia": "./images/linge/stickies.MOV", "frontCoverMedia": "", "caption": "'Kanban' board & UI" }
     ]
   },
   {
@@ -68,9 +66,9 @@
     "description": "Open-source mocap software for pose-tracking & 3D playback. Now used & maintained by University of Pennsylvania research staff under Professor Rajapakse",
     "tags": ["Next.js", "Posenet", "Expo"],
     "polaroids": [
-      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "NORMA" },
-      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Pose Tracking" },
-      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "UPenn Research" }
+      { "frontSquareMedia": "./images/NORMA/recording.mp4", "frontCoverMedia": "", "caption": "Posture analysis" },
+      { "frontSquareMedia": "./images/NORMA/playback.mp4", "frontCoverMedia": "", "caption": "pose playback" },
+      { "frontSquareMedia": "./images/NORMA/abg.mp4", "frontCoverMedia": "", "caption": "Gooning" }
     ]
   },
   {
@@ -79,9 +77,7 @@
     "description": "Built vector-embedded repository for YCombinator AI Startup School data (speaker transcripts & chat logs). Got 300k+ views on LinkedIn, 500+ registered users, and 1M+ queries (~100k searches)",
     "tags": ["Next.js", "Firebase Auth", "Pinecone"],
     "polaroids": [
-      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "YC Search" },
-      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Vector DB" },
-      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "300k+ Views" }
+      { "frontSquareMedia": "./images/YCSearch/search.mp4", "frontCoverMedia": "", "caption": "YC vector search" }
     ]
   },
   {

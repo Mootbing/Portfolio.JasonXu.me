@@ -176,7 +176,7 @@ function TimelineEntry({
   compact: boolean | null;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const isInView = useInView(ref, { once: false, margin: "-100px" });
   const isLeft = !compact && index % 2 === 0;
 
   return (

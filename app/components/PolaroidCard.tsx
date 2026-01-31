@@ -512,7 +512,7 @@ export default function PolaroidStack({
   title,
 }: PolaroidStackProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const isInView = useInView(ref, { once: false, margin: "-100px" });
   const [cardOrder, setCardOrder] = useState(() =>
     Array.from({ length: items.length }, (_, i) => i)
   );
