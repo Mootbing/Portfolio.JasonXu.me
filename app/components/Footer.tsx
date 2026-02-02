@@ -13,8 +13,6 @@ const NAV_LINKS = [
   { href: "https://jasonxu.me", label: "About Me" },
   { href: "https://resume.jasonxu.me", label: "Resume" },
   { href: "https://contact.jasonxu.me", label: "Contact" },
-  { href: "https://github.jasonxu.me", label: "GitHub" },
-  { href: "https://linkedin.jasonxu.me", label: "LinkedIn" },
 ] as const;
 
 export default function Footer() {

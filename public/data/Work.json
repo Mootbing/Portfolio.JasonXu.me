@@ -97,9 +97,9 @@
     "description": "AI career planner. Build timelines on how to get your dream job based on your school's alumni who are there & their former stats",
     "tags": ["Next.js", "Supabase", "Clado"],
     "polaroids": [
-      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Moonbeam" },
-      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Career Path" },
-      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Alumni Data" }
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Demo" },
+      { "frontSquareMedia": "./images/moonbeam/UI.jpg", "frontCoverMedia": "", "caption": "UI Draft" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "" }
     ]
   },
   {
@@ -119,9 +119,7 @@
     "description": "Creates line-by-line breakdown of codebase to be summarized in a Readme.md file attachment",
     "tags": ["Python"],
     "polaroids": [
-      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Repo Analyzer" },
-      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Line Breakdown" },
-      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "README Gen" }
+      { "frontSquareMedia": "./images/repository-analytics/md.png", "frontCoverMedia": "", "caption": "Readme.md integration" }
     ]
   },
   {
