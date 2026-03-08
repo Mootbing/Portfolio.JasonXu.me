@@ -32,14 +32,24 @@ export default function BlobCursor() {
   const lastHoverTypeRef = useRef<HoverType | null>(null);
 
   useEffect(() => {
+    let isTouch = false;
+
     const handleTouchStart = () => {
+      if (isTouch) return;
+      isTouch = true;
       const blob = blobRef.current;
-      if (blob) {
-        blob.style.display = "none";
-      }
+      if (blob) blob.style.display = "none";
     };
 
-    window.addEventListener("touchstart", handleTouchStart, { once: true });
+    const handleMouseEnter = () => {
+      if (!isTouch) return;
+      isTouch = false;
+      const blob = blobRef.current;
+      if (blob) blob.style.display = "";
+    };
+
+    window.addEventListener("touchstart", handleTouchStart);
+    window.addEventListener("mousemove", handleMouseEnter);
 
     const isPointInRect = (
       x: number,
@@ -118,6 +128,20 @@ export default function BlobCursor() {
               left: 8,
             }),
           };
+        }
+      }
+
+      // Polaroid cards (not in fullscreen/expanded mode)
+      if (!document.body.classList.contains("polaroid-expanded")) {
+        const polaroid = target.closest(".bg-white.p-3.pb-14");
+        if (polaroid) {
+          const rect = polaroid.getBoundingClientRect();
+          if (isPointInRect(clientX, clientY, rect)) {
+            return {
+              type: "header",
+              bounds: createBounds(rect, { top: 4, right: 4, bottom: 4, left: 4 }),
+            };
+          }
         }
       }
 
@@ -212,6 +236,7 @@ export default function BlobCursor() {
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("scroll", handleScroll, true);
       window.removeEventListener("touchstart", handleTouchStart);
+      window.removeEventListener("mousemove", handleMouseEnter);
       cancelAnimationFrame(animationId);
     };
   }, []);

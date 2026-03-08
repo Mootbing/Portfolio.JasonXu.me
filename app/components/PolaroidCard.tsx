@@ -448,7 +448,7 @@ function ExpandedPolaroidOverlay({
         className="fixed inset-0 flex items-center justify-center pointer-events-none"
         style={{ zIndex: 10001, perspective: 1000 }}
         initial={{ opacity: 0, scale: 0.6 }}
-        animate={{ opacity: 1, scale: 1.5 }}
+        animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.6 }}
         transition={{ type: "spring", stiffness: 300, damping: 25, mass: 0.5 }}
       >
@@ -460,6 +460,7 @@ function ExpandedPolaroidOverlay({
             rotateY,
             transformStyle: "preserve-3d",
             cursor: "grab",
+            touchAction: "none",
           }}
           onPointerDown={handlePointerDown}
           onPointerMove={handlePointerMove}

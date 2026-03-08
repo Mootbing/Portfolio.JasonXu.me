@@ -10,8 +10,30 @@ interface TimelineProject {
   year: string;
   title: string;
   description: string;
+  link?: string;
   tags: string[];
   polaroids?: PolaroidItem[];
+}
+
+function ExternalLinkIcon() {
+  return (
+    <svg
+      width="9"
+      height="9"
+      viewBox="0 0 12 12"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="inline-block ml-1.5"
+      style={{ verticalAlign: "middle", marginBottom: "2px", color: "#333333" }}
+    >
+      <path d="M4.5 1.5H2a.5.5 0 00-.5.5v8a.5.5 0 00.5.5h8a.5.5 0 00.5-.5V7.5" />
+      <path d="M7 1.5h3.5V5" />
+      <path d="M5 7L10.5 1.5" />
+    </svg>
+  );
 }
 
 function useIsCompact(breakpoint = 800) {
@@ -114,7 +136,20 @@ function TextContent({
           color: "#333333",
         }}
       >
-        {project.title}
+        {project.link ? (
+          <a
+            href={project.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-link"
+            style={{ color: "inherit", textDecoration: "none" }}
+          >
+            {project.title}
+            <ExternalLinkIcon />
+          </a>
+        ) : (
+          project.title
+        )}
       </motion.h3>
       <motion.p
         initial={{ opacity: 0, x: -30, scale: 0.95 }}
@@ -294,6 +329,25 @@ export default function Timeline() {
           {PROJECTS.map((project, index) => (
             <TimelineEntry key={`${project.year}-${project.title}`} project={project} index={index} compact={compact} />
           ))}
+
+          {/* Archive link */}
+          <div className={compact ? "" : "flex justify-center"}>
+            <a
+              href="/archives"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm hover:underline inline-link"
+              style={{
+                background: "#ffffff",
+                border: "1px solid rgba(0, 0, 0, 0.06)",
+                color: "#666666",
+                fontFamily: "var(--font-montserrat), sans-serif",
+                fontWeight: 300,
+                textDecoration: "none",
+                marginLeft: compact ? "28px" : undefined,
+              }}
+            >
+              + 36 more archived projects from 2013-2024
+            </a>
+          </div>
         </div>
       </div>
     </section>
