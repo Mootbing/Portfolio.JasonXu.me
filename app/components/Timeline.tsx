@@ -270,7 +270,7 @@ function TimelineEntry({
             year={project.year}
             title={project.title}
           />
-        ) : (
+        ) : isLeft ? null : (
           <TextContent project={project} isInView={isInView} />
         )}
       </div>

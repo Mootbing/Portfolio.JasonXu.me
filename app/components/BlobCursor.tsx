@@ -7,6 +7,7 @@ type HoverType = "header" | "contact" | "button" | "skill" | "underline";
 interface HoverTarget {
   type: HoverType;
   bounds: DOMRect;
+  rotation?: number;
 }
 
 const HOVER_CLASSES: Record<HoverType, string> = {
@@ -28,6 +29,7 @@ export default function BlobCursor() {
   const blobY = useRef(0);
   const blobWidth = useRef(DEFAULT_BLOB_SIZE);
   const blobHeight = useRef(DEFAULT_BLOB_SIZE);
+  const blobRotation = useRef(0);
   const currentHoverRef = useRef<HoverTarget | null>(null);
   const lastHoverTypeRef = useRef<HoverType | null>(null);
 
@@ -133,13 +135,33 @@ export default function BlobCursor() {
 
       // Polaroid cards (not in fullscreen/expanded mode)
       if (!document.body.classList.contains("polaroid-expanded")) {
-        const polaroid = target.closest(".bg-white.p-3.pb-14");
+        const polaroid = target.closest(".bg-white.p-3.pb-14") as HTMLElement | null;
         if (polaroid) {
           const rect = polaroid.getBoundingClientRect();
           if (isPointInRect(clientX, clientY, rect)) {
+            // Get rotation from the parent motion.div's transform matrix
+            let rotation = 0;
+            const motionParent = polaroid.parentElement;
+            if (motionParent) {
+              const transform = window.getComputedStyle(motionParent).transform;
+              if (transform && transform !== "none") {
+                const match = transform.match(/matrix\(([^)]+)\)/);
+                if (match) {
+                  const values = match[1].split(",").map(Number);
+                  rotation = Math.atan2(values[1], values[0]) * (180 / Math.PI);
+                }
+              }
+            }
+            const el = polaroid;
+            const pad = 4;
+            const cx = rect.left + rect.width / 2;
+            const cy = rect.top + rect.height / 2;
+            const w = el.offsetWidth + pad * 2;
+            const h = el.offsetHeight + pad * 2;
             return {
               type: "header",
-              bounds: createBounds(rect, { top: 4, right: 4, bottom: 4, left: 4 }),
+              bounds: new DOMRect(cx - w / 2, cy - h / 2, w, h),
+              rotation,
             };
           }
         }
@@ -206,6 +228,10 @@ export default function BlobCursor() {
           blobHeight.current,
           hover.bounds.height
         );
+        blobRotation.current = smoothTransition(
+          blobRotation.current,
+          hover.rotation ?? 0
+        );
       } else {
         blobX.current = smoothTransition(blobX.current, mouseX.current);
         blobY.current = smoothTransition(blobY.current, mouseY.current);
@@ -217,9 +243,10 @@ export default function BlobCursor() {
           blobHeight.current,
           DEFAULT_BLOB_SIZE
         );
+        blobRotation.current = smoothTransition(blobRotation.current, 0);
       }
 
-      blob.style.transform = "translate(-50%, -50%)";
+      blob.style.transform = `translate(-50%, -50%) rotate(${blobRotation.current}deg)`;
       blob.style.left = `${blobX.current}px`;
       blob.style.top = `${blobY.current}px`;
       blob.style.width = `${blobWidth.current}px`;

@@ -1,5 +1,21 @@
 [
   {
+    "year": "2026.02",
+    "title": "useNemo.dev",
+    "description": "Google for Agents. Search & discovery layer for agents and users. 30k+ search requests in 2 weeks. 5k+ active users",
+    "link": "https://usenemo.dev",
+    "tags": [],
+    "polaroids": []
+  },
+  {
+    "year": "2026.01",
+    "title": "Payo.dev",
+    "description": "Agent to agent payment infrastructure",
+    "link": "https://payo.dev",
+    "tags": [],
+    "polaroids": []
+  },
+  {
     "year": "2026.01",
     "title": "Tracky",
     "description": "Got inspired by Flighty and decided to build a clone for trains (Amtrak)",
@@ -15,7 +31,7 @@
     "year": "2025.12",
     "title": "Tryflux.ai",
     "description": "Vibe-coding cli for iMessage agents with 1-click agent deployment",
-    "link": "",
+    "link": "https://tryflux.ai",
     "tags": ["Next.js", "Docker", "GRPC"],
     "polaroids": [
       { "frontSquareMedia": "./images/flux/1.mp4", "frontCoverMedia": "", "caption": "Gary's Demo" },
@@ -27,7 +43,7 @@
     "year": "2025.11",
     "title": "Cow Farm Simulator",
     "description": "Breed & manage your herd of cows. Remastered Scratch game from 2018",
-    "link": "",
+    "link": "https://cow-farm-simulator-remastered.vercel.app/",
     "tags": ["Next.js", "Supabase", "Figma"],
     "polaroids": [
       { "frontSquareMedia": "./images/cow-farm-simulator/js.mp4", "frontCoverMedia": "", "caption": "Revamped :)" },
@@ -38,7 +54,7 @@
     "year": "2025.11",
     "title": "Bullhorn Aerosystems",
     "description": "Accidently open-sourced Gotham by Palantir. Originally a 3d-engine for ATC simulations & trainings",
-    "link": "",
+    "link": "https://bullhorn-aerosystems.vercel.app/",
     "tags": ["Next.js", "API"],
     "polaroids": [
       { "frontSquareMedia": "./images/bullhorn/bullhorn.mp4", "frontCoverMedia": "", "caption": "Cowlantir" }
