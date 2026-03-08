@@ -342,7 +342,7 @@ export default function Timeline() {
                 fontFamily: "var(--font-montserrat), sans-serif",
                 fontWeight: 300,
                 textDecoration: "none",
-                marginLeft: compact ? "28px" : undefined,
+                marginLeft: compact ? "-20px" : undefined,
               }}
             >
               + 36 more archived projects from 2013-2024
