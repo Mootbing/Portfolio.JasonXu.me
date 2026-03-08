@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState, useEffect } from "react";
-import { motion, useScroll, useSpring, useInView } from "framer-motion";
+import { motion, useScroll, useSpring, useInView, useTransform } from "framer-motion";
 import PolaroidStack from "./PolaroidCard";
 import type { PolaroidItem } from "./PolaroidCard";
 import PROJECTS from "../../public/data/Work.json";
@@ -77,13 +77,7 @@ function TimelineNode() {
         ease: [0.25, 0.46, 0.45, 0.94],
       }}
     >
-      <div
-        className="w-4 h-4 rounded-full border-2"
-        style={{
-          borderColor: "#333333",
-          background: "#ffffff",
-        }}
-      />
+      <span style={{ fontSize: "14px", lineHeight: 1 }}>💩</span>
     </motion.div>
   );
 }
@@ -292,6 +286,9 @@ export default function Timeline() {
     restDelta: 0.001,
   });
 
+  const cowTop = useTransform(smoothProgress, (v) => `${v * 100}%`);
+  const cowRotate = useTransform(smoothProgress, [0, 1], [0, 14400]);
+
   return (
     <section
       ref={containerRef}
@@ -322,6 +319,21 @@ export default function Timeline() {
               height: "100%",
             }}
           />
+
+          {/* Cow head at the leading edge */}
+          <motion.div
+            className="absolute left-1/2 -translate-x-1/2"
+            style={{
+              top: cowTop,
+              rotate: cowRotate,
+              fontSize: "18px",
+              lineHeight: 1,
+              marginTop: "-10px",
+              zIndex: 1,
+            }}
+          >
+            🐮
+          </motion.div>
         </div>
 
         {/* Timeline entries */}
