@@ -307,7 +307,7 @@ export default function Timeline() {
           {/* Background track */}
           <div
             className="absolute inset-0"
-            style={{ background: "rgba(255, 204, 0, 0.15)" }}
+            style={{ background: "rgba(0, 0, 0, 0.06)" }}
           />
 
           {/* Animated fill */}
