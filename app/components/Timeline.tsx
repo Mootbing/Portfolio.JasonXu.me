@@ -77,7 +77,7 @@ function TimelineNode() {
         ease: [0.25, 0.46, 0.45, 0.94],
       }}
     >
-      <span style={{ fontSize: "14px", lineHeight: 1 }}>💩</span>
+      <span style={{ fontSize: "14px", lineHeight: 1 }}>🧀</span>
     </motion.div>
   );
 }
@@ -307,14 +307,14 @@ export default function Timeline() {
           {/* Background track */}
           <div
             className="absolute inset-0"
-            style={{ background: "rgba(0, 0, 0, 0.06)" }}
+            style={{ background: "rgba(255, 204, 0, 0.15)" }}
           />
 
           {/* Animated fill */}
           <motion.div
             className="absolute top-0 left-0 right-0 origin-top"
             style={{
-              background: "#333333",
+              background: "#FFCC00",
               scaleY: smoothProgress,
               height: "100%",
             }}
