@@ -326,7 +326,7 @@ export default function Timeline() {
         <motion.div
           className={`absolute ${
             compact
-              ? "left-[8px]"
+              ? "left-[8px] -translate-x-1/2"
               : "left-1/2 -translate-x-1/2"
           }`}
           style={{
