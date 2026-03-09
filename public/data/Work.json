@@ -22,9 +22,12 @@
     "link": "",
     "tags": ["Expo", "GTFS"],
     "polaroids": [
-      { "frontSquareMedia": "./images/tracky/train.mov", "frontCoverMedia": "", "caption": "train tracking" },
-      { "frontSquareMedia": "./images/tracky/map.mov", "frontCoverMedia": "", "caption": "route maps" },
-      { "frontSquareMedia": "./images/tracky/station.mov", "frontCoverMedia": "", "caption": "stations" }
+      { "frontSquareMedia": "./images/tracky/train_add_and_details.mp4", "frontCoverMedia": "", "caption": "adding train & train details" },
+      { "frontSquareMedia": "./images/tracky/List_and_passport.mp4", "frontCoverMedia": "", "caption": "trip history page" },
+      { "frontSquareMedia": "./images/tracky/live_train_map.mp4", "frontCoverMedia": "", "caption": "live train map" },
+      { "frontSquareMedia": "./images/tracky/station_details.mp4", "frontCoverMedia": "", "caption": "station details" },
+      { "frontSquareMedia": "./images/tracky/live_activites_and_widgets.png", "frontCoverMedia": "", "caption": "live activites and widgets" },
+      { "frontSquareMedia": "./images/tracky/map_features.mp4", "frontCoverMedia": "", "caption": "map features" }
     ]
   },
   {
