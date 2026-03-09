@@ -12,7 +12,7 @@ interface TimelineProject {
   description: string;
   link?: string;
   tags: string[];
-  badges?: ({ href: string; src: string; alt: string; width: number; height: number } | { text: string })[];
+  badges?: ({ href: string; src: string; alt: string; width: number; height: number; ml?: number } | { text: string })[];
   badgesMt?: number;
   polaroids?: PolaroidItem[];
 }
@@ -211,12 +211,14 @@ function TextContent({
                   letterSpacing: "0.02em",
                   whiteSpace: "nowrap",
                   marginRight: -8,
+                  zIndex: 1,
+                  position: "relative" as const,
                 }}
               >
                 {badge.text}
               </span>
             ) : (
-              <a key={i} href={badge.href} target="_blank" rel="noopener noreferrer">
+              <a key={i} href={badge.href} target="_blank" rel="noopener noreferrer" style={badge.ml ? { marginLeft: badge.ml } : undefined}>
                 <img
                   src={badge.src}
                   alt={badge.alt}
