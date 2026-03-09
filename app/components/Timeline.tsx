@@ -69,7 +69,7 @@ function TimelineNode() {
   return (
     <motion.div
       ref={ref}
-      className="z-0"
+      className="z-10"
       initial={{ scale: 0, opacity: 0 }}
       animate={visible ? { scale: 1, opacity: 1 } : { scale: 0, opacity: 0 }}
       transition={{
@@ -77,7 +77,7 @@ function TimelineNode() {
         ease: [0.25, 0.46, 0.45, 0.94],
       }}
     >
-      <span style={{ fontSize: "14px", lineHeight: 1 }}>🧀</span>
+      <img src="/milk.svg" alt="milk" style={{ width: "24px", height: "24px", background: "#ffffff", borderRadius: "50%", padding: "6px", boxSizing: "content-box", transform: "translateX(-5px)" }} />
     </motion.div>
   );
 }
@@ -235,7 +235,7 @@ function TimelineEntry({
       )}
 
       {/* Center node */}
-      <div className="relative flex items-center justify-center w-4">
+      <div className="relative flex items-center justify-center w-4" style={{ overflow: "visible" }}>
         <TimelineNode />
       </div>
 
@@ -298,7 +298,7 @@ export default function Timeline() {
       <div className={compact ? "relative max-w-md mx-auto" : "relative"}>
         {/* The growing vertical line */}
         <div
-          className={`absolute top-0 bottom-0 w-px ${
+          className={`absolute top-0 bottom-0 w-[2px] ${
             compact
               ? "left-[8px]"
               : "left-1/2 -translate-x-1/2"
@@ -314,7 +314,7 @@ export default function Timeline() {
           <motion.div
             className="absolute top-0 left-0 right-0 origin-top"
             style={{
-              background: "#FFCC00",
+              background: "#000000",
               scaleY: smoothProgress,
               height: "100%",
             }}
@@ -329,7 +329,7 @@ export default function Timeline() {
               fontSize: "18px",
               lineHeight: 1,
               marginTop: "-10px",
-              zIndex: 1,
+              zIndex: 50,
             }}
           >
             🐮
