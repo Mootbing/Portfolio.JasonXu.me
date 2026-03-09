@@ -32,7 +32,7 @@
   {
     "year": "Dec 2025",
     "title": "Flux IDE",
-    "description": "Agentic-coding IDE for creating & deploying iMessage agents in one click. #1 on Product Hunt.",
+    "description": "Agentic-coding IDE for creating & deploying iMessage agents in one click.",
     "link": "https://www.producthunt.com/products/flux-14",
     "tags": ["Next", "Postgres", "GRPC"],
     "badgesMt": -4,
@@ -65,7 +65,7 @@
   {
     "year": "Nov 2025",
     "title": "Bullhorn Aerosystems",
-    "description": "Accidently open-sourced Gotham by Palantir. Originally a 3d-engine for ATC simulations & trainings",
+    "description": "Open-sourced Gotham by Palantir. Commerical edition built with OpenSky API and global airport data.",
     "link": "https://bullhorn-aerosystems.vercel.app/",
     "tags": ["Next", "OpenSky API"],
     "polaroids": [
@@ -75,7 +75,7 @@
   {
     "year": "Aug 2025",
     "title": "BrowserBase Clone",
-    "description": "Browserbase but powered by screenshots instead of DOM elements in chrome extension. Was faster than most web browsing models at the time. Got to meet Paul Klein",
+    "description": "Browserbase powered by DOM elements instead of screenshots in chrome extension. Talked to Paul Klein (CEO @ BrowserBase)",
     "link": "https://github.com/Mootbing/Browser-Use-Clone-But-Dom-And-Not-Screenshots",
     "tags": ["Extension", "OpenAI"],
     "polaroids": [
@@ -114,7 +114,7 @@
   {
     "year": "Jun 2025",
     "title": "YC AI Startup School Search",
-    "description": "Built vector-embedded repository for YCombinator AI Startup School data (speaker transcripts & chat logs). Got 300k+ views on LinkedIn, 500+ registered users, and 1M+ queries (~100k searches)",
+    "description": "Built vector-embedded search of YCombinator Startup School speaker transcripts & logs. Got 300k+ LinkedIn views and 1M+ queries",
     "link": "https://yc-ai-sus-search-engine.vercel.app/",
     "tags": ["Next", "Firebase Auth", "Pinecone"],
     "polaroids": [
