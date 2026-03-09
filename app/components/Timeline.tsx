@@ -395,15 +395,16 @@ export default function Timeline() {
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm hover:underline inline-link"
               style={{
                 background: "#ffffff",
-                border: "2px solid rgba(0, 0, 0, 0.06)",
+                border: "none",
                 color: "rgba(0, 0, 0, 0.15)",
                 fontFamily: "var(--font-montserrat), sans-serif",
                 fontWeight: 600,
+                fontStyle: "italic",
                 textDecoration: "none",
                 marginLeft: compact ? "-20px" : undefined,
               }}
             >
-              + 36 more archived projects from 2013-2024
+              +36 projects in 2013-2024
             </a>
           </div>
         </div>
