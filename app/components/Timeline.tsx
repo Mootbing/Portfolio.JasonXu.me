@@ -320,21 +320,26 @@ export default function Timeline() {
             }}
           />
 
-          {/* Cow head at the leading edge */}
-          <motion.div
-            className="absolute left-1/2 -translate-x-1/2"
-            style={{
-              top: cowTop,
-              rotate: cowRotate,
-              fontSize: "18px",
-              lineHeight: 1,
-              marginTop: "-10px",
-              zIndex: 50,
-            }}
-          >
-            🐮
-          </motion.div>
         </div>
+
+        {/* Cow head at the leading edge */}
+        <motion.div
+          className={`absolute ${
+            compact
+              ? "left-[8px]"
+              : "left-1/2 -translate-x-1/2"
+          }`}
+          style={{
+            top: cowTop,
+            rotate: cowRotate,
+            fontSize: "18px",
+            lineHeight: 1,
+            marginTop: "-10px",
+            zIndex: 50,
+          }}
+        >
+          🐮
+        </motion.div>
 
         {/* Timeline entries */}
         <div className="relative space-y-8 md:space-y-16">
@@ -353,7 +358,6 @@ export default function Timeline() {
                 color: "rgba(0, 0, 0, 0.15)",
                 fontFamily: "var(--font-montserrat), sans-serif",
                 fontWeight: 600,
-                fontStyle: "italic",
                 textDecoration: "none",
                 marginLeft: compact ? "-20px" : undefined,
               }}
