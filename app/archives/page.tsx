@@ -1,6 +1,6 @@
 const ARCHIVES = [
   { year: "Jun 2025", title: "Iron Empire", description: "Cloned my childhood's favorite game (中华铁路 @ QQ)", link: "", tags: ["Next", "Supabase", "Google Maps API"] },
-  { year: "Jan 2025", title: "Repository Analyzer", description: "Creates line-by-line breakdown of codebase to be summarized in a Readme.md file attachment", link: "", tags: ["Python"] },
+  { year: "Jan 2025", title: "Repository Analyzer", description: "Creates line-by-line breakdown of codebase to be summarized in a Readme.md file attachment", link: "https://github.com/Mootbing/repository-analytics", tags: ["Python"] },
   { year: "Dec 2023", title: "Browser Project", description: "Wrote glass-morphic browser 3 years before Apple got to it", link: "https://github.com/Mootbing/Lake-Browser-Project", tags: ["SwiftUI"] },
   { year: "Nov 2023", title: "Smarter", description: "Cluely in 2023", link: "https://github.com/Mootbing/Smart", tags: ["Python", "GPT"] },
   { year: "Sep 2023", title: "The Verse", description: "Landing page for a VR&AR startup using space for education", link: "", tags: ["Figma"] },
@@ -14,6 +14,7 @@ const ARCHIVES = [
   { year: "May 2023", title: "Simpact", description: "Genshin Impact with guns. Yes, I know, I was that degen", link: "https://github.com/Cowland-Game-Studios/Simpact", tags: ["UE5", "C++", "Blender"] },
   { year: "May 2023", title: "GNEC Hackathon Website", description: "Website for Global NGO Executive Committee's Hackathon I founded", link: "https://github.com/GNEC-Hackathon", tags: ["HTML", "CSS", "JS"] },
   { year: "Mar 2023", title: "Moot", description: "Didn't want to do homework. Wrote key terms & vocabulary extractor for web pages", link: "", tags: ["JS"] },
+  { year: "Feb 2023", title: "SLATE", description: "AR glasses for live transcription and translation", link: "https://studio.youtube.com/video/zlGLyyv3_8o/edit", tags: ["ESP32", "BLE", "React Native"] },
   { year: "Mar 2023", title: "MyTube", description: "Can't control myself so I deleted shorts, recommendations, and autoplay from YouTube UI", link: "", tags: ["JS"] },
   { year: "Jan 2023", title: "Journey", description: "Wrote trauma-responsive teaching game for refugee children used by Rotary International", link: "https://www.youtube.com/watch?v=LXthMbQGSg8", tags: ["Expo", "React Native"] },
   { year: "Nov 2022", title: "Holes", description: "Flashcard generator powered by GPT-3 as demo to faculty on abilities of ChatGPT in the classroom", link: "", tags: ["React", "Figma"] },

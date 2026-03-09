@@ -141,18 +141,6 @@ function PolaroidContent({
             className="absolute inset-0 w-full h-full object-cover pointer-events-none"
           />
         )}
-        {year && title && (
-          <span
-            className={`absolute bottom-2 right-2 pointer-events-none ${large ? "text-base" : "text-sm"}`}
-            style={{
-              fontFamily: "monospace",
-              color: "#ff0000",
-              letterSpacing: "0.05em",
-            }}
-          >
-            {year}-{String(photoIndex + 1).padStart(3, "0")}{item.frontSquareMedia ? item.frontSquareMedia.substring(item.frontSquareMedia.lastIndexOf(".")).toUpperCase() : ".DNG"}
-          </span>
-        )}
       </div>
       <p
         className={`mt-3 text-center pointer-events-none ${large ? "text-lg" : "text-base"}`}

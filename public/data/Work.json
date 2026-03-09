@@ -97,7 +97,7 @@
   {
     "year": "Jul 2025",
     "title": "NORMA",
-    "description": "Open-source mocap software for pose-tracking & 3D playback. Now used & maintained by University of Pennsylvania research staff under Professor Rajapakse",
+    "description": "Open-source mocap software for pose-tracking & 3D playback. Adopted for research use at Penn.",
     "link": "https://norma.mootbing.dev",
     "tags": ["Next", "Posenet", "Expo"],
     "badgesMt": -16,
@@ -148,9 +148,14 @@
   {
     "year": "Oct 2024",
     "title": "Black Hole Racing Game",
-    "description": "Unreal game for UPenn Perelman School of Medicine patient recovery",
+    "description": "Pose-based game for mobility-limited patient rehabilitation. Designed for clinical trials at University of Pennsylvania Perelman School of Medicine",
     "link": "",
     "tags": ["UE5", "C++"],
+    "badgesMt": -16,
+    "badges": [
+      { "text": "used by" },
+      { "href": "", "src": "./images/NORMA/Penn.png", "alt": "Perelman School of Medicine, University of Pennsylvania", "width": 110, "height": 45 }
+    ],
     "polaroids": [
       { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Black Hole" },
       { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "UE5 Game" },
@@ -182,14 +187,6 @@
       { "href": "", "src": "./images/17.jasonxu.me/best-ux-white.png", "alt": "CSSDA Best UX Design", "width": 45, "height": 45 },
       { "href": "", "src": "./images/17.jasonxu.me/best-innovation-white.png", "alt": "CSSDA Best Innovation", "width": 45, "height": 45 }
     ],
-    "polaroids": []
-  },
-  {
-    "year": "Feb 2023",
-    "title": "SLATE",
-    "description": "AR glasses for live transcription and translation",
-    "link": "https://studio.youtube.com/video/zlGLyyv3_8o/edit",
-    "tags": ["ESP32", "BLE", "React Native"],
     "polaroids": []
   }
 ]
