@@ -177,10 +177,10 @@
     "link": "https://17.jasonxu.me",
     "tags": ["Next", "Figma", "SVGs"],
     "badges": [
-      { "href": "https://www.awwwards.com/sites/my-life-story-at-17-jason-xu", "src": "./images/17.jasonxu.me/awwwards.svg", "alt": "Awwwards Honoree", "width": 40, "height": 130 },
       { "href": "", "src": "./images/17.jasonxu.me/best-ui-white.png", "alt": "CSSDA Best UI Design", "width": 45, "height": 45 },
       { "href": "", "src": "./images/17.jasonxu.me/best-ux-white.png", "alt": "CSSDA Best UX Design", "width": 45, "height": 45 },
-      { "href": "", "src": "./images/17.jasonxu.me/best-innovation-white.png", "alt": "CSSDA Best Innovation", "width": 45, "height": 45 }
+      { "href": "", "src": "./images/17.jasonxu.me/best-innovation-white.png", "alt": "CSSDA Best Innovation", "width": 45, "height": 45 },
+      { "href": "https://www.awwwards.com/sites/my-life-story-at-17-jason-xu", "src": "./images/17.jasonxu.me/awwwards.svg", "alt": "Awwwards Honoree", "width": 40, "height": 130 }
     ],
     "polaroids": []
   },
