@@ -163,19 +163,6 @@
     ]
   },
   {
-    "year": "Mar 2023",
-    "title": "Azure Speech Recognition",
-    "description": "Rewrote Microsoft's Azure speech recognition on Expo to allow continuous recognition",
-    "link": "https://github.com/Azure-Samples/cognitive-services-speech-sdk/graphs/contributors",
-    "tags": ["Expo", "Azure"],
-    "badgesMt": -32,
-    "badges": [
-      { "text": "merged to" },
-      { "href": "", "src": "./images/Speech-SDK/Microsoft-Azure-Logo.png", "alt": "Microsoft Azure", "width": 130, "height": 30 }
-    ],
-    "polaroids": []
-  },
-  {
     "year": "Jul 2023",
     "title": "17.JasonXu.me",
     "description": "Frontend scrolling website that got glazed hella",
@@ -186,6 +173,19 @@
       { "href": "", "src": "./images/17.jasonxu.me/best-ui-white.png", "alt": "CSSDA Best UI Design", "width": 45, "height": 45 },
       { "href": "", "src": "./images/17.jasonxu.me/best-ux-white.png", "alt": "CSSDA Best UX Design", "width": 45, "height": 45 },
       { "href": "", "src": "./images/17.jasonxu.me/best-innovation-white.png", "alt": "CSSDA Best Innovation", "width": 45, "height": 45 }
+    ],
+    "polaroids": []
+  },
+  {
+    "year": "Mar 2023",
+    "title": "Azure Speech Recognition",
+    "description": "Rewrote Microsoft's Azure speech recognition on Expo to allow continuous recognition",
+    "link": "https://github.com/Azure-Samples/cognitive-services-speech-sdk/graphs/contributors",
+    "tags": ["Expo", "Azure"],
+    "badgesMt": -32,
+    "badges": [
+      { "text": "merged to" },
+      { "href": "", "src": "./images/Speech-SDK/Microsoft-Azure-Logo.png", "alt": "Microsoft Azure", "width": 130, "height": 30 }
     ],
     "polaroids": []
   }
