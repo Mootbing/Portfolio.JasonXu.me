@@ -79,7 +79,7 @@ function TimelineNode() {
         ease: [0.25, 0.46, 0.45, 0.94],
       }}
     >
-      <img src="/milk.svg" alt="milk" style={{ width: "24px", height: "24px", background: "#ffffff", borderRadius: "50%", padding: "6px", boxSizing: "content-box", transform: "translateX(-5px)" }} />
+      <img src="/milk.svg" alt="milk" style={{ width: "30px", height: "30px", background: "#ffffff", borderRadius: "50%", padding: "6px", boxSizing: "content-box", transform: "translateX(-5px)" }} />
     </motion.div>
   );
 }
