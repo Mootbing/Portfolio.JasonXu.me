@@ -287,7 +287,7 @@ export default function Timeline() {
   });
 
   const cowTop = useTransform(smoothProgress, (v) => `${v * 100}%`);
-  const cowRotate = useTransform(smoothProgress, [0, 1], [0, 14400]);
+  const cowRotate = useTransform(smoothProgress, [0, 1], [0, 3600]);
 
   return (
     <section
