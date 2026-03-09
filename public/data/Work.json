@@ -8,7 +8,7 @@
     "badgesMt": -16,
     "badges": [
       { "text": "used by" },
-      { "href": "", "src": "./images/NEMO/neon.png", "alt": "Neon", "width": 80, "height": 35, "ml": -6 }
+      { "href": "", "src": "./images/NEMO/neon.png", "alt": "Neon", "width": 80, "height": 35, "style": "margin-left: -6px" }
     ],
     "polaroids": [
       { "frontSquareMedia": "./images/NEMO/thesis.png", "frontCoverMedia": "", "caption": "the Nemo thesis" }
@@ -167,6 +167,20 @@
     "badges": [
       { "text": "merged to" },
       { "href": "", "src": "./images/Speech-SDK/Microsoft-Azure-Logo.png", "alt": "Microsoft Azure", "width": 130, "height": 30 }
+    ],
+    "polaroids": []
+  },
+  {
+    "year": "Jul 2023",
+    "title": "17.JasonXu.me",
+    "description": "Frontend scrolling website that got glazed hella",
+    "link": "https://17.jasonxu.me",
+    "tags": ["Next", "Figma", "SVGs"],
+    "badges": [
+      { "href": "https://www.awwwards.com/sites/my-life-story-at-17-jason-xu", "src": "./images/17.jasonxu.me/awwwards.svg", "alt": "Awwwards Honoree", "width": 40, "height": 130 },
+      { "href": "", "src": "./images/17.jasonxu.me/best-ui-white.png", "alt": "CSSDA Best UI Design", "width": 45, "height": 45 },
+      { "href": "", "src": "./images/17.jasonxu.me/best-ux-white.png", "alt": "CSSDA Best UX Design", "width": 45, "height": 45 },
+      { "href": "", "src": "./images/17.jasonxu.me/best-innovation-white.png", "alt": "CSSDA Best Innovation", "width": 45, "height": 45 }
     ],
     "polaroids": []
   },

@@ -8,7 +8,6 @@ const ARCHIVES = [
   { year: "Jul 2023", title: "Simply", description: "Simply by Xatalyst Labs is a forked workout app for Empire Dragons NYC rowing team", link: "", tags: ["Expo", "Firebase"] },
   { year: "Jul 2023", title: "Xatalyst Labs", description: "R&D for pose-tracking mobile workout app", link: "", tags: ["Expo", "Firebase"] },
   { year: "Jul 2023", title: "hs.JasonXu.me", description: "High school portfolio", link: "https://hs.jasonxu.me", tags: ["Next", "Figma", "SVGs"] },
-  { year: "Jul 2023", title: "17.JasonXu.me", description: "Frontend scrolling website that got glazed hella", link: "https://17.jasonxu.me", tags: ["Next", "Figma", "SVGs"] },
   { year: "Jul 2023", title: "Yaemage", description: "Lazy-loading SVG library used in 17.JasonXu.me & The Verse", link: "https://github.com/Mootbing/Yaemage", tags: ["JS", "SVG"] },
   { year: "Jul 2023", title: "Now Playing Wallpaper", description: "Music Windows wallpaper (w/ Lively.js SDK)", link: "https://github.com/Mootbing/now-playing-wallpaper", tags: ["JS"] },
   { year: "Jun 2023", title: "DINO", description: "Landing page for Web3 startup", link: "", tags: ["Next", "Figma"] },

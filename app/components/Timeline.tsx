@@ -12,7 +12,7 @@ interface TimelineProject {
   description: string;
   link?: string;
   tags: string[];
-  badges?: ({ href: string; src: string; alt: string; width: number; height: number; ml?: number } | { text: string })[];
+  badges?: ({ href: string; src: string; alt: string; width: number; height: number; style?: string } | { text: string })[];
   badgesMt?: number;
   polaroids?: PolaroidItem[];
 }
@@ -196,7 +196,7 @@ function TextContent({
             ease: [0.25, 0.46, 0.45, 0.94],
             delay: 0.5,
           }}
-          className={`flex flex-wrap items-center gap-3 ${isRight ? "justify-end" : ""}`}
+          className={`flex flex-wrap items-start gap-3 ${isRight ? "justify-end" : ""}`}
           style={{ marginTop: project.badgesMt ?? 12 }}
         >
           {project.badges.map((badge, i) =>
@@ -213,12 +213,13 @@ function TextContent({
                   marginRight: -8,
                   zIndex: 1,
                   position: "relative" as const,
+                  alignSelf: "center",
                 }}
               >
                 {badge.text}
               </span>
             ) : (
-              <a key={i} href={badge.href} target="_blank" rel="noopener noreferrer" style={badge.ml ? { marginLeft: badge.ml } : undefined}>
+              <a key={i} href={badge.href} target="_blank" rel="noopener noreferrer" style={badge.style ? Object.fromEntries(badge.style.split(";").filter(Boolean).map(s => { const [k, v] = s.split(":").map(x => x.trim()); return [k.replace(/-([a-z])/g, (_, c) => c.toUpperCase()), v]; })) : undefined}>
                 <img
                   src={badge.src}
                   alt={badge.alt}
