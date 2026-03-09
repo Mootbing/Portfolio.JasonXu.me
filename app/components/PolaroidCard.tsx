@@ -40,19 +40,38 @@ function MediaElement({
   alt,
   className,
   ref,
+  playing,
 }: {
   src: string;
   alt?: string;
   className?: string;
   ref?: React.Ref<HTMLVideoElement>;
+  playing?: boolean;
 }) {
+  const internalRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const video = internalRef.current;
+    if (!video) return;
+    if (playing) {
+      video.currentTime = 0;
+      video.play().catch(() => {});
+    } else {
+      video.pause();
+      video.currentTime = 0;
+    }
+  }, [playing]);
+
   if (isVideo(src)) {
     return (
       <video
-        ref={ref}
+        ref={(node) => {
+          (internalRef as React.MutableRefObject<HTMLVideoElement | null>).current = node;
+          if (typeof ref === "function") ref(node);
+          else if (ref) (ref as React.MutableRefObject<HTMLVideoElement | null>).current = node;
+        }}
         src={src}
         className={className}
-        autoPlay
         loop
         muted
         playsInline
@@ -78,6 +97,8 @@ function PolaroidContent({
   sizeClass,
   stackOffset,
   videoRef,
+  playing,
+  large,
 }: {
   item: PolaroidItem;
   year?: string;
@@ -86,10 +107,12 @@ function PolaroidContent({
   sizeClass: string;
   stackOffset?: number;
   videoRef?: React.Ref<HTMLVideoElement>;
+  playing?: boolean;
+  large?: boolean;
 }) {
   return (
     <div
-      className="bg-white p-3 pb-14 shadow-md select-none"
+      className={`bg-white shadow-md select-none ${large ? "p-4 pb-16" : "p-3 pb-14"}`}
       style={{
         boxShadow:
           "0 4px 14px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.06)",
@@ -102,6 +125,7 @@ function PolaroidContent({
             src={item.frontSquareMedia}
             alt={item.caption}
             className="w-full h-full object-cover"
+            playing={playing}
           />
         ) : (
           <div
@@ -119,7 +143,7 @@ function PolaroidContent({
         )}
         {year && title && (
           <span
-            className="absolute bottom-2 right-2 text-sm pointer-events-none"
+            className={`absolute bottom-2 right-2 pointer-events-none ${large ? "text-base" : "text-sm"}`}
             style={{
               fontFamily: "monospace",
               color: "#ff0000",
@@ -131,7 +155,7 @@ function PolaroidContent({
         )}
       </div>
       <p
-        className="mt-3 text-center text-base pointer-events-none"
+        className={`mt-3 text-center pointer-events-none ${large ? "text-lg" : "text-base"}`}
         style={{
           fontFamily: "var(--font-caveat), cursive",
           fontWeight: 700,
@@ -158,6 +182,7 @@ function SinglePolaroid({
   title,
   photoIndex,
   videoRef,
+  playing,
 }: {
   item: PolaroidItem;
   rotation: number;
@@ -172,6 +197,7 @@ function SinglePolaroid({
   title?: string;
   photoIndex: number;
   videoRef?: React.Ref<HTMLVideoElement>;
+  playing?: boolean;
 }) {
   const x = useMotionValue(0);
   const rotateValue = useMotionValue(0);
@@ -326,6 +352,7 @@ function SinglePolaroid({
         sizeClass="w-56 h-56 md:w-64 md:h-64"
         stackOffset={stackOffset}
         videoRef={videoRef}
+        playing={playing}
       />
     </motion.div>
   );
@@ -477,8 +504,10 @@ function ExpandedPolaroidOverlay({
               year={year}
               title={title}
               photoIndex={photoIndex}
-              sizeClass="w-72 h-72 md:w-80 md:h-80"
+              sizeClass="w-80 h-80 md:w-96 md:h-96"
               videoRef={frontVideoRef}
+              playing={true}
+              large={true}
             />
           </div>
 
@@ -567,7 +596,7 @@ export default function PolaroidStack({
           delay: 0.25,
         }}
         className="relative"
-        style={{ width: "fit-content", height: "fit-content" }}
+        style={{ width: "fit-content", height: "fit-content", zIndex: 51 }}
       >
         {/* Invisible spacer to hold layout */}
         <div className="invisible">
@@ -594,6 +623,7 @@ export default function PolaroidStack({
             title={title}
             photoIndex={itemIndex}
             videoRef={stackPos === 0 ? topVideoRef : undefined}
+            playing={isInView}
           />
         ))}
       </motion.div>

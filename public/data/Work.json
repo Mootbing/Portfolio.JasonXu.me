@@ -2,10 +2,12 @@
   {
     "year": "2026.02",
     "title": "useNemo.dev",
-    "description": "Google for Agents. Search & discovery layer for agents and users. 30k+ search requests in 2 weeks. 5k+ active users",
+    "description": "Google for Agents. Search & remote skills & MCP execution for agents. 30k+ searches in 2 weeks.",
     "link": "https://usenemo.dev",
     "tags": [],
-    "polaroids": []
+    "polaroids": [
+      { "frontSquareMedia": "./images/NEMO/thesis.png", "frontCoverMedia": "", "caption": "the Nemo thesis" }
+    ]
   },
   {
     "year": "2026.01",
@@ -18,23 +20,23 @@
   {
     "year": "2026.01",
     "title": "Tracky",
-    "description": "Got inspired by Flighty and decided to build a clone for trains (Amtrak)",
+    "description": "The feature-for-feature Flighty inspired Amtrak train logbook & tracker",
     "link": "",
     "tags": ["Expo", "GTFS"],
     "polaroids": [
+      { "frontSquareMedia": "./images/tracky/live_activites_and_widgets.png", "frontCoverMedia": "", "caption": "live activites and widgets" },
       { "frontSquareMedia": "./images/tracky/train_add_and_details.mp4", "frontCoverMedia": "", "caption": "adding train & train details" },
       { "frontSquareMedia": "./images/tracky/List_and_passport.mp4", "frontCoverMedia": "", "caption": "trip history page" },
       { "frontSquareMedia": "./images/tracky/live_train_map.mp4", "frontCoverMedia": "", "caption": "live train map" },
       { "frontSquareMedia": "./images/tracky/station_details.mp4", "frontCoverMedia": "", "caption": "station details" },
-      { "frontSquareMedia": "./images/tracky/live_activites_and_widgets.png", "frontCoverMedia": "", "caption": "live activites and widgets" },
       { "frontSquareMedia": "./images/tracky/map_features.mp4", "frontCoverMedia": "", "caption": "map features" }
     ]
   },
   {
     "year": "2025.12",
-    "title": "Tryflux.ai",
+    "title": "Flux IDE",
     "description": "Vibe-coding cli for iMessage agents with 1-click agent deployment",
-    "link": "https://tryflux.ai",
+    "link": "https://www.producthunt.com/products/flux-14",
     "tags": ["Next.js", "Docker", "GRPC"],
     "polaroids": [
       { "frontSquareMedia": "./images/flux/1.mp4", "frontCoverMedia": "", "caption": "Gary's Demo" },
