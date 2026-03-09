@@ -398,7 +398,7 @@ export default function Timeline() {
                 border: "none",
                 color: "rgba(0, 0, 0, 0.15)",
                 fontFamily: "var(--font-montserrat), sans-serif",
-                fontWeight: 600,
+                fontWeight: 400,
                 fontStyle: "italic",
                 textDecoration: "none",
                 marginLeft: compact ? "-20px" : undefined,
