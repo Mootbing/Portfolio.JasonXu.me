@@ -102,7 +102,7 @@
     "tags": ["Next", "Posenet", "Expo"],
     "badgesMt": -16,
     "badges": [
-      { "text": "maintained by" },
+      { "text": "used by" },
       { "href": "", "src": "./images/NORMA/Penn.png", "alt": "Perelman School of Medicine, University of Pennsylvania", "width": 110, "height": 45 }
     ],
     "polaroids": [
