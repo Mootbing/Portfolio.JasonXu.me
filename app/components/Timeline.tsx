@@ -12,6 +12,8 @@ interface TimelineProject {
   description: string;
   link?: string;
   tags: string[];
+  badges?: ({ href: string; src: string; alt: string; width: number; height: number } | { text: string })[];
+  badgesMt?: number;
   polaroids?: PolaroidItem[];
 }
 
@@ -104,11 +106,12 @@ function TextContent({
             ease: [0.25, 0.46, 0.45, 0.94],
             delay: 0.1,
           }}
-          className="block mb-1 text-sm tracking-widest uppercase"
+          className="block mb-1 tracking-widest uppercase"
           style={{
             fontFamily: "var(--font-montserrat), sans-serif",
             fontWeight: 300,
             color: "#999999",
+            fontSize: "0.7rem",
             letterSpacing: "0.1em",
           }}
         >
@@ -123,7 +126,7 @@ function TextContent({
           ease: [0.25, 0.46, 0.45, 0.94],
           delay: 0.2,
         }}
-        className="text-xl md:text-2xl mb-3 leading-tight"
+        className="text-xl md:text-2xl mb-1 leading-tight"
         style={{
           fontFamily: "var(--font-playfair), serif",
           fontWeight: 300,
@@ -145,6 +148,27 @@ function TextContent({
           project.title
         )}
       </motion.h3>
+      {project.tags.length > 0 && (
+        <motion.div
+          initial={{ opacity: 0, x: -30, scale: 0.95 }}
+          animate={isInView ? { opacity: 1, x: 0, scale: 1 } : undefined}
+          transition={{
+            duration: 0.5,
+            ease: [0.25, 0.46, 0.45, 0.94],
+            delay: 0.25,
+          }}
+          className="mb-3"
+          style={{
+            fontFamily: "monospace",
+            fontWeight: 300,
+            color: "#999999",
+            fontSize: "0.7rem",
+            letterSpacing: "0.02em",
+          }}
+        >
+          {project.tags.join(" · ")}
+        </motion.div>
+      )}
       <motion.p
         initial={{ opacity: 0, x: -30, scale: 0.95 }}
         animate={isInView ? { opacity: 1, x: 0, scale: 1 } : undefined}
@@ -163,34 +187,48 @@ function TextContent({
       >
         {project.description}
       </motion.p>
-      <motion.div
-        initial={{ opacity: 0, x: -20, scale: 0.95 }}
-        animate={isInView ? { opacity: 1, x: 0, scale: 1 } : undefined}
-        transition={{
-          duration: 0.5,
-          ease: [0.25, 0.46, 0.45, 0.94],
-          delay: 0.4,
-        }}
-        className={`flex flex-wrap gap-2 ${isRight ? "justify-end" : ""}`}
-      >
-        {project.tags.map((tag) => (
-          <span
-            key={tag}
-            className="inline-flex items-center whitespace-nowrap"
-            style={{
-              background: "rgba(0, 0, 0, 0.05)",
-              padding: "8px 14px",
-              borderRadius: "20px",
-              color: "#333333",
-              fontSize: "0.9em",
-              transition: "transform 0.2s ease, background-color 0.2s ease, color 0.2s ease",
-              transformOrigin: "center",
-            }}
-          >
-            {tag}
-          </span>
-        ))}
-      </motion.div>
+      {project.badges?.length ? (
+        <motion.div
+          initial={{ opacity: 0, x: -20, scale: 0.95 }}
+          animate={isInView ? { opacity: 1, x: 0, scale: 1 } : undefined}
+          transition={{
+            duration: 0.5,
+            ease: [0.25, 0.46, 0.45, 0.94],
+            delay: 0.5,
+          }}
+          className={`flex flex-wrap items-center gap-3 ${isRight ? "justify-end" : ""}`}
+          style={{ marginTop: project.badgesMt ?? 12 }}
+        >
+          {project.badges.map((badge, i) =>
+            "text" in badge ? (
+              <span
+                key={i}
+                style={{
+                  fontFamily: "var(--font-montserrat), sans-serif",
+                  fontWeight: 300,
+                  color: "#999999",
+                  fontSize: "0.7rem",
+                  letterSpacing: "0.02em",
+                  whiteSpace: "nowrap",
+                  marginRight: -8,
+                }}
+              >
+                {badge.text}
+              </span>
+            ) : (
+              <a key={i} href={badge.href} target="_blank" rel="noopener noreferrer">
+                <img
+                  src={badge.src}
+                  alt={badge.alt}
+                  width={badge.width}
+                  height={badge.height}
+                  className="border-0 outline-0"
+                />
+              </a>
+            )
+          )}
+        </motion.div>
+      ) : null}
     </div>
   );
 }

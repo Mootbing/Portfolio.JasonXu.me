@@ -1,24 +1,21 @@
 [
   {
-    "year": "2026.02",
+    "year": "Feb 2026",
     "title": "useNemo.dev",
     "description": "Google for Agents. Search & remote skills & MCP execution for agents. 30k+ searches in 2 weeks.",
     "link": "https://usenemo.dev",
-    "tags": [],
+    "tags": ["Next", "Neon"],
+    "badgesMt": -16,
+    "badges": [
+      { "text": "used by" },
+      { "href": "", "src": "./images/NEMO/neon.png", "alt": "Neon", "width": 80, "height": 35 }
+    ],
     "polaroids": [
       { "frontSquareMedia": "./images/NEMO/thesis.png", "frontCoverMedia": "", "caption": "the Nemo thesis" }
     ]
   },
   {
-    "year": "2026.01",
-    "title": "Payo.dev",
-    "description": "Agent to agent payment infrastructure",
-    "link": "https://payo.dev",
-    "tags": [],
-    "polaroids": []
-  },
-  {
-    "year": "2026.01",
+    "year": "Jan 2026",
     "title": "Tracky",
     "description": "The feature-for-feature Flighty inspired Amtrak train logbook & tracker",
     "link": "",
@@ -33,40 +30,50 @@
     ]
   },
   {
-    "year": "2025.12",
+    "year": "Dec 2025",
     "title": "Flux IDE",
-    "description": "Vibe-coding cli for iMessage agents with 1-click agent deployment",
+    "description": "Agentic-coding IDE for creating & deploying iMessage agents in one click. #1 on Product Hunt.",
     "link": "https://www.producthunt.com/products/flux-14",
-    "tags": ["Next.js", "Docker", "GRPC"],
+    "tags": ["Next", "Postgres", "GRPC"],
+    "badgesMt": -4,
+    "badges": [
+      {
+        "href": "https://www.producthunt.com/products/flux-14?embed=true&utm_source=badge-top-post-badge&utm_medium=badge&utm_campaign=badge-flux-c4240f1a-2941-4e8f-b9c9-3aeeb45815fe",
+        "src": "https://api.producthunt.com/widgets/embed-image/v1/top-post-badge.svg?post_id=1057545&theme=light&period=daily&t=1773040534132",
+        "alt": "Flux - Build your own agents in iMessage | Product Hunt",
+        "width": 188,
+        "height": 41
+      }
+    ],
     "polaroids": [
-      { "frontSquareMedia": "./images/flux/1.mp4", "frontCoverMedia": "", "caption": "Gary's Demo" },
+      { "frontSquareMedia": "./images/flux/1.mp4", "frontCoverMedia": "", "caption": "Launch demo (ft. Gary)" },
       { "frontSquareMedia": "./images/flux/2.png", "frontCoverMedia": "", "caption": "Flux (in convo)" },
       { "frontSquareMedia": "./images/flux/3.jpg", "frontCoverMedia": "", "caption": "the Photon Residency <3" }
     ]
   },
   {
-    "year": "2025.11",
+    "year": "Nov 2025",
     "title": "Cow Farm Simulator",
-    "description": "Breed & manage your herd of cows. Remastered Scratch game from 2018",
+    "description": "Moo? Moo. Remastering a Scratch game from 2018. Manage your herd of cows and craft diary products",
     "link": "https://cow-farm-simulator-remastered.vercel.app/",
-    "tags": ["Next.js", "Supabase", "Figma"],
+    "tags": ["Next", "Supabase", "Figma"],
     "polaroids": [
-      { "frontSquareMedia": "./images/cow-farm-simulator/js.mp4", "frontCoverMedia": "", "caption": "Revamped :)" },
-      { "frontSquareMedia": "./images/cow-farm-simulator/scratch.mp4", "frontCoverMedia": "", "caption": "Scratch ver (2018)" }
+      { "frontSquareMedia": "./images/cow-farm-simulator/js.mp4", "frontCoverMedia": "", "caption": "revamped :)" },
+      { "frontSquareMedia": "./images/cow-farm-simulator/scratch.mp4", "frontCoverMedia": "", "caption": "Scratch ver. (est. 2018)" }
     ]
   },
   {
-    "year": "2025.11",
+    "year": "Nov 2025",
     "title": "Bullhorn Aerosystems",
     "description": "Accidently open-sourced Gotham by Palantir. Originally a 3d-engine for ATC simulations & trainings",
     "link": "https://bullhorn-aerosystems.vercel.app/",
-    "tags": ["Next.js", "API"],
+    "tags": ["Next", "OpenSky API"],
     "polaroids": [
       { "frontSquareMedia": "./images/bullhorn/bullhorn.mp4", "frontCoverMedia": "", "caption": "Cowlantir" }
     ]
   },
   {
-    "year": "2025.08",
+    "year": "Aug 2025",
     "title": "BrowserBase Clone",
     "description": "Browserbase but powered by screenshots instead of DOM elements in chrome extension. Was faster than most web browsing models at the time. Got to meet Paul Klein",
     "link": "https://github.com/Mootbing/Browser-Use-Clone-But-Dom-And-Not-Screenshots",
@@ -76,7 +83,7 @@
     ]
   },
   {
-    "year": "2025.07",
+    "year": "Jul 2025",
     "title": "Linge",
     "description": "Tinder + Hinge = Linge. Swipe through weekly coffee chat matches",
     "link": "",
@@ -88,11 +95,16 @@
     ]
   },
   {
-    "year": "2025.07",
+    "year": "Jul 2025",
     "title": "NORMA",
     "description": "Open-source mocap software for pose-tracking & 3D playback. Now used & maintained by University of Pennsylvania research staff under Professor Rajapakse",
-    "link": "",
-    "tags": ["Next.js", "Posenet", "Expo"],
+    "link": "https://norma.mootbing.dev",
+    "tags": ["Next", "Posenet", "Expo"],
+    "badgesMt": -16,
+    "badges": [
+      { "text": "maintained by" },
+      { "href": "", "src": "./images/NORMA/Penn.png", "alt": "Perelman School of Medicine, University of Pennsylvania", "width": 110, "height": 45 }
+    ],
     "polaroids": [
       { "frontSquareMedia": "./images/NORMA/recording.mp4", "frontCoverMedia": "", "caption": "Posture analysis" },
       { "frontSquareMedia": "./images/NORMA/playback.mp4", "frontCoverMedia": "", "caption": "pose playback" },
@@ -100,33 +112,21 @@
     ]
   },
   {
-    "year": "2025.06",
+    "year": "Jun 2025",
     "title": "YC AI Startup School Search",
     "description": "Built vector-embedded repository for YCombinator AI Startup School data (speaker transcripts & chat logs). Got 300k+ views on LinkedIn, 500+ registered users, and 1M+ queries (~100k searches)",
-    "link": "",
-    "tags": ["Next.js", "Firebase Auth", "Pinecone"],
+    "link": "https://yc-ai-sus-search-engine.vercel.app/",
+    "tags": ["Next", "Firebase Auth", "Pinecone"],
     "polaroids": [
       { "frontSquareMedia": "./images/YCSearch/search.mp4", "frontCoverMedia": "", "caption": "YC vector search" }
     ]
   },
   {
-    "year": "2025.06",
-    "title": "Iron Empire",
-    "description": "Cloned my childhood's favorite game (中华铁路 @ QQ)",
-    "link": "",
-    "tags": ["Next.js", "Supabase", "Google Maps API"],
-    "polaroids": [
-      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Iron Empire" },
-      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Train Game" },
-      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Station Map" }
-    ]
-  },
-  {
-    "year": "2025.05",
+    "year": "May 2025",
     "title": "Moonbeam",
     "description": "AI career planner. Build timelines on how to get your dream job based on your school's alumni who are there & their former stats",
     "link": "",
-    "tags": ["Next.js", "Supabase", "Clado"],
+    "tags": ["Next", "Supabase", "Clado"],
     "polaroids": [
       { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Demo" },
       { "frontSquareMedia": "./images/moonbeam/UI.jpg", "frontCoverMedia": "", "caption": "UI Draft" },
@@ -134,7 +134,7 @@
     ]
   },
   {
-    "year": "2025.01",
+    "year": "Jan 2025",
     "title": "Poke",
     "description": "Soft-\"where\" to nudge your friends to hang out based on physical proximity and calendar availability",
     "link": "",
@@ -146,17 +146,7 @@
     ]
   },
   {
-    "year": "2025.01",
-    "title": "Repository Analyzer",
-    "description": "Creates line-by-line breakdown of codebase to be summarized in a Readme.md file attachment",
-    "link": "",
-    "tags": ["Python"],
-    "polaroids": [
-      { "frontSquareMedia": "./images/repository-analytics/md.png", "frontCoverMedia": "", "caption": "Readme.md integration" }
-    ]
-  },
-  {
-    "year": "2024.10",
+    "year": "Oct 2024",
     "title": "Black Hole Racing Game",
     "description": "Unreal game for UPenn Perelman School of Medicine patient recovery",
     "link": "",
@@ -166,5 +156,26 @@
       { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "UE5 Game" },
       { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Patient Recovery" }
     ]
+  },
+  {
+    "year": "Mar 2023",
+    "title": "Azure Speech Recognition",
+    "description": "Rewrote Microsoft's Azure speech recognition on Expo to allow continuous recognition",
+    "link": "https://github.com/Azure-Samples/cognitive-services-speech-sdk/graphs/contributors",
+    "tags": ["Expo", "Azure"],
+    "badgesMt": -32,
+    "badges": [
+      { "text": "merged to" },
+      { "href": "", "src": "./images/Speech-SDK/Microsoft-Azure-Logo.png", "alt": "Microsoft Azure", "width": 130, "height": 30 }
+    ],
+    "polaroids": []
+  },
+  {
+    "year": "Feb 2023",
+    "title": "SLATE",
+    "description": "AR glasses for live transcription and translation",
+    "link": "https://studio.youtube.com/video/zlGLyyv3_8o/edit",
+    "tags": ["ESP32", "BLE", "React Native"],
+    "polaroids": []
   }
 ]
