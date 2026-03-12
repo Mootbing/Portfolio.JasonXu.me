@@ -180,7 +180,7 @@
     "year": "Mar 2023",
     "title": "Azure Speech Recognition",
     "description": "Rewrote Microsoft's Azure speech recognition on Expo to allow continuous recognition",
-    "link": "https://github.com/Azure-Samples/cognitive-services-speech-sdk/graphs/contributors",
+    "link": "https://github.com/Mootbing/speech-sdk-continuous-recognition-react-native",
     "tags": ["Expo", "Azure"],
     "badgesMt": -32,
     "badges": [
