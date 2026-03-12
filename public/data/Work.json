@@ -17,8 +17,8 @@
   {
     "year": "Jan 2026",
     "title": "Tracky",
-    "description": "The feature-for-feature Flighty inspired Amtrak train logbook & tracker",
-    "link": "",
+    "description": "The feature-for-feature Flighty inspired Amtrak train logbook & tracker. 10k+ views <24h",
+    "link": "https://trytracky.com/",
     "tags": ["Expo", "GTFS"],
     "polaroids": [
       { "frontSquareMedia": "./images/tracky/live_activites_and_widgets.png", "frontCoverMedia": "", "caption": "live activites and widgets" },
