@@ -6,10 +6,6 @@
     "link": "https://usenemo.dev",
     "tags": ["Next", "Neon"],
     "badgesMt": -16,
-    "badges": [
-      { "text": "used by" },
-      { "href": "", "src": "./images/NEMO/neon.png", "alt": "Neon", "width": 80, "height": 35, "style": "margin-left: -6px" }
-    ],
     "polaroids": [
       { "frontSquareMedia": "./images/NEMO/thesis.png", "frontCoverMedia": "", "caption": "the Nemo thesis" }
     ]
