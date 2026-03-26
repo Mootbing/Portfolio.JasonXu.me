@@ -2,7 +2,7 @@
   {
     "year": "Feb 2026",
     "title": "useNemo.dev",
-    "description": "Google for Agents. Search & remote skills & MCP execution for agents. 30k+ searches in 2 weeks.",
+    "description": "Google for Agents. Search & execute remote skills & MCP for agents. 30k+ searches in 2 weeks.",
     "link": "https://usenemo.dev",
     "tags": ["Next", "Neon"],
     "badgesMt": -16,
@@ -20,6 +20,11 @@
     "description": "The feature-for-feature Flighty inspired Amtrak train logbook & tracker. 10k+ views <24h",
     "link": "https://trytracky.com/",
     "tags": ["Expo", "GTFS"],
+    "badgesMt": -16,
+    "badges": [
+      { "text": "Partnered w/ " },
+      { "href": "", "src": "./images/tracky/r4l.png", "alt": "Rail4Less", "width": 30, "height": 30, "style": "margin-left: 2px" }
+    ],
     "polaroids": [
       { "frontSquareMedia": "./images/tracky/live_activites_and_widgets.png", "frontCoverMedia": "", "caption": "live activites and widgets" },
       { "frontSquareMedia": "./images/tracky/train_add_and_details.mp4", "frontCoverMedia": "", "caption": "adding train & train details" },
