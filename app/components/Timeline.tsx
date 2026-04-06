@@ -225,6 +225,8 @@ function TextContent({
                   alt={badge.alt}
                   width={badge.width}
                   height={badge.height}
+                  loading="lazy"
+                  decoding="async"
                   className="border-0 outline-0"
                 />
               </a>

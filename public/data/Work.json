@@ -1,5 +1,15 @@
 [
   {
+    "year": "Mar 2026",
+    "title": "Ball Knowledge",
+    "description": "NBA game locator. Find nearby games, check schedules, and grab tickets powered by the Ticketmaster API.",
+    "link": "",
+    "tags": ["Next", "REST API", "Ticketmaster API"],
+    "polaroids": [
+      { "frontSquareMedia": "./images/Ball Knowledge/Ball Knowledge.mp4", "frontCoverMedia": "", "caption": "Ball Knowledge" }
+    ]
+  },
+  {
     "year": "Feb 2026",
     "title": "useNemo.dev",
     "description": "Google for Agents. Search & execute remote skills & MCP for agents. 30k+ searches in 2 weeks.",
@@ -23,15 +33,15 @@
     "badgesMt": -16,
     "badges": [
       { "text": "Partnered w/ " },
-      { "href": "", "src": "./images/tracky/r4l.png", "alt": "Rail4Less", "width": 30, "height": 30, "style": "margin-left: 2px" }
+      { "href": "", "src": "./images/Tracky/r4l.png", "alt": "Rail4Less", "width": 30, "height": 30, "style": "margin-left: 2px" }
     ],
     "polaroids": [
-      { "frontSquareMedia": "./images/tracky/live_activites_and_widgets.png", "frontCoverMedia": "", "caption": "live activites and widgets" },
-      { "frontSquareMedia": "./images/tracky/train_add_and_details.mp4", "frontCoverMedia": "", "caption": "adding train & train details" },
-      { "frontSquareMedia": "./images/tracky/List_and_passport.mp4", "frontCoverMedia": "", "caption": "trip history page" },
-      { "frontSquareMedia": "./images/tracky/live_train_map.mp4", "frontCoverMedia": "", "caption": "live train map" },
-      { "frontSquareMedia": "./images/tracky/station_details.mp4", "frontCoverMedia": "", "caption": "station details" },
-      { "frontSquareMedia": "./images/tracky/map_features.mp4", "frontCoverMedia": "", "caption": "map features" }
+      { "frontSquareMedia": "./images/Tracky/live_activites_and_widgets.png", "frontCoverMedia": "", "caption": "live activites and widgets" },
+      { "frontSquareMedia": "./images/Tracky/train_add_and_details.mp4", "frontCoverMedia": "", "caption": "adding train & train details" },
+      { "frontSquareMedia": "./images/Tracky/List_and_passport.mp4", "frontCoverMedia": "", "caption": "trip history page" },
+      { "frontSquareMedia": "./images/Tracky/live_train_map.mp4", "frontCoverMedia": "", "caption": "live train map" },
+      { "frontSquareMedia": "./images/Tracky/station_details.mp4", "frontCoverMedia": "", "caption": "station details" },
+      { "frontSquareMedia": "./images/Tracky/map_features.mp4", "frontCoverMedia": "", "caption": "map features" }
     ]
   },
   {
@@ -51,9 +61,9 @@
       }
     ],
     "polaroids": [
-      { "frontSquareMedia": "./images/flux/1.mp4", "frontCoverMedia": "", "caption": "Launch demo (ft. Gary)" },
-      { "frontSquareMedia": "./images/flux/2.png", "frontCoverMedia": "", "caption": "Flux (in convo)" },
-      { "frontSquareMedia": "./images/flux/3.jpg", "frontCoverMedia": "", "caption": "the Photon Residency <3" }
+      { "frontSquareMedia": "./images/Flux/1.mp4", "frontCoverMedia": "", "caption": "Launch demo (ft. Gary)" },
+      { "frontSquareMedia": "./images/Flux/2.png", "frontCoverMedia": "", "caption": "Flux (in convo)" },
+      { "frontSquareMedia": "./images/Flux/3.jpg", "frontCoverMedia": "", "caption": "the Photon Residency <3" }
     ]
   },
   {
@@ -63,8 +73,8 @@
     "link": "https://cow-farm-simulator-remastered.vercel.app/",
     "tags": ["Next", "Supabase", "Figma"],
     "polaroids": [
-      { "frontSquareMedia": "./images/cow-farm-simulator/js.mp4", "frontCoverMedia": "", "caption": "revamped :)" },
-      { "frontSquareMedia": "./images/cow-farm-simulator/scratch.mp4", "frontCoverMedia": "", "caption": "Scratch ver. (est. 2018)" }
+      { "frontSquareMedia": "./images/Cow Farm Simulator/js.mp4", "frontCoverMedia": "", "caption": "revamped :)" },
+      { "frontSquareMedia": "./images/Cow Farm Simulator/scratch.mp4", "frontCoverMedia": "", "caption": "Scratch ver. (est. 2018)" }
     ]
   },
   {
@@ -74,7 +84,7 @@
     "link": "https://bullhorn-aerosystems.vercel.app/",
     "tags": ["Next", "OpenSky API"],
     "polaroids": [
-      { "frontSquareMedia": "./images/bullhorn/bullhorn.mp4", "frontCoverMedia": "", "caption": "Cowlantir" }
+      { "frontSquareMedia": "./images/Bullhorn/bullhorn.mp4", "frontCoverMedia": "", "caption": "Cowlantir" }
     ]
   },
   {
@@ -84,7 +94,7 @@
     "link": "https://github.com/Mootbing/Browser-Use-Clone-But-Dom-And-Not-Screenshots",
     "tags": ["Extension", "OpenAI"],
     "polaroids": [
-      { "frontSquareMedia": "./images/browserbase/browse.mp4", "frontCoverMedia": "", "caption": "Browsing Agent (Real-time)" }
+      { "frontSquareMedia": "./images/Browserbase/browse.mp4", "frontCoverMedia": "", "caption": "Browsing Agent (Real-time)" }
     ]
   },
   {
@@ -95,8 +105,8 @@
     "tags": ["Flutter", "Supabase", "Clado"],
     "polaroids": [
       { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Linge" },
-      { "frontSquareMedia": "./images/linge/cheng.MOV", "frontCoverMedia": "", "caption": "Wrote entire product on overnight train" },
-      { "frontSquareMedia": "./images/linge/stickies.MOV", "frontCoverMedia": "", "caption": "'Kanban' board & UI" }
+      { "frontSquareMedia": "./images/Linge/cheng.MOV", "frontCoverMedia": "", "caption": "Wrote entire product on overnight train" },
+      { "frontSquareMedia": "./images/Linge/stickies.MOV", "frontCoverMedia": "", "caption": "'Kanban' board & UI" }
     ]
   },
   {
@@ -123,7 +133,7 @@
     "link": "https://yc-ai-sus-search-engine.vercel.app/",
     "tags": ["Next", "Firebase Auth", "Pinecone"],
     "polaroids": [
-      { "frontSquareMedia": "./images/YCSearch/search.mp4", "frontCoverMedia": "", "caption": "YC vector search" }
+      { "frontSquareMedia": "./images/YC Search/search.mp4", "frontCoverMedia": "", "caption": "YC vector search" }
     ]
   },
   {
@@ -134,7 +144,7 @@
     "tags": ["Next", "Supabase", "Clado"],
     "polaroids": [
       { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Demo" },
-      { "frontSquareMedia": "./images/moonbeam/UI.jpg", "frontCoverMedia": "", "caption": "UI Draft" },
+      { "frontSquareMedia": "./images/Moonbeam/UI.jpg", "frontCoverMedia": "", "caption": "UI Draft" },
       { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "" }
     ]
   },
@@ -190,7 +200,7 @@
     "badgesMt": -32,
     "badges": [
       { "text": "merged to" },
-      { "href": "", "src": "./images/Speech-SDK/Microsoft-Azure-Logo.png", "alt": "Microsoft Azure", "width": 130, "height": 30 }
+      { "href": "", "src": "./images/Speech SDK/Microsoft-Azure-Logo.png", "alt": "Microsoft Azure", "width": 130, "height": 30 }
     ],
     "polaroids": []
   }

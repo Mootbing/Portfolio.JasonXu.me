@@ -1,8 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import Timeline from "./components/Timeline";
+import dynamic from "next/dynamic";
 import Footer from "./components/Footer";
+
+const Timeline = dynamic(() => import("./components/Timeline"));
 
 const STYLES = {
   montserrat: {

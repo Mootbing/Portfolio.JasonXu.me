@@ -72,6 +72,7 @@ function MediaElement({
         }}
         src={src}
         className={className}
+        preload="none"
         loop
         muted
         playsInline
@@ -84,6 +85,8 @@ function MediaElement({
       src={src}
       alt={alt ?? ""}
       className={className}
+      loading="lazy"
+      decoding="async"
       draggable={false}
     />
   );
