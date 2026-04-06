@@ -3,7 +3,7 @@
     "year": "Mar 2026",
     "title": "Ball Knowledge",
     "description": "NBA game locator. Find nearby games, check schedules, and grab tickets powered by the Ticketmaster API.",
-    "link": "",
+    "link": "https://ball-knowledge-theta.vercel.app/",
     "tags": ["Next", "REST API", "Ticketmaster API"],
     "polaroids": [
       { "frontSquareMedia": "./images/Ball Knowledge/Ball Knowledge.mp4", "frontCoverMedia": "", "caption": "Ball Knowledge" }
