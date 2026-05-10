@@ -12,13 +12,13 @@
   {
     "year": "Feb 2026",
     "title": "useNemo.dev",
-    "description": "Google for Agents. Search & execute remote skills & MCP for agents. 30k+ searches in 2 weeks.",
+    "description": "Google for Agents. Search & execute remote skills & MCP for agents. ==30k+ searches in 2 weeks==.",
     "link": "https://usenemo.dev",
     "tags": ["Next", "Neon"],
     "badgesMt": -16,
     "badges": [
       { "text": "used by" },
-      { "href": "", "src": "./images/NEMO/neon.png", "alt": "Neon", "width": 80, "height": 35, "style": "margin-left: -6px" }
+      { "href": "", "src": "./images/NEMO/neon.png", "alt": "Neon", "width": 80, "height": 35, "style": "margin-left: -3px" }
     ],
     "polaroids": [
       { "frontSquareMedia": "./images/NEMO/thesis.png", "frontCoverMedia": "", "caption": "the Nemo thesis" }
@@ -27,14 +27,10 @@
   {
     "year": "Jan 2026",
     "title": "Tracky",
-    "description": "The feature-for-feature Flighty inspired Amtrak train logbook & tracker. Rail4Less partner (200k+ users).",
+    "description": "The feature-for-feature Flighty inspired Amtrak train logbook & tracker. ==Rail4Less.us partner (200k+ users)==.",
     "link": "https://trytracky.com/",
     "tags": ["Expo", "GTFS"],
     "badgesMt": -16,
-    "badges": [
-      { "text": "Partnered w/ " },
-      { "href": "", "src": "./images/Tracky/r4l.png", "alt": "Rail4Less", "width": 30, "height": 30, "style": "margin-left: 2px" }
-    ],
     "polaroids": [
       { "frontSquareMedia": "./images/Tracky/live_activites_and_widgets.png", "frontCoverMedia": "", "caption": "live activites and widgets" },
       { "frontSquareMedia": "./images/Tracky/train_add_and_details.mp4", "frontCoverMedia": "", "caption": "adding train & train details" },
@@ -99,18 +95,6 @@
   },
   {
     "year": "Jul 2025",
-    "title": "Linge",
-    "description": "Tinder + Hinge = Linge. Swipe through weekly coffee chat matches",
-    "link": "",
-    "tags": ["Flutter", "Supabase", "Clado"],
-    "polaroids": [
-      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Linge" },
-      { "frontSquareMedia": "./images/Linge/cheng.MOV", "frontCoverMedia": "", "caption": "Wrote entire product on overnight train" },
-      { "frontSquareMedia": "./images/Linge/stickies.MOV", "frontCoverMedia": "", "caption": "'Kanban' board & UI" }
-    ]
-  },
-  {
-    "year": "Jul 2025",
     "title": "NORMA",
     "description": "Open-source mocap software for pose-tracking & 3D playback. Adopted for research use at Penn.",
     "link": "https://norma.mootbing.dev",
@@ -118,7 +102,7 @@
     "badgesMt": -16,
     "badges": [
       { "text": "used by" },
-      { "href": "", "src": "./images/NORMA/Penn.png", "alt": "Perelman School of Medicine, University of Pennsylvania", "width": 110, "height": 45 }
+      { "href": "", "src": "./images/NORMA/Penn.png", "alt": "Perelman School of Medicine, University of Pennsylvania", "width": 110, "height": 45, "style": "margin-left: 3px" }
     ],
     "polaroids": [
       { "frontSquareMedia": "./images/NORMA/recording.mp4", "frontCoverMedia": "", "caption": "Posture analysis" },
@@ -129,35 +113,11 @@
   {
     "year": "Jun 2025",
     "title": "YC AI Startup School Search",
-    "description": "Built vector-embedded search of YCombinator Startup School speaker transcripts & logs. Got 300k+ LinkedIn views and 1M+ queries",
+    "description": "Built vector-embedded search of YCombinator Startup School speaker transcripts & logs. Got ==300k+ LinkedIn views and 1M+ queries==",
     "link": "https://yc-ai-sus-search-engine.vercel.app/",
     "tags": ["Next", "Firebase Auth", "Pinecone"],
     "polaroids": [
       { "frontSquareMedia": "./images/YC Search/search.mp4", "frontCoverMedia": "", "caption": "YC vector search" }
-    ]
-  },
-  {
-    "year": "May 2025",
-    "title": "Moonbeam",
-    "description": "AI career planner. Build timelines on how to get your dream job based on your school's alumni who are there & their former stats",
-    "link": "",
-    "tags": ["Next", "Supabase", "Clado"],
-    "polaroids": [
-      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Demo" },
-      { "frontSquareMedia": "./images/Moonbeam/UI.jpg", "frontCoverMedia": "", "caption": "UI Draft" },
-      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "" }
-    ]
-  },
-  {
-    "year": "Jan 2025",
-    "title": "Poke",
-    "description": "Soft-\"where\" to nudge your friends to hang out based on physical proximity and calendar availability",
-    "link": "",
-    "tags": ["Expo", "Supabase"],
-    "polaroids": [
-      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Poke" },
-      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Proximity" },
-      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Connect" }
     ]
   },
   {
@@ -189,7 +149,11 @@
       { "href": "", "src": "./images/17.jasonxu.me/best-ux-white.png", "alt": "CSSDA Best UX Design", "width": 45, "height": 45 },
       { "href": "", "src": "./images/17.jasonxu.me/best-innovation-white.png", "alt": "CSSDA Best Innovation", "width": 45, "height": 45 }
     ],
-    "polaroids": []
+    "polaroids": [
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "the homepage" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Awwwards Honoree" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "CSSDA Best UI / UX / Innovation" }
+    ]
   },
   {
     "year": "Mar 2023",
@@ -202,6 +166,9 @@
       { "text": "merged to" },
       { "href": "", "src": "./images/Speech SDK/Microsoft-Azure-Logo.png", "alt": "Microsoft Azure", "width": 130, "height": 30 }
     ],
-    "polaroids": []
+    "polaroids": [
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "continuous recognition" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "merged to Azure" }
+    ]
   }
 ]

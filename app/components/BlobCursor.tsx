@@ -139,18 +139,26 @@ export default function BlobCursor() {
         if (polaroid) {
           const rect = polaroid.getBoundingClientRect();
           if (isPointInRect(clientX, clientY, rect)) {
-            // Get rotation from the parent motion.div's transform matrix
+            // Walk up the parent chain summing 2D rotations. The polaroid now
+            // has multiple ancestors that may rotate (in-stack tilt + outer
+            // spin/arc/scale wrapper), so reading only the immediate parent
+            // misses the bulk of the rotation.
             let rotation = 0;
-            const motionParent = polaroid.parentElement;
-            if (motionParent) {
-              const transform = window.getComputedStyle(motionParent).transform;
-              if (transform && transform !== "none") {
-                const match = transform.match(/matrix\(([^)]+)\)/);
-                if (match) {
-                  const values = match[1].split(",").map(Number);
-                  rotation = Math.atan2(values[1], values[0]) * (180 / Math.PI);
+            let cur: HTMLElement | null = polaroid.parentElement as HTMLElement | null;
+            while (cur && cur !== document.body) {
+              const t = window.getComputedStyle(cur).transform;
+              if (t && t !== "none") {
+                const m2 = t.match(/matrix\(([^)]+)\)/);
+                const m3 = t.match(/matrix3d\(([^)]+)\)/);
+                if (m2) {
+                  const v = m2[1].split(",").map(Number);
+                  rotation += Math.atan2(v[1], v[0]) * (180 / Math.PI);
+                } else if (m3) {
+                  const v = m3[1].split(",").map(Number);
+                  rotation += Math.atan2(v[1], v[0]) * (180 / Math.PI);
                 }
               }
+              cur = cur.parentElement as HTMLElement | null;
             }
             const el = polaroid;
             const pad = 4;
