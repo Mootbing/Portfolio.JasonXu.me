@@ -163,8 +163,8 @@ export default function Home() {
         <Timeline />
       </div>
 
-      {/* Footer */}
-      <Footer />
+      {/* Footer hidden for now */}
+      {/* <Footer /> */}
     </div>
   );
 }

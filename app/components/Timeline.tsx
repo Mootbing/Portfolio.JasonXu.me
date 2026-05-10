@@ -698,7 +698,7 @@ export default function Timeline() {
       {compact ? <CompactList /> : <Carousel />}
       <div className={compact ? "pb-3 text-center" : "pt-12 pb-3 text-center"}>
         <a
-          href="/all"
+          href="/more"
           className="inline-flex items-center gap-2 px-5 py-2.5 hover:underline inline-link"
           style={{
             color: "#999999",

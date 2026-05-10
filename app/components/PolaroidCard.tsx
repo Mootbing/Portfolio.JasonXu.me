@@ -205,7 +205,7 @@ function SinglePolaroid({
   const prevStackOffset = useRef(stackOffset);
 
   const getTargetX = useCallback(
-    (offset: number) => (offset === 0 ? 0 : offset * 8 * sideMultiplier),
+    (offset: number) => (offset === 0 ? 0 : offset * 18 * sideMultiplier),
     [sideMultiplier]
   );
 
@@ -238,7 +238,7 @@ function SinglePolaroid({
       const unsub = dragRotate.on("change", (v) => rotateValue.set(v));
       return unsub;
     } else {
-      const target = rotation + stackOffset * 3 * sideMultiplier + (stackOffset === 0 ? baseTilt : 0);
+      const target = rotation + stackOffset * 7 * sideMultiplier + (stackOffset === 0 ? baseTilt : 0);
       if (isFirstRotate.current || !prevIsDraggable.current) {
         if (isFirstRotate.current) {
           rotateValue.set(target);
@@ -318,8 +318,8 @@ function SinglePolaroid({
       onClick={onTap ? handleClick : undefined}
       initial={false}
       animate={{
-        y: stackOffset * 4,
-        scale: faded ? 1 : 1 - stackOffset * 0.04,
+        y: stackOffset * 10,
+        scale: faded ? 1 : 1 - stackOffset * 0.06,
         opacity: faded ? 0 : 1,
       }}
       transition={{

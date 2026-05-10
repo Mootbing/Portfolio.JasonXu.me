@@ -61,7 +61,7 @@ function ExternalLinkIcon() {
   );
 }
 
-export default function All() {
+export default function More() {
   return (
     <div
       className="min-h-screen px-6 md:px-12 py-20 max-w-2xl mx-auto"
@@ -85,7 +85,7 @@ export default function All() {
           fontWeight: 300,
         }}
       >
-        All
+        More
       </h1>
       <ul className="space-y-6" style={{ listStyle: "none", padding: 0 }}>
         {ARCHIVES.map((p) => (
