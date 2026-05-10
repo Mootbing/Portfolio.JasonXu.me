@@ -12,13 +12,13 @@
   {
     "year": "Feb 2026",
     "title": "useNemo.dev",
-    "description": "Google for Agents. Search & execute remote skills & MCP for agents. 30k+ searches in 2 weeks.",
+    "description": "Google for Agents. Search & execute remote skills & MCP for agents. ==30k+ searches in 2 weeks==.",
     "link": "https://usenemo.dev",
     "tags": ["Next", "Neon"],
     "badgesMt": -16,
     "badges": [
       { "text": "used by" },
-      { "href": "", "src": "./images/NEMO/neon.png", "alt": "Neon", "width": 80, "height": 35, "style": "margin-left: -6px" }
+      { "href": "", "src": "./images/NEMO/neon.png", "alt": "Neon", "width": 80, "height": 35, "style": "margin-left: -3px" }
     ],
     "polaroids": [
       { "frontSquareMedia": "./images/NEMO/thesis.png", "frontCoverMedia": "", "caption": "the Nemo thesis" }
@@ -27,7 +27,7 @@
   {
     "year": "Jan 2026",
     "title": "Tracky",
-    "description": "The feature-for-feature Flighty inspired Amtrak train logbook & tracker. Rail4Less partner (200k+ users).",
+    "description": "The feature-for-feature Flighty inspired Amtrak train logbook & tracker. ==Rail4Less partner (200k+ users)==.",
     "link": "https://trytracky.com/",
     "tags": ["Expo", "GTFS"],
     "badgesMt": -16,
@@ -106,7 +106,7 @@
     "badgesMt": -16,
     "badges": [
       { "text": "used by" },
-      { "href": "", "src": "./images/NORMA/Penn.png", "alt": "Perelman School of Medicine, University of Pennsylvania", "width": 110, "height": 45 }
+      { "href": "", "src": "./images/NORMA/Penn.png", "alt": "Perelman School of Medicine, University of Pennsylvania", "width": 110, "height": 45, "style": "margin-left: 3px" }
     ],
     "polaroids": [
       { "frontSquareMedia": "./images/NORMA/recording.mp4", "frontCoverMedia": "", "caption": "Posture analysis" },
@@ -117,7 +117,7 @@
   {
     "year": "Jun 2025",
     "title": "YC AI Startup School Search",
-    "description": "Built vector-embedded search of YCombinator Startup School speaker transcripts & logs. Got 300k+ LinkedIn views and 1M+ queries",
+    "description": "Built vector-embedded search of YCombinator Startup School speaker transcripts & logs. Got ==300k+ LinkedIn views and 1M+ queries==",
     "link": "https://yc-ai-sus-search-engine.vercel.app/",
     "tags": ["Next", "Firebase Auth", "Pinecone"],
     "polaroids": [

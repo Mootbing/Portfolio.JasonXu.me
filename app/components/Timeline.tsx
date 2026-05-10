@@ -23,6 +23,75 @@ function clamp(v: number, lo: number, hi: number) {
   return v < lo ? lo : v > hi ? hi : v;
 }
 
+const MONTH_MAP: Record<string, string> = {
+  Jan: "January", Feb: "February", Mar: "March", Apr: "April",
+  May: "May", Jun: "June", Jul: "July", Aug: "August",
+  Sep: "September", Oct: "October", Nov: "November", Dec: "December",
+};
+
+function expandYear(year: string): string {
+  const parts = year.split(" ");
+  if (parts.length === 2 && MONTH_MAP[parts[0]]) {
+    return `${MONTH_MAP[parts[0]]} ${parts[1]}`;
+  }
+  return year;
+}
+
+// Rough hand-drawn-looking highlighter mark. Inline SVG background with a
+// slightly wobbly Bezier outline so the edges look marker-drawn rather than
+// a clean rectangle. `box-decoration-break: clone` so it survives line wraps.
+function Highlight({ children }: { children: React.ReactNode }) {
+  const svg = encodeURIComponent(
+    `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 30' preserveAspectRatio='none'><path d='M 3 7 C 60 3 120 8 160 5 S 197 7 198 9 L 196 24 C 140 28 90 23 50 26 S 4 25 3 23 Z' fill='rgb(253,224,71)' opacity='0.55'/></svg>`
+  );
+  return (
+    <span
+      style={{
+        backgroundImage: `url("data:image/svg+xml;utf8,${svg}")`,
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "100% 92%",
+        backgroundPosition: "0 60%",
+        padding: "0 0.08em",
+        boxDecorationBreak: "clone",
+        WebkitBoxDecorationBreak: "clone",
+      } as React.CSSProperties}
+    >
+      {children}
+    </span>
+  );
+}
+
+// Parse `==text==` markers into <Highlight> wraps; leave the rest as text.
+function parseHighlights(text: string): React.ReactNode[] {
+  const parts: React.ReactNode[] = [];
+  const regex = /==(.+?)==/g;
+  let lastIndex = 0;
+  let match;
+  let key = 0;
+  while ((match = regex.exec(text)) !== null) {
+    if (match.index > lastIndex) {
+      parts.push(text.slice(lastIndex, match.index));
+    }
+    parts.push(<Highlight key={key++}>{match[1]}</Highlight>);
+    lastIndex = regex.lastIndex;
+  }
+  if (lastIndex < text.length) {
+    parts.push(text.slice(lastIndex));
+  }
+  return parts;
+}
+
+// Per-segment smoothstep — slow at each landing point (i/(N-1)), fast between.
+// Polaroid motion eases into and out of every "rest" position.
+function easeP(p: number, N: number): number {
+  if (N <= 1) return p;
+  const idx = p * (N - 1);
+  const i = Math.floor(idx);
+  const t = idx - i;
+  const eased = t * t * (3 - 2 * t);
+  return (i + eased) / (N - 1);
+}
+
 function ExternalLinkIcon() {
   return (
     <svg
@@ -34,7 +103,7 @@ function ExternalLinkIcon() {
       strokeWidth="1.5"
       strokeLinecap="round"
       strokeLinejoin="round"
-      className="inline-block ml-1.5"
+      className="inline-block ml-3"
       style={{ verticalAlign: "middle", marginBottom: "2px", color: "#333333" }}
     >
       <path d="M4.5 1.5H2a.5.5 0 00-.5.5v8a.5.5 0 00.5.5h8a.5.5 0 00.5-.5V7.5" />
@@ -193,23 +262,20 @@ function ProjectSlide({
   // For project 0 during entry, `entryT` keeps dist > 0 even though progress = 0.
   const distEff = (index - progress * (total - 1)) + entryT;
 
-  // Clip keyframes by effective dist — same units as polaroid screen position.
-  // Reveal as this polaroid sweeps left past center; hide as the next polaroid
-  // (distEff - 1) sweeps left past center. Both phases linear with distEff so
-  // the cuts track polaroid motion 1:1.
-  //
-  //   distEff     leftClip%   rightClip%
-  //   +inf → 0     100         0         (polaroid right of center, hidden from left)
-  //    0 → -0.25    100 → 0    0         (revealing — polaroid sweeps off to left)
-  //   -0.25 → -0.75 0          0         (visible band)
-  //   -0.75 → -1.0  0          0 → 100   (hiding — next polaroid sweeps over)
-  //   -1.0 → -inf   0          100       (hidden from right)
+  // Clip keyframes tied to the polaroid actually crossing the text region
+  // (right: 25%, ~54%-75% from viewport left). Polaroid is ~24% wide. With
+  // landing offset shifting polaroid_center to 25% + distEff*100% from left:
+  //   polaroid touches text_right (75%) when distEff = 0.62
+  //   polaroid past   text_left  (54%) when distEff = 0.17
+  // → reveal window: distEff in [0.62, 0.17] (polaroid sweeps over text)
+  //   next polaroid covers text when distEff_i in [-0.38, -0.83]
+  // → hide window:   distEff in [-0.38, -0.83]
   const CLIP_STOPS: [number, number, number][] = [
     [ 1.00,   100,    0 ],
-    [ 0.00,   100,    0 ],
-    [-0.25,     0,    0 ],
-    [-0.75,     0,    0 ],
-    [-1.00,     0,  100 ],
+    [ 0.62,   100,    0 ],
+    [ 0.17,     0,    0 ],
+    [-0.38,     0,    0 ],
+    [-0.83,     0,  100 ],
     [-2.00,     0,  100 ],
   ];
 
@@ -237,17 +303,35 @@ function ProjectSlide({
         position: "absolute",
         top: "50%",
         right: "25%",
-        transform: "translateY(-50%)",
+        // Shift the container right by half its own width so its CENTER sits at
+        // 25% from the viewport's right edge (instead of its right edge sitting
+        // there). Container is now visually centered at right: 25%.
+        transform: "translate(50%, -50%)",
         // fit-content sizes the container to the actual text bounds so the
         // clip-path percentages map directly to text width (not a giant box).
         width: "fit-content",
         maxWidth: "min(560px, 40vw)",
-        textAlign: "right",
+        textAlign: "left",
         pointerEvents: "auto",
         clipPath,
         WebkitClipPath: clipPath,
       }}
     >
+      {project.year && (
+        <span
+          className="block"
+          style={{
+            fontFamily: "var(--font-caveat), cursive",
+            fontWeight: 400,
+            color: "#999999",
+            fontSize: "1.15rem",
+            letterSpacing: "0.02em",
+            marginBottom: "0.25rem",
+          }}
+        >
+          {expandYear(project.year)}
+        </span>
+      )}
       <h3
         className="text-3xl md:text-5xl leading-none"
         style={{
@@ -255,6 +339,10 @@ function ProjectSlide({
           fontWeight: 700,
           color: "#222222",
           marginBottom: "0.75rem",
+          // Caveat glyphs (especially trailing letters) extend slightly past
+          // their metric width. Add a tiny right padding so titles without a
+          // trailing link icon don't get clipped on the right edge.
+          paddingRight: "0.15em",
         }}
       >
         {project.link ? (
@@ -279,11 +367,9 @@ function ProjectSlide({
           color: "#444444",
           fontSize: "1.25rem",
           lineHeight: 1.4,
-          maxWidth: "min(300px, 28vw)",
-          marginLeft: "auto",
         }}
       >
-        {project.description}
+        {parseHighlights(project.description)}
       </p>
     </div>
   );
@@ -295,7 +381,10 @@ function Carousel() {
   const polaroidsRef = useRef<HTMLDivElement>(null);
   const polaroidItemRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [progress, setProgress] = useState(0);
-  const [entryProgress, setEntryProgress] = useState(0);
+  // Default to 1 (polaroid 0 off-screen right) so initial render before any
+  // scroll handler runs has all project text fully clipped — prevents a flash
+  // of project 0's text on page load.
+  const [entryProgress, setEntryProgress] = useState(1);
   const N = PROJECTS.length;
   const sectionHeight = `${100 + (N - 1) * SLIDE_VH}vh`;
 
@@ -309,6 +398,7 @@ function Carousel() {
   useEffect(() => {
     let raf = 0;
     let lastProgress = -1;
+    let lastEntryT = -1;
     let lastOpacity = -1;
 
     const update = () => {
@@ -320,23 +410,21 @@ function Carousel() {
       const winH = window.innerHeight;
       const sectionScroll = rect.height - winH;
 
-      // Pin is always 100% opacity — no fade in/out. Pointer events still
-      // toggle based on whether the carousel section overlaps the viewport so
-      // the pin doesn't intercept clicks above/below its scroll range.
-      const visible = Math.max(0, Math.min(rect.bottom, winH) - Math.max(rect.top, 0));
-      const inView = visible > 0;
-      const targetPointer = inView ? "auto" : "none";
+      // Pin is always 100% opacity, always pointer-events: none. Interactive
+      // children (polaroid cards via default `auto`, text fragments via
+      // explicit `pointerEvents: auto`) still receive events; the pin itself
+      // doesn't intercept clicks on empty viewport areas — so hero links and
+      // anything underneath stay clickable.
       if (lastOpacity !== 1) {
         lastOpacity = 1;
         fixed.style.opacity = "1";
       }
-      if (fixed.style.pointerEvents !== targetPointer) {
-        fixed.style.pointerEvents = targetPointer;
-      }
 
       // Progress through the carousel, 0 → 1. Clamped so during fade in/out the
       // polaroids park at start/end positions instead of overshooting.
-      const p = sectionScroll > 0 ? clamp(-rect.top / sectionScroll, 0, 1) : 0;
+      const pRaw = sectionScroll > 0 ? clamp(-rect.top / sectionScroll, 0, 1) : 0;
+      // Per-segment smoothstep so the polaroid decelerates into each landing.
+      const p = easeP(pRaw, N);
       // Entry slide: polaroid 0 slides in horizontally from off-screen right
       // (just like the other polaroids do during carousel scroll). entryT is
       // the section's approach progress: 1 = section's top is one viewport
@@ -344,8 +432,16 @@ function Carousel() {
       const entryT = Math.max(0, Math.min(rect.top, winH)) / Math.max(winH, 1);
       const entryX = entryT * window.innerWidth;
       const polaroids = polaroidsRef.current;
+      // Mirror of text positioning: text uses `right: 25% + translate(50%)`
+      // to put its CENTER at 25% from the right. For polaroid: shift the row
+      // by (25vw + half polaroid width ≈ 12vw) so the polaroid's LEFT edge
+      // sits at 25% from viewport left, leaving its visual center further
+      // right (analogous to the text container extending past its anchor).
+      // Slot center = (- LANDING_OFFSET) + 50vw. For polaroid_left_edge = 25vw
+      // → polaroid_center = 25 + 12 = 37vw → LANDING_OFFSET = 50 - 37 = 13vw.
+      const LANDING_OFFSET_VW = 13;
       if (polaroids) {
-        polaroids.style.transform = `translate3d(calc(${-p * (N - 1) * 100}vw + ${entryX}px), -50%, 0)`;
+        polaroids.style.transform = `translate3d(calc(${-p * (N - 1) * 100}vw + ${entryX}px - ${LANDING_OFFSET_VW}vw), -50%, 0)`;
       }
 
       // Per-polaroid spin + arc. Effective dist includes entryT so polaroid 0
@@ -370,6 +466,12 @@ function Carousel() {
       if (p !== lastProgress) {
         lastProgress = p;
         setProgress(p);
+      }
+      // entryT also needs its own track — during approach phase p stays clamped
+      // at 0 while entryT swings from 1 → 0, so we'd otherwise miss those updates
+      // and stale state would keep project 0's text visible at the top.
+      if (entryT !== lastEntryT) {
+        lastEntryT = entryT;
         setEntryProgress(entryT);
       }
     };
@@ -421,7 +523,11 @@ function Carousel() {
             top: "50%",
             left: 0,
             display: "flex",
-            transform: "translate3d(0, -50%, 0)",
+            // Initial transform = scroll-0 state (entryT=1, p=0, LANDING_OFFSET=13vw).
+            // entryX = 100vw, so translateX = 100vw - 13vw = 87vw → polaroid 0
+            // sits off-screen right. Prevents flash on first paint before the
+            // scroll handler runs.
+            transform: "translate3d(87vw, -50%, 0)",
             willChange: "transform",
             zIndex: 1,
           }}
@@ -435,6 +541,10 @@ function Carousel() {
                 alignItems: "center",
                 justifyContent: "center",
                 flex: "0 0 100vw",
+                // Slot is the 100vw empty area; pointer-events: none lets clicks
+                // outside the polaroid card fall through to the hero. The
+                // wrapper inside re-enables `auto` for the polaroid card itself.
+                pointerEvents: "none",
               }}
             >
               <div
@@ -444,6 +554,7 @@ function Carousel() {
                 style={{
                   willChange: "transform",
                   transformOrigin: "center center",
+                  pointerEvents: "auto",
                 }}
               >
                 {p.polaroids?.length ? (
@@ -531,16 +642,18 @@ function CompactList() {
               )}
             </h3>
             <p
-              className="text-base mb-3"
+              className="mb-3"
               style={{
-                fontFamily: "var(--font-montserrat), sans-serif",
-                fontWeight: 300,
-                color: "#555555",
-                lineHeight: 1.65,
+                fontFamily: "var(--font-caveat), cursive",
+                fontWeight: 400,
+                color: "#444444",
+                fontSize: "1.25rem",
+                lineHeight: 1.4,
               }}
             >
-              {project.description}
+              {parseHighlights(project.description)}
             </p>
+            {/* Tags hidden for now
             {project.tags?.length ? (
               <div
                 className="mb-2"
@@ -554,6 +667,7 @@ function CompactList() {
                 {project.tags.join(" · ")}
               </div>
             ) : null}
+            */}
             <Badges project={project} align="left" />
           </div>
           {project.polaroids?.length ? (
@@ -579,7 +693,7 @@ export default function Timeline() {
   return (
     <div className="relative">
       {compact ? <CompactList /> : <Carousel />}
-      <div className={compact ? "pb-12 text-center" : "py-12 text-center"}>
+      <div className={compact ? "pb-3 text-center" : "pt-12 pb-3 text-center"}>
         <a
           href="/all"
           className="inline-flex items-center gap-2 px-5 py-2.5 hover:underline inline-link"

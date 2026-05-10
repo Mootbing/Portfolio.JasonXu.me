@@ -54,11 +54,12 @@ function MediaElement({
     const video = internalRef.current;
     if (!video) return;
     if (playing) {
-      video.currentTime = 0;
+      // Don't reset currentTime — the parent component owns the playhead so
+      // the expanded overlay can hand off seamlessly from the source's exact
+      // position without flickering through frame 0.
       video.play().catch(() => {});
     } else {
       video.pause();
-      video.currentTime = 0;
     }
   }, [playing]);
 

@@ -26,39 +26,53 @@ const STYLES = {
 function Hero() {
   const ref = useRef<HTMLElement>(null);
 
-  // Cut tied to the polaroid's RIGHT edge (its leading side as it sweeps
-  // leftward). Using right edge means the cut STARTS the instant the polaroid
-  // first touches the hero on the right and COMPLETES the moment the polaroid
-  // is fully past on the left — so the cut leads the polaroid instead of
-  // lagging behind it.
-  //   polaroid.right >= hero.right → rightClip = 0   (polaroid hasn't reached hero)
-  //   polaroid.right =  hero.right → rightClip = 0   (just touching)
-  //   polaroid.right =  hero.left  → rightClip = 100 (polaroid right edge fully past)
-  //   polaroid.right <  hero.left  → rightClip = 100 (polaroid past hero)
+  // Desktop: cut anchored to half-a-polaroid-width past the polaroid's right
+  // edge so the cut tracks the polaroid sweeping across the hero.
+  // Mobile (<800px): the carousel is replaced by a vertical CompactList, so
+  // there's no polaroid sweeping the hero. Fall back to a simple opacity fade
+  // over the first viewport of scroll.
   useEffect(() => {
     const handleScroll = () => {
       const el = ref.current;
       if (!el) return;
+      const winW = window.innerWidth;
+      const isMobile = winW < 800;
+      const webkitStyle = el.style as unknown as { webkitClipPath: string };
+
+      if (isMobile) {
+        const t = Math.max(0, Math.min(window.scrollY / window.innerHeight, 1));
+        el.style.opacity = String(1 - t);
+        el.style.clipPath = "";
+        webkitStyle.webkitClipPath = "";
+        el.style.pointerEvents = t > 0.9 ? "none" : "auto";
+        return;
+      }
+
       const polaroid = document.querySelector(
         ".bg-white.p-3.pb-14"
       ) as HTMLElement | null;
       const heroRect = el.getBoundingClientRect();
       let rightClip = 0;
       if (polaroid && heroRect.width > 0) {
-        const polaroidRight = polaroid.getBoundingClientRect().right;
+        const polRect = polaroid.getBoundingClientRect();
+        const cutAnchor = polRect.right - polRect.width / 2;
         rightClip = Math.max(
           0,
-          Math.min(100, ((heroRect.right - polaroidRight) / heroRect.width) * 100)
+          Math.min(100, ((heroRect.right - cutAnchor) / heroRect.width) * 100)
         );
       }
       el.style.clipPath = `inset(0 ${rightClip}% 0 0)`;
-      (el.style as unknown as { webkitClipPath: string }).webkitClipPath = `inset(0 ${rightClip}% 0 0)`;
+      webkitStyle.webkitClipPath = `inset(0 ${rightClip}% 0 0)`;
       el.style.opacity = "1";
       el.style.pointerEvents = rightClip > 90 ? "none" : "auto";
     };
     handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener("resize", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleScroll);
+    };
   }, []);
 
   return (

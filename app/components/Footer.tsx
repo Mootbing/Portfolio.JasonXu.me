@@ -17,7 +17,7 @@ const NAV_LINKS = [
 
 export default function Footer() {
   return (
-    <footer className="py-20 px-6 md:px-12 text-center">
+    <footer className="pt-3 pb-20 px-6 md:px-12 text-center">
       <h2
         className="text-2xl md:text-3xl mb-6 leading-tight"
         style={{

@@ -112,9 +112,11 @@ export default function All() {
             <div className="text-sm" style={{ color: "#666666" }}>
               {p.description}
             </div>
+            {/* Tags hidden for now
             <div className="text-xs mt-1" style={{ color: "#aaaaaa" }}>
               {p.tags.join(", ")}
             </div>
+            */}
           </li>
         ))}
       </ul>
