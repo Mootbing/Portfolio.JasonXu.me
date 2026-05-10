@@ -19,12 +19,16 @@
 
 html {
   scroll-behavior: smooth;
+  /* Always reserve scrollbar space so toggling body overflow (e.g., when the
+     polaroid expand overlay locks scroll) doesn't widen the page and shift
+     the fixed carousel sideways. Eliminates the FLIP open/close hitch. */
+  scrollbar-gutter: stable;
 }
 
-html,
-body {
-  overflow-x: hidden;
-}
+/* NOTE: overflow-x must stay `visible` on html/body so position: sticky inside
+   the timeline carousel works (otherwise body becomes the scroll container and
+   sticky never pins). Components that need to clip horizontal overflow should
+   set overflow-x: hidden on their own wrapper. */
 
 body {
   background: var(--background);

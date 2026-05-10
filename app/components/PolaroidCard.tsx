@@ -146,11 +146,12 @@ function PolaroidContent({
         )}
       </div>
       <p
-        className={`mt-3 text-center pointer-events-none ${large ? "text-lg" : "text-base"}`}
+        className="mt-3 text-center pointer-events-none"
         style={{
           fontFamily: "var(--font-caveat), cursive",
           fontWeight: 700,
           color: "#333333",
+          fontSize: large ? "1.6875rem" : "1.5rem",
         }}
       >
         {item.caption}
@@ -174,6 +175,7 @@ function SinglePolaroid({
   photoIndex,
   videoRef,
   playing,
+  cardElRef,
 }: {
   item: PolaroidItem;
   rotation: number;
@@ -189,6 +191,7 @@ function SinglePolaroid({
   photoIndex: number;
   videoRef?: React.Ref<HTMLVideoElement>;
   playing?: boolean;
+  cardElRef?: React.Ref<HTMLDivElement>;
 }) {
   const x = useMotionValue(0);
   const rotateValue = useMotionValue(0);
@@ -227,7 +230,6 @@ function SinglePolaroid({
   const prevIsDraggable = useRef(isDraggable);
   useEffect(() => {
     if (isDraggable) {
-      // Sync rotation with drag-based rotation
       if (isFirstRotate.current) {
         rotateValue.set(dragRotate.get());
         isFirstRotate.current = false;
@@ -237,7 +239,6 @@ function SinglePolaroid({
     } else {
       const target = rotation + stackOffset * 3 * sideMultiplier + (stackOffset === 0 ? baseTilt : 0);
       if (isFirstRotate.current || !prevIsDraggable.current) {
-        // First render or was already non-draggable — set directly or animate position change
         if (isFirstRotate.current) {
           rotateValue.set(target);
           isFirstRotate.current = false;
@@ -251,7 +252,6 @@ function SinglePolaroid({
           return () => controls.stop();
         }
       } else {
-        // Was draggable, now isn't — animate from current rotation to target
         const controls = animate(rotateValue, target, {
           type: "spring",
           stiffness: 400,
@@ -274,10 +274,8 @@ function SinglePolaroid({
           stiffness: 300,
           damping: 30,
         });
-        // Fire early so the card redirects mid-flight instead of pausing at 350px
         setTimeout(() => onSwipe(), 150);
       } else {
-        // Small drag that didn't meet threshold — snap back, not a real drag
         animate(x, 0, {
           type: "spring",
           stiffness: 800,
@@ -294,7 +292,6 @@ function SinglePolaroid({
         wasDragged.current = false;
         return;
       }
-      // Only count as tap if pointer didn't move
       const dx = e.clientX - pointerStart.current.x;
       const dy = e.clientY - pointerStart.current.y;
       if (Math.abs(dx) > 5 || Math.abs(dy) > 5) return;
@@ -305,6 +302,7 @@ function SinglePolaroid({
 
   return (
     <motion.div
+      ref={cardElRef}
       className="absolute top-0 left-0"
       style={{
         x,
@@ -320,7 +318,7 @@ function SinglePolaroid({
       initial={false}
       animate={{
         y: stackOffset * 4,
-        scale: faded ? 0.92 : 1 - stackOffset * 0.04,
+        scale: faded ? 1 : 1 - stackOffset * 0.04,
         opacity: faded ? 0 : 1,
       }}
       transition={{
@@ -328,6 +326,9 @@ function SinglePolaroid({
         stiffness: 400,
         damping: 30,
         mass: 0.4,
+        // Hide source instantly when handing off to the FLIP overlay; restore after
+        // the overlay's exit animation finishes so the source doesn't pop in early.
+        opacity: faded ? { duration: 0 } : { duration: 0, delay: 0.55 },
       }}
       drag={isDraggable ? "x" : false}
       dragConstraints={{ left: -300, right: 300 }}
@@ -340,7 +341,7 @@ function SinglePolaroid({
         year={year}
         title={title}
         photoIndex={photoIndex}
-        sizeClass="w-56 h-56 md:w-64 md:h-64"
+        sizeClass="w-72 h-72 md:w-80 md:h-80"
         stackOffset={stackOffset}
         videoRef={videoRef}
         playing={playing}
@@ -349,12 +350,72 @@ function SinglePolaroid({
   );
 }
 
+// Approximate target dimensions of the expanded polaroid frame (image + padding).
+// Matches sizeClass="w-80 h-80 md:w-96 md:h-96" with PolaroidContent's `large` padding (p-4 pb-16).
+// w-80 = 320, w-96 = 384; padding adds 32 (16 each side); height adds 16+64.
+const TARGET_FRAME_W_DESKTOP = 384 + 32; // 416
+const TARGET_FRAME_W_MOBILE = 320 + 32;  // 352
+
+interface OriginRect {
+  cx: number;        // visual center X in viewport coords (post-rotation)
+  cy: number;        // visual center Y in viewport coords
+  w: number;         // unrotated/unscaled width (offsetWidth)
+  h: number;         // unrotated/unscaled height
+  rotation: number;  // cumulative rotation in degrees, screen space
+  scale: number;     // cumulative parent scale (visual size = w × scale)
+}
+
+// Walk up the DOM and sum the 2D rotation contributed by each parent's transform.
+// Lets the FLIP start with the correct visual rotation (source can be tilted by both
+// its own rotateValue motion value and parent scrapbook scatter rotation).
+function getCumulativeRotation(el: HTMLElement | null): number {
+  let rotation = 0;
+  let cur: HTMLElement | null = el;
+  while (cur && cur !== document.body) {
+    const t = window.getComputedStyle(cur).transform;
+    if (t && t !== "none") {
+      try {
+        const m = new DOMMatrix(t);
+        rotation += (Math.atan2(m.b, m.a) * 180) / Math.PI;
+      } catch {
+        // ignore parse failures
+      }
+    }
+    cur = cur.parentElement;
+  }
+  return rotation;
+}
+
+// Walk up the DOM and multiply the 2D scale contributed by each parent's transform.
+// For matrix(a, b, c, d, tx, ty) the X scale magnitude is sqrt(a² + b²). Used by
+// the FLIP so its end scale matches the polaroid's actual on-screen size (which
+// is offsetWidth × cumulative parent scale, not just offsetWidth).
+function getCumulativeScale(el: HTMLElement | null): number {
+  let scale = 1;
+  let cur: HTMLElement | null = el;
+  while (cur && cur !== document.body) {
+    const t = window.getComputedStyle(cur).transform;
+    if (t && t !== "none") {
+      try {
+        const m = new DOMMatrix(t);
+        const sx = Math.sqrt(m.a * m.a + m.b * m.b);
+        if (sx > 0) scale *= sx;
+      } catch {
+        // ignore
+      }
+    }
+    cur = cur.parentElement;
+  }
+  return scale;
+}
+
 function ExpandedPolaroidOverlay({
   item,
   year,
   title,
   photoIndex,
   initialTime,
+  origin,
   onDismiss,
 }: {
   item: PolaroidItem;
@@ -362,6 +423,7 @@ function ExpandedPolaroidOverlay({
   title?: string;
   photoIndex: number;
   initialTime?: number;
+  origin: OriginRect | null;
   onDismiss: (currentTime?: number) => void;
 }) {
   const rotateX = useMotionValue(0);
@@ -374,12 +436,29 @@ function ExpandedPolaroidOverlay({
 
   const SENSITIVITY = 0.3;
 
+  // FLIP delta: where the source card's center sits relative to the viewport center,
+  // how much smaller the source is than the target frame, and how much it's rotated
+  // visually. Computed once per mount.
+  const flip = useRef<{ x: number; y: number; scale: number; rotate: number }>({
+    x: 0, y: 0, scale: 1, rotate: 0,
+  });
+  if (origin && typeof window !== "undefined") {
+    const isMd = window.innerWidth >= 768;
+    const targetW = isMd ? TARGET_FRAME_W_DESKTOP : TARGET_FRAME_W_MOBILE;
+    flip.current = {
+      x: origin.cx - window.innerWidth / 2,
+      y: origin.cy - window.innerHeight / 2,
+      // Multiply by source's cumulative parent scale so the FLIP exit ends at
+      // the polaroid's actual on-screen visual size (not the unscaled offsetWidth).
+      scale: (origin.w * origin.scale) / targetW,
+      rotate: origin.rotation,
+    };
+  }
+
   const dismissWithTime = useCallback(() => {
-    const time = frontVideoRef.current?.currentTime;
-    onDismiss(time);
+    onDismiss(frontVideoRef.current?.currentTime);
   }, [onDismiss]);
 
-  // Escape key handler
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") dismissWithTime();
@@ -388,8 +467,9 @@ function ExpandedPolaroidOverlay({
     return () => window.removeEventListener("keydown", handleKey);
   }, [dismissWithTime]);
 
-  // Body scroll lock + hide blob cursor
   useEffect(() => {
+    // html has `scrollbar-gutter: stable` (globals.css) so toggling body
+    // overflow does NOT shift layout — no padding-right compensation needed.
     document.body.style.overflow = "hidden";
     document.body.classList.add("polaroid-expanded");
     return () => {
@@ -398,7 +478,6 @@ function ExpandedPolaroidOverlay({
     };
   }, []);
 
-  // Sync video playhead from stack
   useEffect(() => {
     const video = frontVideoRef.current;
     if (!video || initialTime == null) return;
@@ -431,7 +510,6 @@ function ExpandedPolaroidOverlay({
       const dy = e.clientY - lastPointer.current.y;
       rotateY.set(rotateY.get() + dx * SENSITIVITY);
       rotateX.set(rotateX.get() - dy * SENSITIVITY);
-      // Track velocity (degrees per ms) with smoothing
       velocity.current = {
         x: 0.8 * (dx * SENSITIVITY / dt) + 0.2 * velocity.current.x,
         y: 0.8 * (-dy * SENSITIVITY / dt) + 0.2 * velocity.current.y,
@@ -444,83 +522,107 @@ function ExpandedPolaroidOverlay({
 
   const handlePointerUp = useCallback(() => {
     isDragging.current = false;
-    animate(rotateX, 0, { type: "spring", stiffness: 50, damping: 15 });
-    animate(rotateY, 0, { type: "spring", stiffness: 50, damping: 15 });
+    animate(rotateX, 0, { type: "spring", stiffness: 80, damping: 18 });
+    animate(rotateY, 0, { type: "spring", stiffness: 80, damping: 18 });
   }, [rotateX, rotateY]);
+
+  const FLIP_TRANSITION = { duration: 0.55, ease: [0.32, 0.72, 0, 1] as const };
 
   return (
     <>
-      {/* Backdrop */}
+      {/* Backdrop: dark + blur. Click to dismiss. */}
       <motion.div
         className="fixed inset-0"
-        style={{ zIndex: 10000, backgroundColor: "rgba(0, 0, 0, 0.6)" }}
+        style={{
+          zIndex: 10000,
+          backgroundColor: "rgba(0, 0, 0, 0.5)",
+          backdropFilter: "blur(10px)",
+          WebkitBackdropFilter: "blur(10px)",
+        }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        transition={{ duration: 0.3 }}
+        transition={FLIP_TRANSITION}
         onClick={dismissWithTime}
       />
 
-      {/* Card container with perspective */}
-      <motion.div
+      {/* Centered container — flexbox keeps the polaroid pinned to viewport center
+          so framer-motion's x/y/scale on the inner div is a clean transform offset. */}
+      <div
         className="fixed inset-0 flex items-center justify-center pointer-events-none"
-        style={{ zIndex: 10001, perspective: 1000 }}
-        initial={{ opacity: 0, scale: 0.6 }}
-        animate={{ opacity: 1, scale: 1 }}
-        exit={{ opacity: 0, scale: 0.6 }}
-        transition={{ type: "spring", stiffness: 300, damping: 25, mass: 0.5 }}
+        style={{ zIndex: 10001 }}
       >
-        {/* 3D rotatable card */}
+        {/* FLIP wrapper: lerps from the captured source rect to centered+full-size,
+            including the source's cumulative rotation so it doesn't pop upright. */}
         <motion.div
-          className="pointer-events-auto relative"
-          style={{
-            rotateX,
-            rotateY,
-            transformStyle: "preserve-3d",
-            cursor: "grab",
-            touchAction: "none",
+          className="pointer-events-auto"
+          initial={{
+            x: flip.current.x,
+            y: flip.current.y,
+            scale: flip.current.scale,
+            rotate: flip.current.rotate,
           }}
-          onPointerDown={handlePointerDown}
-          onPointerMove={handlePointerMove}
-          onPointerUp={handlePointerUp}
-          onPointerCancel={() => {
-            isDragging.current = false;
+          animate={{ x: 0, y: 0, scale: 1, rotate: 0 }}
+          exit={{
+            x: flip.current.x,
+            y: flip.current.y,
+            scale: flip.current.scale,
+            rotate: flip.current.rotate,
           }}
-          onClick={(e) => e.stopPropagation()}
+          transition={FLIP_TRANSITION}
         >
-          {/* Front face */}
-          <div style={{ backfaceVisibility: "hidden" }}>
-            <PolaroidContent
-              item={item}
-              year={year}
-              title={title}
-              photoIndex={photoIndex}
-              sizeClass="w-80 h-80 md:w-96 md:h-96"
-              videoRef={frontVideoRef}
-              playing={true}
-              large={true}
-            />
-          </div>
-
-          {/* Back face */}
-          <div
-            className="absolute inset-0 bg-white select-none overflow-hidden"
-            style={{
-              backfaceVisibility: "hidden",
-              transform: "rotateY(180deg)",
-              boxShadow:
-                "0 4px 14px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.06)",
-            }}
-          >
-            {item.backCoverMedia && (
-              <MediaElement
-                src={item.backCoverMedia}
-                className="w-full h-full object-cover"
-              />
-            )}
+          {/* Static perspective layer so the inner 3D rotate has depth without
+              being scaled by the FLIP wrapper. */}
+          <div style={{ perspective: 1200 }}>
+            <motion.div
+              className="relative"
+              style={{
+                rotateX,
+                rotateY,
+                transformStyle: "preserve-3d",
+                cursor: "grab",
+                touchAction: "none",
+              }}
+              onPointerDown={handlePointerDown}
+              onPointerMove={handlePointerMove}
+              onPointerUp={handlePointerUp}
+              onPointerCancel={() => {
+                isDragging.current = false;
+              }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div style={{ backfaceVisibility: "hidden" }}>
+                <PolaroidContent
+                  item={item}
+                  year={year}
+                  title={title}
+                  photoIndex={photoIndex}
+                  sizeClass="w-80 h-80 md:w-96 md:h-96"
+                  videoRef={frontVideoRef}
+                  playing={true}
+                  large={true}
+                />
+              </div>
+              <div
+                className="absolute inset-0 bg-white select-none overflow-hidden"
+                style={{
+                  backfaceVisibility: "hidden",
+                  transform: "rotateY(180deg)",
+                  boxShadow:
+                    "0 4px 14px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.06)",
+                }}
+              >
+                {item.backCoverMedia && (
+                  <MediaElement
+                    src={item.backCoverMedia}
+                    className="w-full h-full object-cover"
+                  />
+                )}
+              </div>
+            </motion.div>
           </div>
         </motion.div>
-      </motion.div>
+      </div>
     </>
   );
 }
@@ -539,7 +641,9 @@ export default function PolaroidStack({
   );
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
   const [expandedInitialTime, setExpandedInitialTime] = useState<number | undefined>();
+  const [origin, setOrigin] = useState<OriginRect | null>(null);
   const topVideoRef = useRef<HTMLVideoElement>(null);
+  const topCardElRef = useRef<HTMLDivElement>(null);
   const [portalTarget, setPortalTarget] = useState<HTMLElement | null>(null);
 
   useEffect(() => {
@@ -558,6 +662,22 @@ export default function PolaroidStack({
   }, []);
 
   const handleTapTopCard = useCallback(() => {
+    const el = topCardElRef.current;
+    if (el) {
+      // getBoundingClientRect gives the AABB (post-rotation) → its center is the
+      // source's true visual center. offsetWidth gives the unrotated/unscaled
+      // frame width; cumulative parent scale captures the per-polaroid carousel
+      // scale so the FLIP ends at the actual on-screen visual size.
+      const r = el.getBoundingClientRect();
+      setOrigin({
+        cx: r.left + r.width / 2,
+        cy: r.top + r.height / 2,
+        w: el.offsetWidth,
+        h: el.offsetHeight,
+        rotation: getCumulativeRotation(el),
+        scale: getCumulativeScale(el),
+      });
+    }
     setExpandedInitialTime(topVideoRef.current?.currentTime ?? undefined);
     setExpandedIndex(cardOrder[0]);
   }, [cardOrder]);
@@ -573,26 +693,15 @@ export default function PolaroidStack({
 
   return (
     <>
-      <motion.div
+      <div
         ref={ref}
-        initial={{
-          opacity: 0,
-          scale: 0.7,
-          rotate: baseRotation + (side === "left" ? -12 : 12),
-        }}
-        animate={isInView ? { opacity: 1, scale: 1, rotate: 0 } : undefined}
-        transition={{
-          duration: 0.8,
-          ease: [0.25, 0.46, 0.45, 0.94],
-          delay: 0.25,
-        }}
         className="relative"
         style={{ width: "fit-content", height: "fit-content", zIndex: 51 }}
       >
         {/* Invisible spacer to hold layout */}
         <div className="invisible">
           <div className="bg-white p-3 pb-14">
-            <div className="w-56 h-56 md:w-64 md:h-64" />
+            <div className="w-72 h-72 md:w-80 md:h-80" />
             <p className="mt-3 text-sm">&nbsp;</p>
           </div>
         </div>
@@ -614,10 +723,11 @@ export default function PolaroidStack({
             title={title}
             photoIndex={itemIndex}
             videoRef={stackPos === 0 ? topVideoRef : undefined}
+            cardElRef={stackPos === 0 ? topCardElRef : undefined}
             playing={isInView}
           />
         ))}
-      </motion.div>
+      </div>
 
       {/* Expanded overlay via portal */}
       {portalTarget &&
@@ -631,6 +741,7 @@ export default function PolaroidStack({
                 title={title}
                 photoIndex={expandedIndex}
                 initialTime={expandedInitialTime}
+                origin={origin}
                 onDismiss={handleDismissExpanded}
               />
             )}
