@@ -604,22 +604,25 @@ function ExpandedPolaroidOverlay({
                   large={true}
                 />
               </div>
-              <div
-                className="absolute inset-0 bg-white select-none overflow-hidden"
-                style={{
-                  backfaceVisibility: "hidden",
-                  transform: "rotateY(180deg)",
-                  boxShadow:
-                    "0 4px 14px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.06)",
-                }}
-              >
-                {item.backCoverMedia && (
+              {/* Back face — only rendered when the polaroid actually has
+                  back-cover media to show. Otherwise the bg-white div leaks a
+                  subpixel sliver around the front face's edges. */}
+              {item.backCoverMedia && (
+                <div
+                  className="absolute inset-0 bg-white select-none overflow-hidden"
+                  style={{
+                    backfaceVisibility: "hidden",
+                    transform: "rotateY(180deg)",
+                    boxShadow:
+                      "0 4px 14px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.06)",
+                  }}
+                >
                   <MediaElement
                     src={item.backCoverMedia}
                     className="w-full h-full object-cover"
                   />
-                )}
-              </div>
+                </div>
+              )}
             </motion.div>
           </div>
         </motion.div>
