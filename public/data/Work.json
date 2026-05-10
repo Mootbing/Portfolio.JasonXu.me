@@ -27,14 +27,10 @@
   {
     "year": "Jan 2026",
     "title": "Tracky",
-    "description": "The feature-for-feature Flighty inspired Amtrak train logbook & tracker. ==Rail4Less partner (200k+ users)==.",
+    "description": "The feature-for-feature Flighty inspired Amtrak train logbook & tracker. ==Rail4Less.us partner (200k+ users)==.",
     "link": "https://trytracky.com/",
     "tags": ["Expo", "GTFS"],
     "badgesMt": -16,
-    "badges": [
-      { "text": "Partnered w/ " },
-      { "href": "", "src": "./images/Tracky/r4l.png", "alt": "Rail4Less", "width": 30, "height": 30, "style": "margin-left: 2px" }
-    ],
     "polaroids": [
       { "frontSquareMedia": "./images/Tracky/live_activites_and_widgets.png", "frontCoverMedia": "", "caption": "live activites and widgets" },
       { "frontSquareMedia": "./images/Tracky/train_add_and_details.mp4", "frontCoverMedia": "", "caption": "adding train & train details" },

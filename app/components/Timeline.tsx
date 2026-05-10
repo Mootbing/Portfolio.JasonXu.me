@@ -128,9 +128,11 @@ function useIsCompact(breakpoint = 800) {
 function Badges({
   project,
   align,
+  marginTop,
 }: {
   project: TimelineProject;
   align: "left" | "right" | "center";
+  marginTop?: number | string;
 }) {
   if (!project.badges?.length) return null;
   const justify =
@@ -138,7 +140,7 @@ function Badges({
   return (
     <div
       className={`flex flex-wrap items-center gap-3 ${justify}`}
-      style={{ marginTop: project.badgesMt ?? 8 }}
+      style={{ marginTop: marginTop ?? project.badgesMt ?? 8 }}
     >
       {project.badges.map((badge, i) =>
         "text" in badge ? (
@@ -371,6 +373,7 @@ function ProjectSlide({
       >
         {parseHighlights(project.description)}
       </p>
+      <Badges project={project} align="left" marginTop="0.75rem" />
     </div>
   );
 }
