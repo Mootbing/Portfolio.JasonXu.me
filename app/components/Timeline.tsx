@@ -19,6 +19,13 @@ interface TimelineProject {
 // vh of vertical scroll required per project transition
 const SLIDE_VH = 90;
 
+// At full carousel scroll, the last polaroid drifts this many viewport-widths
+// past its landing position (toward viewport-left). Picked to land its center
+// at viewport X = 30vw (30% from left / 70% from right). The carousel section
+// is lengthened by END_OVERSHOOT * SLIDE_VH so the trailing scroll feels natural
+// rather than abrupt.
+const END_OVERSHOOT = 0.07;
+
 function clamp(v: number, lo: number, hi: number) {
   return v < lo ? lo : v > hi ? hi : v;
 }
@@ -81,15 +88,12 @@ function parseHighlights(text: string): React.ReactNode[] {
   return parts;
 }
 
-// Per-segment smoothstep — slow at each landing point (i/(N-1)), fast between.
-// Polaroid motion eases into and out of every "rest" position.
-function easeP(p: number, N: number): number {
-  if (N <= 1) return p;
-  const idx = p * (N - 1);
-  const i = Math.floor(idx);
-  const t = idx - i;
-  const eased = t * t * (3 - 2 * t);
-  return (i + eased) / (N - 1);
+// Linear progress — uniform horizontal velocity across the whole carousel. The
+// previous per-segment smoothstep concentrated the slow-feel at each landing
+// midpoint; now the slowness is spread evenly so polaroids drift in from the
+// right at the same gentle rate they exit on the left.
+function easeP(p: number, _N: number): number {
+  return p;
 }
 
 function ExternalLinkIcon() {
@@ -262,7 +266,7 @@ function ProjectSlide({
   // viewport center. Positive = polaroid right of center (approaching), 0 =
   // centered, negative = past center moving left.
   // For project 0 during entry, `entryT` keeps dist > 0 even though progress = 0.
-  const distEff = (index - progress * (total - 1)) + entryT;
+  const distEff = (index - progress * (total - 1 + END_OVERSHOOT)) + entryT;
 
   // Clip keyframes tied to the polaroid actually crossing the text region.
   // Text anchor changed: now left: 50% (text left edge at viewport center),
@@ -388,7 +392,11 @@ function Carousel() {
   // of project 0's text on page load.
   const [entryProgress, setEntryProgress] = useState(1);
   const N = PROJECTS.length;
-  const sectionHeight = `${100 + (N - 1) * SLIDE_VH}vh`;
+  // TRAVEL is the polaroid row's total horizontal traversal in viewport-widths.
+  // Extending by END_OVERSHOOT past (N-1) makes the final polaroid drift past
+  // its landing so it ends at 30% from viewport-left.
+  const TRAVEL = N - 1 + END_OVERSHOOT;
+  const sectionHeight = `${100 + TRAVEL * SLIDE_VH}vh`;
 
   // The pinned content is a real `position: fixed` element — browser anchors it
   // to the viewport natively (zero JS lag, no scroll jitter). The empty section
@@ -443,26 +451,41 @@ function Carousel() {
       // → polaroid_center = 25 + 12 = 37vw → LANDING_OFFSET = 50 - 37 = 13vw.
       const LANDING_OFFSET_VW = 13;
       if (polaroids) {
-        polaroids.style.transform = `translate3d(calc(${-p * (N - 1) * 100}vw + ${entryX}px - ${LANDING_OFFSET_VW}vw), -50%, 0)`;
+        polaroids.style.transform = `translate3d(calc(${-p * TRAVEL * 100}vw + ${entryX}px - ${LANDING_OFFSET_VW}vw), -50%, 0)`;
       }
 
       // Per-polaroid spin + arc. Effective dist includes entryT so polaroid 0
       // looks like it's approaching center from one viewport-width to the right
       // during the entry phase — same spin/arc/scale behavior as any other
       // polaroid sliding into center.
+      // Once a polaroid's center crosses viewport X = 30vw (30% from left /
+      // 70% from right) — i.e. dist < -0.07 — drag it back with a local X
+      // offset so its visible leftward velocity drops to 40% of normal (60%
+      // slowdown, matching the rotation slowdown factor). The polaroid lingers
+      // longer in the left half of the viewport before exiting.
+      const LATE_X_THRESHOLD = -0.07;
+      const LATE_X_SLOWDOWN = 0.6; // fraction by which X velocity is reduced
       for (let i = 0; i < N; i++) {
         const el = polaroidItemRefs.current[i];
         if (!el) continue;
-        const dist = (i - p * (N - 1)) + entryT;
+        const dist = (i - p * TRAVEL) + entryT;
         const absD = Math.abs(dist);
-        // Linear rotation: constant rate as polaroid moves. No slow-at-center,
-        // no acceleration. 540° per viewport-width of travel — polaroid is
-        // upside down at the extremes, upright at center.
-        const rot = -dist * 540;
+        // Linear rotation: constant rate across the whole travel — 60% slower
+        // than the original 540°/viewport-width (216°/viewport-width). Polaroid
+        // never goes upside down; the gentler spin reads from the moment it
+        // enters from the right instead of only easing after midpoint.
+        const rot = -dist * 216;
         // Spline arc: lifts up on the way in/out, exactly 0 at the centerline.
         const arcY = absD < 1 ? -absD * (1 - absD) * 180 : 0;
         const scale = 1 - Math.min(absD * 0.12, 0.25);
-        el.style.transform = `translate3d(0, ${arcY}px, 0) rotate(${rot}deg) scale(${scale})`;
+        // Counter-translate: 0 until threshold, then grows linearly with how
+        // far past the threshold the polaroid has traveled. At dist=-0.07: 0vw.
+        // At dist=-1: ~55.8vw (right-ward pull, lagging behind the row).
+        const offsetVw =
+          dist < LATE_X_THRESHOLD
+            ? (LATE_X_THRESHOLD - dist) * 100 * LATE_X_SLOWDOWN
+            : 0;
+        el.style.transform = `translate3d(calc(${offsetVw}vw), ${arcY}px, 0) rotate(${rot}deg) scale(${scale})`;
       }
 
       if (p !== lastProgress) {
