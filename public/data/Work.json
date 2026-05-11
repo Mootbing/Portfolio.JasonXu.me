@@ -1,8 +1,20 @@
 [
   {
+    "year": "Apr 2026",
+    "title": "Clarmi.studio",
+    "description": "100% automated web design agency w/ automatic lead generation and maintenance.",
+    "link": "https://clarmi.studio",
+    "tags": ["Next"],
+    "polaroids": [
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "website" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "client" },
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "lead gen" }
+    ]
+  },
+  {
     "year": "Mar 2026",
     "title": "Ball Knowledge",
-    "description": "NBA game locator. Find nearby games, check schedules, and grab tickets powered by the Ticketmaster API.",
+    "description": "Intelligence platform for NBA matches.",
     "link": "https://ball-knowledge-theta.vercel.app/",
     "tags": ["Next", "REST API", "Ticketmaster API"],
     "polaroids": [
@@ -12,7 +24,7 @@
   {
     "year": "Feb 2026",
     "title": "useNemo.dev",
-    "description": "Google for Agents. Search & execute remote skills & MCP for agents. ==30k+ searches in 2 weeks==.",
+    "description": "Google for Agents. Allowed agents to discover & execute skills and MCP servers. ==30k+ queries served in 3 weeks==.",
     "link": "https://usenemo.dev",
     "tags": ["Next", "Neon"],
     "badgesMt": -16,
@@ -65,49 +77,32 @@
   {
     "year": "Nov 2025",
     "title": "Cow Farm Simulator",
-    "description": "Moo? Moo. Remastering a Scratch game from 2018. Manage your herd of cows and craft diary products",
+    "description": "2018 Scratch game remastered. Manage your herd of cows and craft diary products",
     "link": "https://cow-farm-simulator-remastered.vercel.app/",
     "tags": ["Next", "Supabase", "Figma"],
     "polaroids": [
-      { "frontSquareMedia": "./images/Cow Farm Simulator/js.mp4", "frontCoverMedia": "", "caption": "revamped :)" },
-      { "frontSquareMedia": "./images/Cow Farm Simulator/scratch.mp4", "frontCoverMedia": "", "caption": "Scratch ver. (est. 2018)" }
+      { "frontSquareMedia": "./images/Cow Farm Simulator/js.mp4", "frontCoverMedia": "", "caption": "2026 ver." },
+      { "frontSquareMedia": "./images/Cow Farm Simulator/scratch.mp4", "frontCoverMedia": "", "caption": "Scratch ver. (2018)" }
     ]
   },
   {
     "year": "Nov 2025",
-    "title": "Bullhorn Aerosystems",
-    "description": "Open-sourced Gotham by Palantir. Commerical edition built with OpenSky API and global airport data.",
-    "link": "https://bullhorn-aerosystems.vercel.app/",
+    "title": "Raidar.net",
+    "description": "Open-sourced Gotham by Palantir for fun.",
+    "link": "https://raidar.net/",
     "tags": ["Next", "OpenSky API"],
     "polaroids": [
-      { "frontSquareMedia": "./images/Bullhorn/bullhorn.mp4", "frontCoverMedia": "", "caption": "Cowlantir" }
+      { "frontSquareMedia": "./images/Bullhorn/bullhorn.mp4", "frontCoverMedia": "", "caption": "Freelantir" }
     ]
   },
   {
     "year": "Aug 2025",
     "title": "BrowserBase Clone",
-    "description": "Browserbase powered by DOM elements instead of screenshots in chrome extension. Talked to Paul Klein (CEO @ BrowserBase)",
+    "description": "Browserbase powered by DOM elements instead of screenshots in a chrome extension. Got to meet Paul Klein.",
     "link": "https://github.com/Mootbing/Browser-Use-Clone-But-Dom-And-Not-Screenshots",
     "tags": ["Extension", "OpenAI"],
     "polaroids": [
       { "frontSquareMedia": "./images/Browserbase/browse.mp4", "frontCoverMedia": "", "caption": "Browsing Agent (Real-time)" }
-    ]
-  },
-  {
-    "year": "Jul 2025",
-    "title": "NORMA",
-    "description": "Open-source mocap software for pose-tracking & 3D playback. Adopted for research use at Penn.",
-    "link": "https://norma.mootbing.dev",
-    "tags": ["Next", "Posenet", "Expo"],
-    "badgesMt": -16,
-    "badges": [
-      { "text": "used by" },
-      { "href": "", "src": "./images/NORMA/Penn.png", "alt": "Perelman School of Medicine, University of Pennsylvania", "width": 110, "height": 45, "style": "margin-left: 3px" }
-    ],
-    "polaroids": [
-      { "frontSquareMedia": "./images/NORMA/recording.mp4", "frontCoverMedia": "", "caption": "Posture analysis" },
-      { "frontSquareMedia": "./images/NORMA/playback.mp4", "frontCoverMedia": "", "caption": "pose playback" },
-      { "frontSquareMedia": "./images/NORMA/abg.mp4", "frontCoverMedia": "", "caption": "Gooning" }
     ]
   },
   {
@@ -121,20 +116,19 @@
     ]
   },
   {
-    "year": "Oct 2024",
-    "title": "Black Hole Racing Game",
-    "description": "Pose-based game for mobility-limited patient rehabilitation. Designed for clinical trials at University of Pennsylvania Perelman School of Medicine",
-    "link": "",
-    "tags": ["UE5", "C++"],
+    "year": "Jul 2025",
+    "title": "NORMA",
+    "description": "Open-source mocap software for pose-tracking & 3D playback. Used by researchers @ UPenn.",
+    "link": "https://norma.mootbing.dev",
+    "tags": ["Next", "Posenet", "Expo"],
     "badgesMt": -16,
     "badges": [
-      { "text": "used by" },
-      { "href": "", "src": "./images/NORMA/Penn.png", "alt": "Perelman School of Medicine, University of Pennsylvania", "width": 110, "height": 45 }
+      { "href": "", "src": "./images/NORMA/Penn.png", "alt": "Perelman School of Medicine, University of Pennsylvania", "width": 110, "height": 45, "style": "margin-left: 3px" }
     ],
     "polaroids": [
-      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Black Hole" },
-      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "UE5 Game" },
-      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Patient Recovery" }
+      { "frontSquareMedia": "./images/NORMA/recording.mp4", "frontCoverMedia": "", "caption": "Posture analysis" },
+      { "frontSquareMedia": "./images/NORMA/playback.mp4", "frontCoverMedia": "", "caption": "pose playback" },
+      { "frontSquareMedia": "./images/NORMA/abg.mp4", "frontCoverMedia": "", "caption": "Gooning" }
     ]
   },
   {

@@ -264,20 +264,22 @@ function ProjectSlide({
   // For project 0 during entry, `entryT` keeps dist > 0 even though progress = 0.
   const distEff = (index - progress * (total - 1)) + entryT;
 
-  // Clip keyframes tied to the polaroid actually crossing the text region
-  // (right: 25%, ~54%-75% from viewport left). Polaroid is ~24% wide. With
-  // landing offset shifting polaroid_center to 25% + distEff*100% from left:
-  //   polaroid touches text_right (75%) when distEff = 0.62
-  //   polaroid past   text_left  (54%) when distEff = 0.17
-  // → reveal window: distEff in [0.62, 0.17] (polaroid sweeps over text)
-  //   next polaroid covers text when distEff_i in [-0.38, -0.83]
-  // → hide window:   distEff in [-0.38, -0.83]
+  // Clip keyframes tied to the polaroid actually crossing the text region.
+  // Text anchor changed: now left: 50% (text left edge at viewport center),
+  // so text occupies ~50vw → ~50+W vw (W ≈ 30vw for typical entries; capped
+  // at 40vw). Polaroid is ~24vw wide; landing center at 37vw → polaroid_right
+  // at 49vw + distEff*100vw. Compared to the old right: 25% anchor (text
+  // centered at 75vw), text shifted ~10vw left for typical widths, so the
+  // reveal/hide windows shift by ~-0.10 in distEff units.
+  //   reveal: polaroid_right meets text_right_edge → starts ~0.52
+  //           polaroid_right past text_left (50vw)  → completes ~0.07
+  //   hide:   next polaroid mirrors symmetrically  → starts ~-0.48, ends ~-0.93
   const CLIP_STOPS: [number, number, number][] = [
     [ 1.00,   100,    0 ],
-    [ 0.62,   100,    0 ],
-    [ 0.17,     0,    0 ],
-    [-0.38,     0,    0 ],
-    [-0.83,     0,  100 ],
+    [ 0.52,   100,    0 ],
+    [ 0.07,     0,    0 ],
+    [-0.48,     0,    0 ],
+    [-0.93,     0,  100 ],
     [-2.00,     0,  100 ],
   ];
 
@@ -304,11 +306,8 @@ function ProjectSlide({
       style={{
         position: "absolute",
         top: "50%",
-        right: "25%",
-        // Shift the container right by half its own width so its CENTER sits at
-        // 25% from the viewport's right edge (instead of its right edge sitting
-        // there). Container is now visually centered at right: 25%.
-        transform: "translate(50%, -50%)",
+        left: "50%",
+        transform: "translateY(-50%)",
         // fit-content sizes the container to the actual text bounds so the
         // clip-path percentages map directly to text width (not a giant box).
         width: "fit-content",
@@ -708,7 +707,7 @@ export default function Timeline() {
             textDecoration: "none",
           }}
         >
-          +36 more from 2013–2024 →
+          & 40 more since 2013 →
         </a>
       </div>
     </div>

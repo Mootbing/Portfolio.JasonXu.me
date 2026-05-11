@@ -40,7 +40,8 @@ function Hero() {
       const webkitStyle = el.style as unknown as { webkitClipPath: string };
 
       if (isMobile) {
-        const t = Math.max(0, Math.min(window.scrollY / window.innerHeight, 1));
+        // 2× speed: complete fade by half a viewport of scroll instead of one.
+        const t = Math.max(0, Math.min((window.scrollY * 2) / window.innerHeight, 1));
         el.style.opacity = String(1 - t);
         el.style.clipPath = "";
         webkitStyle.webkitClipPath = "";
@@ -149,6 +150,12 @@ export default function Home() {
         ...STYLES.montserrat,
         backgroundColor: STYLES.colors.background,
         color: STYLES.colors.primary,
+        // Mobile compact list lets the polaroid back-stack translate past the
+        // viewport edge (cards offset right by stackOffset*18px + rotation
+        // bounding box), which would surface a horizontal page scrollbar.
+        // Clip here — overflow: clip does NOT establish a containing block for
+        // position: fixed descendants, so the Hero stays viewport-anchored.
+        overflowX: "clip",
       }}
     >
       {/* Fixed hero — fades out on scroll */}
