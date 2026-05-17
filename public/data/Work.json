@@ -2,35 +2,27 @@
   {
     "year": "Apr 2026",
     "title": "Clarmi.studio",
-    "description": "100% automated web design agency w/ automatic lead generation and maintenance.",
+    "description": "$10k/mo automated design agency ran on Claude.",
+    "fullDescription": "==100% automated web design agency== w/ automatic lead generation and maintenance. Built on a custom fork of Openclaw & Photon's iMessage kit service, allowing all tasks besides onboarding & intro call to be automated by end-clients texting a service agent. Eg. to change something on their website, the agent will automatic fix, branch, and create vercel preview link.",
     "link": "https://clarmi.studio",
     "tags": ["Next"],
     "polaroids": [
-      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "website" },
-      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "client" },
-      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "lead gen" }
-    ]
-  },
-  {
-    "year": "Mar 2026",
-    "title": "Ball Knowledge",
-    "description": "Intelligence platform for NBA matches.",
-    "link": "https://ball-knowledge-theta.vercel.app/",
-    "tags": ["Next", "REST API", "Ticketmaster API"],
-    "polaroids": [
-      { "frontSquareMedia": "./images/Ball Knowledge/Ball Knowledge.mp4", "frontCoverMedia": "", "caption": "Ball Knowledge" }
+      { "frontSquareMedia": "./images/Clarmi/Clarmi.png", "frontCoverMedia": "", "caption": "website", "mediaStyle": { "fit": "contain-blur" } },
+      { "frontSquareMedia": "./images/Clarmi/0.png", "frontCoverMedia": "", "caption": "client", "mediaStyle": { "fit": "cover", "objectPosition": "top" } }
     ]
   },
   {
     "year": "Feb 2026",
     "title": "useNemo.dev",
-    "description": "Google for Agents. Allowed agents to discover & execute skills and MCP servers. ==30k+ queries served in 3 weeks==.",
+    "description": "Google for Agents. Discover & execute skills and MCP servers automatically. ==30k+ queries served in 3 weeks==.",
+    "fullDescription": "Sourced ==1.5k+== most-useful skills and MCP servers and built a agent-native search engine as a skill allowing agents to invoke MCP servers & skills in a remote sandbox environment. ==30k+ queries served in 3 weeks==.",
     "link": "https://usenemo.dev",
     "tags": ["Next", "Neon"],
     "badgesMt": -16,
     "badges": [
-      { "text": "used by" },
-      { "href": "", "src": "./images/NEMO/neon.png", "alt": "Neon", "width": 80, "height": 35, "style": "margin-left: -3px" }
+      { "text": "<3 by devs @" },
+      { "href": "", "src": "./images/NEMO/neon.png", "alt": "Neon", "width": 80, "height": 35, "style": "margin-left: 0px" },
+        { "href": "", "src": "./images/NEMO/browseruse.png", "alt": "Neon", "width": 110, "height": 35, "style": "margin-left: 0px, margin-top: -2px" }
     ],
     "polaroids": [
       { "frontSquareMedia": "./images/NEMO/thesis.png", "frontCoverMedia": "", "caption": "the Nemo thesis" }
@@ -40,6 +32,7 @@
     "year": "Jan 2026",
     "title": "Tracky",
     "description": "The feature-for-feature Flighty inspired Amtrak train logbook & tracker. ==Rail4Less.us partner (200k+ users)==.",
+    "fullDescription": "",
     "link": "https://trytracky.com/",
     "tags": ["Expo", "GTFS"],
     "badgesMt": -16,
@@ -56,6 +49,7 @@
     "year": "Dec 2025",
     "title": "Flux IDE",
     "description": "Agentic-coding IDE for creating & deploying iMessage agents in one click.",
+    "fullDescription": "",
     "link": "https://www.producthunt.com/products/flux-14",
     "tags": ["Next", "Postgres", "GRPC"],
     "badgesMt": -4,
@@ -78,6 +72,7 @@
     "year": "Nov 2025",
     "title": "Cow Farm Simulator",
     "description": "2018 Scratch game remastered. Manage your herd of cows and craft diary products",
+    "fullDescription": "",
     "link": "https://cow-farm-simulator-remastered.vercel.app/",
     "tags": ["Next", "Supabase", "Figma"],
     "polaroids": [
@@ -86,19 +81,10 @@
     ]
   },
   {
-    "year": "Nov 2025",
-    "title": "Raidar.net",
-    "description": "Open-sourced Gotham by Palantir for fun.",
-    "link": "https://raidar.net/",
-    "tags": ["Next", "OpenSky API"],
-    "polaroids": [
-      { "frontSquareMedia": "./images/Bullhorn/bullhorn.mp4", "frontCoverMedia": "", "caption": "Freelantir" }
-    ]
-  },
-  {
     "year": "Aug 2025",
     "title": "BrowserBase Clone",
-    "description": "Browserbase powered by DOM elements instead of screenshots in a chrome extension. Got to meet Paul Klein.",
+    "description": "Cloned Browserbase using DOM elements instead of screenshots before they did it. Meet Paul Klein (Founder & CEO) & got to interview.",
+    "fullDescription": "",
     "link": "https://github.com/Mootbing/Browser-Use-Clone-But-Dom-And-Not-Screenshots",
     "tags": ["Extension", "OpenAI"],
     "polaroids": [
@@ -109,6 +95,7 @@
     "year": "Jun 2025",
     "title": "YC AI Startup School Search",
     "description": "Built vector-embedded search of YCombinator Startup School speaker transcripts & logs. Got ==300k+ LinkedIn views and 1M+ queries==",
+    "fullDescription": "",
     "link": "https://yc-ai-sus-search-engine.vercel.app/",
     "tags": ["Next", "Firebase Auth", "Pinecone"],
     "polaroids": [
@@ -119,6 +106,7 @@
     "year": "Jul 2025",
     "title": "NORMA",
     "description": "Open-source mocap software for pose-tracking & 3D playback. Used by researchers @ UPenn.",
+    "fullDescription": "",
     "link": "https://norma.mootbing.dev",
     "tags": ["Next", "Posenet", "Expo"],
     "badgesMt": -16,
@@ -135,6 +123,7 @@
     "year": "Jul 2023",
     "title": "17.JasonXu.me",
     "description": "Frontend scrolling website that got glazed hella",
+    "fullDescription": "",
     "link": "https://17.jasonxu.me",
     "tags": ["Next", "Figma", "SVGs"],
     "badges": [
@@ -153,6 +142,7 @@
     "year": "Mar 2023",
     "title": "Azure Speech Recognition",
     "description": "Rewrote Microsoft's Azure speech recognition on Expo to allow continuous recognition",
+    "fullDescription": "",
     "link": "https://github.com/Mootbing/speech-sdk-continuous-recognition-react-native",
     "tags": ["Expo", "Azure"],
     "badgesMt": -32,

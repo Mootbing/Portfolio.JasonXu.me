@@ -1,6 +1,7 @@
 "use client";
 
-import { useRef, useState, useEffect, useLayoutEffect } from "react";
+import { Fragment, useRef, useState, useEffect, useLayoutEffect, useMemo } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import PolaroidStack from "./PolaroidCard";
 import type { PolaroidItem } from "./PolaroidCard";
 import PROJECTS from "../../public/data/Work.json";
@@ -14,6 +15,7 @@ interface TimelineProject {
   year: string;
   title: string;
   description: string;
+  fullDescription?: string;
   link?: string;
   tags: string[];
   badges?: ({ href: string; src: string; alt: string; width: number; height: number; style?: string } | { text: string })[];
@@ -93,6 +95,370 @@ function parseHighlights(text: string): React.ReactNode[] {
   return parts;
 }
 
+// Same as parseHighlights but returns typed runs so AnimatedReveal can slice
+// by visible char count and wrap highlighted runs in <Highlight>.
+type TextRun = { type: "plain" | "highlight"; text: string };
+function parseTextRuns(text: string): TextRun[] {
+  const runs: TextRun[] = [];
+  const regex = /==(.+?)==/g;
+  let lastIndex = 0;
+  let match;
+  while ((match = regex.exec(text)) !== null) {
+    if (match.index > lastIndex) {
+      runs.push({ type: "plain", text: text.slice(lastIndex, match.index) });
+    }
+    runs.push({ type: "highlight", text: match[1] });
+    lastIndex = regex.lastIndex;
+  }
+  if (lastIndex < text.length) {
+    runs.push({ type: "plain", text: text.slice(lastIndex) });
+  }
+  return runs;
+}
+
+// Length excluding the `==` markers — what the user actually sees and what the
+// typewriter should ramp through.
+function visibleLength(text: string): number {
+  return text.replace(/==/g, "").length;
+}
+
+const CHAR_DURATION_MS = 180;
+const STAGGER_MS_MAX = 7;
+const REVEAL_TOTAL_MAX_MS = 700;
+const BUTTON_FADE_MS = 110;
+const HEIGHT_SMOOTH_MS = 280;
+
+// Outer wrapper animates its own height to whatever the inner content's natural
+// height resolves to (tracked via ResizeObserver). Discrete reflow jumps — like
+// a typewritten char wrapping onto a new line, or all chars unmounting at the
+// end of a collapse — become smooth eased transitions instead of snaps.
+// overflow: hidden so the inner content can never paint outside the animated
+// box (avoids text briefly overlapping siblings below during catch-up).
+function HeightSmoother({ children }: { children: React.ReactNode }) {
+  const innerRef = useRef<HTMLDivElement>(null);
+  const [height, setHeight] = useState<number | "auto">("auto");
+
+  useIsoLayoutEffect(() => {
+    const el = innerRef.current;
+    if (!el) return;
+    setHeight(el.offsetHeight);
+    const ro = new ResizeObserver(() => {
+      if (innerRef.current) setHeight(innerRef.current.offsetHeight);
+    });
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+
+  return (
+    <motion.div
+      animate={{ height }}
+      transition={{ duration: HEIGHT_SMOOTH_MS / 1000, ease: [0.32, 0.72, 0, 1] }}
+      style={{
+        // Vertical-only clip: the inner content can't paint past the animated
+        // height (avoids text bleeding into siblings during catch-up), but
+        // horizontally we extend the clip region far beyond the box so the
+        // [more]/[less] button at the right edge of a tight line never gets
+        // its trailing pixel clipped. `overflow: hidden` clips both axes;
+        // mixing overflow-x/y forces auto and adds scrollbars; this is the
+        // clean middle ground.
+        clipPath:
+          "polygon(-1000px 0, calc(100% + 1000px) 0, calc(100% + 1000px) 100%, -1000px 100%)",
+      }}
+    >
+      <div ref={innerRef}>{children}</div>
+    </motion.div>
+  );
+}
+
+// Typewriter on expand: chars mount one at a time at staggerMs intervals so
+// the inline flow grows organically (no FLIP scale artifacts). On collapse:
+// all currently-mounted chars fade out together (opacity + blur), then unmount
+// in a single batch — faster and cleaner than the reverse typewriter, and the
+// layout snap at the end happens behind a curtain of already-faded text.
+function AnimatedReveal({
+  text,
+  show,
+  staggerMs,
+}: {
+  text: string;
+  show: boolean;
+  staggerMs: number;
+}) {
+  const runs = useMemo(() => parseTextRuns(text), [text]);
+  const total = useMemo(
+    () => runs.reduce((acc, r) => acc + r.text.length, 0),
+    [runs]
+  );
+  const [count, setCount] = useState(show ? total : 0);
+  const [fadingOut, setFadingOut] = useState(false);
+  const countRef = useRef(count);
+  countRef.current = count;
+
+  useEffect(() => {
+    if (show) {
+      setFadingOut(false);
+      if (countRef.current >= total) return;
+      const id = window.setInterval(() => {
+        const next = countRef.current + 1;
+        countRef.current = next;
+        setCount(next);
+        if (next >= total) window.clearInterval(id);
+      }, staggerMs);
+      return () => window.clearInterval(id);
+    }
+    if (countRef.current === 0) return;
+    setFadingOut(true);
+    const timer = window.setTimeout(() => {
+      countRef.current = 0;
+      setCount(0);
+      setFadingOut(false);
+    }, CHAR_DURATION_MS);
+    return () => window.clearTimeout(timer);
+  }, [show, total, staggerMs]);
+
+  const renderChars = (chars: string[]) =>
+    chars.map((ch, i) => (
+      <motion.span
+        key={i}
+        initial={{ opacity: 0, filter: "blur(6px)" }}
+        animate={
+          fadingOut
+            ? { opacity: 0, filter: "blur(6px)" }
+            : { opacity: 1, filter: "blur(0px)" }
+        }
+        transition={{ duration: CHAR_DURATION_MS / 1000, ease: "easeOut" }}
+      >
+        {ch}
+      </motion.span>
+    ));
+
+  let offset = 0;
+  return (
+    <>
+      {runs.map((run, ri) => {
+        const runLen = run.text.length;
+        const visibleInRun = Math.min(runLen, Math.max(0, count - offset));
+        offset += runLen;
+        if (visibleInRun === 0) return null;
+        const chars = Array.from(run.text).slice(0, visibleInRun);
+        return run.type === "highlight" ? (
+          <Highlight key={ri}>{renderChars(chars)}</Highlight>
+        ) : (
+          <Fragment key={ri}>{renderChars(chars)}</Fragment>
+        );
+      })}
+    </>
+  );
+}
+
+type DiffSegment = { type: "kept" | "new"; text: string };
+
+// Word-level LCS diff. If short's tokens are a subsequence of full's tokens,
+// returns segments interleaving "kept" (matched) and "new" (inserted) runs of
+// full. Otherwise returns the entire full as a single "new" segment.
+//
+// This lets the renderer keep old words anchored in place and only animate the
+// inserted portions — spaces between kept words naturally expand as new chars
+// typewriter into them and push the surrounding text apart.
+function diffSegments(short: string, full: string): {
+  segments: DiffSegment[];
+  isSubsequence: boolean;
+  totalNewLen: number;
+  longestNewLen: number;
+} {
+  const sToks = short.split(/(\s+)/).filter((t) => t.length > 0);
+  const fToks = full.split(/(\s+)/).filter((t) => t.length > 0);
+  const m = sToks.length;
+  const n = fToks.length;
+
+  if (m === 0) {
+    const len = visibleLength(full);
+    return {
+      segments: [{ type: "new", text: full }],
+      isSubsequence: true,
+      totalNewLen: len,
+      longestNewLen: len,
+    };
+  }
+
+  const dp: number[][] = Array.from({ length: m + 1 }, () =>
+    new Array(n + 1).fill(0)
+  );
+  for (let i = 1; i <= m; i++) {
+    for (let j = 1; j <= n; j++) {
+      dp[i][j] =
+        sToks[i - 1] === fToks[j - 1]
+          ? dp[i - 1][j - 1] + 1
+          : Math.max(dp[i - 1][j], dp[i][j - 1]);
+    }
+  }
+
+  const isSubsequence = dp[m][n] === m;
+
+  if (!isSubsequence) {
+    const len = visibleLength(full);
+    return {
+      segments: [{ type: "new", text: full }],
+      isSubsequence: false,
+      totalNewLen: len,
+      longestNewLen: len,
+    };
+  }
+
+  const matched = new Array<boolean>(n).fill(false);
+  let i = m;
+  let j = n;
+  while (i > 0 && j > 0) {
+    if (sToks[i - 1] === fToks[j - 1]) {
+      matched[j - 1] = true;
+      i--;
+      j--;
+    } else if (dp[i - 1][j] >= dp[i][j - 1]) {
+      i--;
+    } else {
+      j--;
+    }
+  }
+
+  const segments: DiffSegment[] = [];
+  for (let k = 0; k < n; k++) {
+    const type: "kept" | "new" = matched[k] ? "kept" : "new";
+    const last = segments[segments.length - 1];
+    if (last && last.type === type) last.text += fToks[k];
+    else segments.push({ type, text: fToks[k] });
+  }
+
+  let totalNewLen = 0;
+  let longestNewLen = 0;
+  for (const s of segments) {
+    if (s.type === "new") {
+      const len = visibleLength(s.text);
+      totalNewLen += len;
+      longestNewLen = Math.max(longestNewLen, len);
+    }
+  }
+  return { segments, isSubsequence, totalNewLen, longestNewLen };
+}
+
+function DescriptionWithMore({ short, full }: { short: string; full?: string }) {
+  const [open, setOpen] = useState(false);
+  const [suffixOpen, setSuffixOpen] = useState(false);
+
+  const trimmedShort = short.trim();
+  const trimmedFull = full?.trim() ?? "";
+  const hasMore = trimmedFull.length > 0 && trimmedFull !== trimmedShort;
+
+  const diff = useMemo(() => {
+    if (!hasMore) return null;
+    return diffSegments(trimmedShort, trimmedFull);
+  }, [trimmedShort, trimmedFull, hasMore]);
+
+  // Stagger sized against the total new chars so the whole reveal fits inside
+  // REVEAL_TOTAL_MAX_MS even with multiple insertion points (each segment runs
+  // its own typewriter in parallel, but the budget is shared).
+  const totalNewLen = diff?.totalNewLen ?? 0;
+  const longestNewLen = diff?.longestNewLen ?? 0;
+  const staggerMs = useMemo(() => {
+    const len = Math.max(1, totalNewLen);
+    return Math.min(
+      STAGGER_MS_MAX,
+      Math.max(2, (REVEAL_TOTAL_MAX_MS - CHAR_DURATION_MS) / len)
+    );
+  }, [totalNewLen]);
+  // Expand: wait for the longest segment's ramp + deblur tail. Collapse: all
+  // new segments fade out together in CHAR_DURATION_MS (plus a small buffer).
+  const rampMs = longestNewLen * staggerMs;
+  const buttonEnterDelayMs = open
+    ? rampMs + CHAR_DURATION_MS
+    : CHAR_DURATION_MS + 30;
+
+  useEffect(() => {
+    if (!hasMore) return;
+    const t = setTimeout(() => setSuffixOpen(open), BUTTON_FADE_MS);
+    return () => clearTimeout(t);
+  }, [open, hasMore]);
+
+  const button = hasMore && (
+    <>
+      {" "}
+      <AnimatePresence mode="wait" initial={false}>
+        <motion.button
+          key={open ? "less" : "more"}
+          type="button"
+          className="inline-link"
+          onClick={(e) => {
+            e.stopPropagation();
+            setOpen((v) => !v);
+          }}
+          initial={{ opacity: 0 }}
+          animate={{
+            opacity: 1,
+            transition: {
+              duration: BUTTON_FADE_MS / 1000,
+              delay: buttonEnterDelayMs / 1000,
+            },
+          }}
+          exit={{ opacity: 0, transition: { duration: BUTTON_FADE_MS / 1000 } }}
+          style={{
+            fontFamily: "inherit",
+            fontSize: "inherit",
+            lineHeight: "inherit",
+            color: "#999999",
+            background: "none",
+            border: "none",
+            padding: 0,
+            cursor: "pointer",
+          }}
+        >
+          {open ? "[less]" : "[more]"}
+        </motion.button>
+      </AnimatePresence>
+    </>
+  );
+
+  if (!hasMore || !diff) {
+    return <>{parseHighlights(short)}</>;
+  }
+
+  // Mode A: short's tokens are a subsequence of full's. Render kept segments
+  // statically and animate each "new" run independently — inserted chars push
+  // the surrounding kept words apart organically as they type in.
+  if (diff.isSubsequence) {
+    return (
+      <>
+        {diff.segments.map((seg, i) =>
+          seg.type === "kept" ? (
+            <Fragment key={i}>{parseHighlights(seg.text)}</Fragment>
+          ) : (
+            <AnimatedReveal
+              key={i}
+              text={seg.text}
+              show={suffixOpen}
+              staggerMs={staggerMs}
+            />
+          )
+        )}
+        {button}
+      </>
+    );
+  }
+
+  // Mode B: full diverges from short — render short when collapsed, full
+  // (typewritten) when expanded. No interleaving since there's no structural
+  // alignment to preserve.
+  return (
+    <>
+      {!suffixOpen && parseHighlights(short)}
+      <AnimatedReveal
+        text={trimmedFull}
+        show={suffixOpen}
+        staggerMs={staggerMs}
+      />
+      {button}
+    </>
+  );
+}
+
 // Linear progress — uniform horizontal velocity across the whole carousel. The
 // previous per-segment smoothstep concentrated the slow-feel at each landing
 // midpoint; now the slowness is spread evenly so polaroids drift in from the
@@ -134,6 +500,40 @@ function useIsCompact(breakpoint = 800) {
   return compact;
 }
 
+// Parses an inline CSS string from Work.json into a React style object. Splits
+// on `;` or `,` (commas at top level only — commas inside parens like
+// `translate(10px, 20px)` are preserved). Each `prop: value` pair has its
+// kebab-case key converted to camelCase. Tolerant of both separators because
+// authors mostly write JSON-y commas; CSS-y semicolons work too.
+function parseBadgeStyle(s: string): React.CSSProperties {
+  const parts: string[] = [];
+  let current = "";
+  let depth = 0;
+  for (const ch of s) {
+    if (ch === "(") depth++;
+    else if (ch === ")") depth = Math.max(0, depth - 1);
+    if (depth === 0 && (ch === ";" || ch === ",")) {
+      if (current.trim()) parts.push(current);
+      current = "";
+    } else {
+      current += ch;
+    }
+  }
+  if (current.trim()) parts.push(current);
+
+  const out: Record<string, string> = {};
+  for (const part of parts) {
+    const idx = part.indexOf(":");
+    if (idx < 0) continue;
+    const rawKey = part.slice(0, idx).trim();
+    const value = part.slice(idx + 1).trim();
+    if (!rawKey || !value) continue;
+    const key = rawKey.replace(/-([a-z])/g, (_, c) => c.toUpperCase());
+    out[key] = value;
+  }
+  return out as React.CSSProperties;
+}
+
 function Badges({
   project,
   align,
@@ -173,19 +573,7 @@ function Badges({
             href={badge.href}
             target="_blank"
             rel="noopener noreferrer"
-            style={
-              badge.style
-                ? Object.fromEntries(
-                    badge.style
-                      .split(";")
-                      .filter(Boolean)
-                      .map((s) => {
-                        const [k, v] = s.split(":").map((x) => x.trim());
-                        return [k.replace(/-([a-z])/g, (_, c) => c.toUpperCase()), v];
-                      })
-                  )
-                : undefined
-            }
+            style={badge.style ? parseBadgeStyle(badge.style) : undefined}
           >
             <img
               src={badge.src}
@@ -370,17 +758,19 @@ function ProjectSlide({
           project.title
         )}
       </h3>
-      <p
-        style={{
-          fontFamily: "var(--font-caveat), cursive",
-          fontWeight: 400,
-          color: "#444444",
-          fontSize: "1.25rem",
-          lineHeight: 1.4,
-        }}
-      >
-        {parseHighlights(project.description)}
-      </p>
+      <HeightSmoother>
+        <p
+          style={{
+            fontFamily: "var(--font-caveat), cursive",
+            fontWeight: 400,
+            color: "#444444",
+            fontSize: "1.25rem",
+            lineHeight: 1.4,
+          }}
+        >
+          <DescriptionWithMore short={project.description} full={project.fullDescription} />
+        </p>
+      </HeightSmoother>
       <Badges project={project} align="left" marginTop="0.75rem" />
     </div>
   );
@@ -693,18 +1083,20 @@ function CompactList() {
                 project.title
               )}
             </h3>
-            <p
-              className="mb-3"
-              style={{
-                fontFamily: "var(--font-caveat), cursive",
-                fontWeight: 400,
-                color: "#444444",
-                fontSize: "1.25rem",
-                lineHeight: 1.4,
-              }}
-            >
-              {parseHighlights(project.description)}
-            </p>
+            <HeightSmoother>
+              <p
+                className="mb-3"
+                style={{
+                  fontFamily: "var(--font-caveat), cursive",
+                  fontWeight: 400,
+                  color: "#444444",
+                  fontSize: "1.25rem",
+                  lineHeight: 1.4,
+                }}
+              >
+                <DescriptionWithMore short={project.description} full={project.fullDescription} />
+              </p>
+            </HeightSmoother>
             {/* Tags hidden for now
             {project.tags?.length ? (
               <div

@@ -12,11 +12,19 @@ import {
   type PanInfo,
 } from "framer-motion";
 
+export interface PolaroidMediaStyle {
+  fit?: "cover" | "contain" | "fill" | "none" | "scale-down" | "contain-blur";
+  maxWidth?: string | number;
+  maxHeight?: string | number;
+  objectPosition?: string;
+}
+
 export interface PolaroidItem {
   frontSquareMedia: string;
   frontCoverMedia: string;
   caption: string;
   backCoverMedia?: string;
+  mediaStyle?: PolaroidMediaStyle;
 }
 
 interface PolaroidStackProps {
@@ -39,12 +47,14 @@ function MediaElement({
   src,
   alt,
   className,
+  style,
   ref,
   playing,
 }: {
   src: string;
   alt?: string;
   className?: string;
+  style?: React.CSSProperties;
   ref?: React.Ref<HTMLVideoElement>;
   playing?: boolean;
 }) {
@@ -73,6 +83,7 @@ function MediaElement({
         }}
         src={src}
         className={className}
+        style={style}
         preload="none"
         loop
         muted
@@ -86,6 +97,7 @@ function MediaElement({
       src={src}
       alt={alt ?? ""}
       className={className}
+      style={style}
       loading="lazy"
       decoding="async"
       draggable={false}
@@ -114,6 +126,25 @@ function PolaroidContent({
   playing?: boolean;
   large?: boolean;
 }) {
+  const ms = item.mediaStyle;
+  const useBlurFill = ms?.fit === "contain-blur";
+  const effectiveFit = useBlurFill ? "contain" : ms?.fit;
+  const hasConstraint = !!(ms?.maxWidth || ms?.maxHeight);
+  const mediaInlineStyle: React.CSSProperties | undefined = ms
+    ? {
+        objectFit: effectiveFit ?? "cover",
+        objectPosition: ms.objectPosition,
+        maxWidth: ms.maxWidth ?? "100%",
+        maxHeight: ms.maxHeight ?? "100%",
+        width: hasConstraint ? "auto" : "100%",
+        height: hasConstraint ? "auto" : "100%",
+        position: useBlurFill ? "relative" : undefined,
+        zIndex: useBlurFill ? 1 : undefined,
+      }
+    : undefined;
+  const frameExtraClass = ms ? " flex items-center justify-center" : "";
+  const mediaClass = ms ? "" : "w-full h-full object-cover";
+
   return (
     <div
       className={`bg-white shadow-md select-none ${large ? "p-4 pb-16" : "p-3 pb-14"}`}
@@ -122,13 +153,26 @@ function PolaroidContent({
           "0 4px 14px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.06)",
       }}
     >
-      <div className={`${sizeClass} overflow-hidden pointer-events-none relative`}>
+      <div className={`${sizeClass} overflow-hidden pointer-events-none relative${frameExtraClass}`}>
+        {useBlurFill && item.frontSquareMedia && (
+          <MediaElement
+            src={item.frontSquareMedia}
+            className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+            style={{
+              filter: "blur(28px) saturate(1.25)",
+              transform: "scale(1.18)",
+              zIndex: 0,
+            }}
+            playing={playing}
+          />
+        )}
         {item.frontSquareMedia ? (
           <MediaElement
             ref={videoRef}
             src={item.frontSquareMedia}
             alt={item.caption}
-            className="w-full h-full object-cover"
+            className={mediaClass}
+            style={mediaInlineStyle}
             playing={playing}
           />
         ) : (
