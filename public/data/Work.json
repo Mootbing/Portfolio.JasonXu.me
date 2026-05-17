@@ -15,7 +15,7 @@
     "year": "Feb 2026",
     "title": "useNemo.dev",
     "description": "Google for Agents. Discover & execute skills and MCP servers automatically. ==30k+ queries served in 3 weeks==.",
-    "fullDescription": "Sourced ==1.5k+== most-useful skills and MCP servers and built a agent-native search engine as a skill allowing agents to invoke MCP servers & skills in a remote sandbox environment. ==30k+ queries served in 3 weeks==.",
+    "fullDescription": "Sourced ==1.5k+ most-useful skills and MCP servers== and built a agent-native search engine as a skill allowing agents to invoke MCP servers & skills in a remote sandbox environment. ==30k+ queries served in 3 weeks==.",
     "link": "https://usenemo.dev",
     "tags": ["Next", "Neon"],
     "badgesMt": -16,
