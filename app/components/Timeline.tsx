@@ -1,9 +1,14 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useLayoutEffect } from "react";
 import PolaroidStack from "./PolaroidCard";
 import type { PolaroidItem } from "./PolaroidCard";
 import PROJECTS from "../../public/data/Work.json";
+
+// Carousel needs measurements committed before paint. SSR has no window —
+// fall back to useEffect there (it's a no-op since the carousel is gated
+// behind useIsCompact which only resolves on the client).
+const useIsoLayoutEffect = typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
 interface TimelineProject {
   year: string;
@@ -405,7 +410,15 @@ function Carousel() {
   //  - the polaroid row's horizontal translate
   //  - per-polaroid spin/arc transforms
   //  - the React `progress` state that drives the text overlays
-  useEffect(() => {
+  //
+  // useLayoutEffect (not useEffect) so the FIRST update() runs synchronously
+  // before paint. Critical on the mobile→desktop breakpoint crossover: the
+  // Carousel just mounted, its initial state has polaroid 0 off-screen-right
+  // and all text clipped, but the user may be scrolled mid-carousel. Without
+  // a pre-paint measurement, the browser paints that stale state for one frame
+  // before the post-paint useEffect fixes it — flashing the polaroids and text
+  // out of sync.
+  useIsoLayoutEffect(() => {
     let raf = 0;
     let lastProgress = -1;
     let lastEntryT = -1;
@@ -508,10 +521,17 @@ function Carousel() {
 
     update();
     window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
+    // Resize must run update() synchronously, NOT through the RAF debounce.
+    // The polaroid row's inline transform mixes vw (auto-reflows) with px
+    // (entryX, frozen until update() runs); per-polaroid offsetVw is also
+    // frozen in the inline string. If we let the browser paint between the
+    // resize and the next RAF, the px parts are stale relative to the
+    // freshly-reflowed vw parts → polaroid and text clip drift out of sync
+    // for a frame. Resize is infrequent enough that a sync update is fine.
+    window.addEventListener("resize", update);
     return () => {
       window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
+      window.removeEventListener("resize", update);
       if (raf) cancelAnimationFrame(raf);
     };
   }, [N]);
@@ -525,9 +545,16 @@ function Carousel() {
         style={{ height: sectionHeight, position: "relative" }}
       />
 
-      {/* Real position: fixed pin — natively anchored to viewport, no JS lag. */}
+      {/* Real position: fixed pin — natively anchored to viewport, no JS lag.
+          data-carousel-pin lets Hero's clip-path scope its polaroid lookup
+          to ONLY the carousel polaroid (not CompactList polaroids which
+          share the .bg-white.p-3.pb-14 class). Without this, crossing the
+          800px breakpoint upward briefly resolves the selector to a
+          CompactList polaroid (CompactList hasn't unmounted yet), which
+          sits centered in the page → Hero clips to ~50% and gets stuck. */}
       <div
         ref={fixedRef}
+        data-carousel-pin
         style={{
           position: "fixed",
           top: 0,

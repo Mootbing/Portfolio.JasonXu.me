@@ -1,9 +1,11 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef } from "react";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import Footer from "./components/Footer";
+
+const useIsoLayoutEffect = typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
 const Timeline = dynamic(() => import("./components/Timeline"));
 
@@ -31,7 +33,11 @@ function Hero() {
   // Mobile (<800px): the carousel is replaced by a vertical CompactList, so
   // there's no polaroid sweeping the hero. Fall back to a simple opacity fade
   // over the first viewport of scroll.
-  useEffect(() => {
+  // Layout effect so the initial clip-path is computed before paint —
+  // prevents a first-frame flash where the hero shows un-clipped, then
+  // snaps to its scroll-driven clip. Especially noticeable when the page
+  // breakpoint flips (mobile↔desktop) and Hero re-runs its initial pass.
+  useIsoLayoutEffect(() => {
     const handleScroll = () => {
       const el = ref.current;
       if (!el) return;
@@ -49,8 +55,12 @@ function Hero() {
         return;
       }
 
+      // Scope to the carousel pin — CompactList polaroids share the same
+      // .bg-white.p-3.pb-14 class. Without scoping, the breakpoint crossing
+      // can briefly resolve this to a centered CompactList polaroid (React
+      // hasn't committed the unmount yet) and lock the Hero clip at ~50%.
       const polaroid = document.querySelector(
-        ".bg-white.p-3.pb-14"
+        "[data-carousel-pin] .bg-white.p-3.pb-14"
       ) as HTMLElement | null;
       const heroRect = el.getBoundingClientRect();
       let rightClip = 0;
@@ -67,12 +77,38 @@ function Hero() {
       el.style.opacity = "1";
       el.style.pointerEvents = rightClip > 90 ? "none" : "auto";
     };
-    handleScroll();
+
+    // Run once now, then again on the next frame. Carousel is a sibling
+    // component — when crossing the 800px breakpoint, Carousel just mounted
+    // and its layout effect (which positions the polaroid) may run AFTER
+    // Hero's. Without the deferred second call, Hero would read a missing
+    // or initial-state polaroid and lock rightClip at the wrong value
+    // until the next scroll/resize.
+    const handleScrollSettled = () => {
+      handleScroll();
+      requestAnimationFrame(handleScroll);
+    };
+
+    handleScrollSettled();
     window.addEventListener("scroll", handleScroll, { passive: true });
-    window.addEventListener("resize", handleScroll);
+    window.addEventListener("resize", handleScrollSettled);
+    // Breakpoint crossings can desync Hero (Carousel mount/unmount races)
+    // and resize events alone don't always fire at the exact crossover.
+    const mql = window.matchMedia("(max-width: 799px)");
+    mql.addEventListener("change", handleScrollSettled);
+    // Returning focus to the tab can reveal a stale clip if the user
+    // crossed the breakpoint with the tab backgrounded (matchMedia change
+    // may not have re-fired Carousel's positioning).
+    const onVisibility = () => {
+      if (document.visibilityState === "visible") handleScrollSettled();
+    };
+    document.addEventListener("visibilitychange", onVisibility);
+
     return () => {
       window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("resize", handleScroll);
+      window.removeEventListener("resize", handleScrollSettled);
+      mql.removeEventListener("change", handleScrollSettled);
+      document.removeEventListener("visibilitychange", onVisibility);
     };
   }, []);
 
