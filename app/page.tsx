@@ -161,7 +161,7 @@ function Hero() {
           color: STYLES.colors.primary,
         }}
       >
-        Everything I&apos;ve Built
+        My Portfolio
       </h1>
 
       {/* Subtitle */}

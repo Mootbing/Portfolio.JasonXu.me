@@ -1,5 +1,5 @@
 const ARCHIVES = [
-  { year: "Mar 2026", title: "Ball Knowledge", description: "Intelligence platform for NBA matches.", link: "https://ball-knowledge-theta.vercel.app/", tags: ["Next", "REST API", "Ticketmaster API"] },
+  { year: "Mar 2026", title: "Ball Knowledge", description: "Intelligence platform for NBA matches built w/ AirBnB UI.", link: "https://ball-knowledge-theta.vercel.app/", tags: ["Next", "REST API", "Ticketmaster API"] },
   { year: "Nov 2025", title: "Raidar.net", description: "Open-sourced Gotham by Palantir for fun.", link: "https://raidar.net/", tags: ["Next", "OpenSky API"] },
   { year: "Jul 2025", title: "Linge", description: "Tinder + Hinge = Linge. Swipe through weekly coffee chat matches", link: "", tags: ["Flutter", "Supabase", "Clado"] },
   { year: "Jun 2025", title: "Iron Empire", description: "Cloned my childhood's favorite game (中华铁路 @ QQ)", link: "", tags: ["Next", "Supabase", "Google Maps API"] },

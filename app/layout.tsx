@@ -25,7 +25,7 @@ const caveat = Caveat({
 });
 
 export const metadata: Metadata = {
-  title: "Jason Xu | Everything I've Built",
+  title: "Jason Xu | Portfolio",
   description:
     "Jason Xu - Builder, Entrepreneur, and Student at the University of Pennsylvania",
   keywords: [
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
   authors: [{ name: "Jason Xu" }],
   creator: "Jason Xu",
   openGraph: {
-    title: "Jason Xu | Everything I've Built",
+    title: "Jason Xu | Portfolio",
     description:
       "Builder, Entrepreneur, and Student at the University of Pennsylvania",
     type: "website",

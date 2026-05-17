@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, useRef, useState, useEffect, useLayoutEffect, useMemo } from "react";
+import { Fragment, useRef, useState, useEffect, useLayoutEffect, useMemo, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import PolaroidStack from "./PolaroidCard";
 import type { PolaroidItem } from "./PolaroidCard";
@@ -122,9 +122,9 @@ function visibleLength(text: string): number {
   return text.replace(/==/g, "").length;
 }
 
-const CHAR_DURATION_MS = 180;
-const STAGGER_MS_MAX = 7;
-const REVEAL_TOTAL_MAX_MS = 700;
+const CHAR_DURATION_MS = 110;
+const STAGGER_MS_MAX = 4;
+const REVEAL_TOTAL_MAX_MS = 420;
 const BUTTON_FADE_MS = 110;
 const HEIGHT_SMOOTH_MS = 280;
 const HIGHLIGHT_FILL_MS = 420;
@@ -232,10 +232,12 @@ function AnimatedReveal({
   text,
   show,
   staggerMs,
+  onEraseComplete,
 }: {
   text: string;
   show: boolean;
   staggerMs: number;
+  onEraseComplete?: () => void;
 }) {
   const runs = useMemo(() => parseTextRuns(text), [text]);
   const total = useMemo(
@@ -291,16 +293,20 @@ function AnimatedReveal({
     }
     // Collapse: highlights off first, chars run the per-char staggered eraser.
     setHighlightsActive(false);
-    if (countRef.current === 0) return;
+    if (countRef.current === 0) {
+      onEraseComplete?.();
+      return;
+    }
     setEraserMode(true);
     const eraserTotalMs = total * staggerMs + CHAR_DURATION_MS;
     const timer = window.setTimeout(() => {
       countRef.current = 0;
       setCount(0);
       setEraserMode(false);
+      onEraseComplete?.();
     }, eraserTotalMs);
     return () => window.clearTimeout(timer);
-  }, [show, total, staggerMs]);
+  }, [show, total, staggerMs, onEraseComplete]);
 
   let globalCharIdx = 0;
   let offset = 0;
@@ -396,31 +402,28 @@ function DescriptionWithMore({ short, full }: { short: string; full?: string }) 
     ? rampMs + CHAR_DURATION_MS + highlightsCascadeMs
     : rampMs + CHAR_DURATION_MS + 30;
 
+  // After the button-fade lag, flip textOpen AND set fullErasing in the same
+  // tick so the next render has both consistent values. (Splitting them across
+  // effects caused a one-frame stutter: textOpen would flip but fullErasing
+  // wouldn't, so shortIsAbsolute briefly went false and the short flashed into
+  // the inline flow before snapping back to absolute.) fullErasing only goes
+  // true when we're actually collapsing FROM an expanded state.
+  const prevOpenRef = useRef(open);
   useEffect(() => {
     if (!hasMore) return;
-    const t = setTimeout(() => setTextOpen(open), BUTTON_FADE_MS);
+    const wasOpen = prevOpenRef.current;
+    prevOpenRef.current = open;
+    const t = setTimeout(() => {
+      setTextOpen(open);
+      if (!open && wasOpen) setFullErasing(true);
+      if (open) setFullErasing(false);
+    }, BUTTON_FADE_MS);
     return () => clearTimeout(t);
   }, [open, hasMore]);
 
-  // Track when the full text is mid-eraser so we can keep short as an absolute
-  // overlay (in front of, not displacing, the erasing text). Synced exactly to
-  // AnimatedReveal's eraser duration so the short flips into normal flow the
-  // same frame full unmounts → no zero-height gap.
-  const prevTextOpenRef = useRef(textOpen);
-  useEffect(() => {
-    const prev = prevTextOpenRef.current;
-    prevTextOpenRef.current = textOpen;
-    if (!hasMore) return;
-    if (prev && !textOpen) {
-      setFullErasing(true);
-      const eraserTotalMs = animatedLen * staggerMs + CHAR_DURATION_MS;
-      const timer = window.setTimeout(() => setFullErasing(false), eraserTotalMs);
-      return () => window.clearTimeout(timer);
-    }
-    if (!prev && textOpen) {
-      setFullErasing(false);
-    }
-  }, [textOpen, hasMore, animatedLen, staggerMs]);
+  const handleEraseComplete = useCallback(() => {
+    setFullErasing(false);
+  }, []);
 
   const button = hasMore && (
     <>
@@ -511,6 +514,7 @@ function DescriptionWithMore({ short, full }: { short: string; full?: string }) 
         text={animatedText}
         show={textOpen}
         staggerMs={staggerMs}
+        onEraseComplete={handleEraseComplete}
       />
       {button}
     </>
@@ -1209,7 +1213,7 @@ export default function Timeline() {
             textDecoration: "none",
           }}
         >
-          & 40 more since 2013 →
+          & 41 more from 2013 → 2026
         </a>
       </div>
     </div>

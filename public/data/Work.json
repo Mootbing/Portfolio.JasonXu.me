@@ -2,20 +2,20 @@
   {
     "year": "Apr 2026",
     "title": "Clarmi.studio",
-    "description": "$10k/mo automated web agency ran by Claude.",
-    "fullDescription": "==100% automated web design agency== w/ automatic lead generation and maintenance. Built on a custom fork of Openclaw & Photon's iMessage kit service, allowing all tasks besides onboarding & intro call to be automated by end-clients texting a service agent. Eg. to change something on their website, the agent will automatic fix, branch, and create vercel preview link.",
+    "description": "$10k/mo automated web agency that ran itself.",
+    "fullDescription": "==100% automated web design agency w/ automatic lead generation and maintenance.== Built on a custom fork of Openclaw & Photon's iMessage kit service, allowing all tasks besides onboarding & intro call to be automated by end-clients texting a service agent. Eg. to change something on their website, the agent will automatic fix, branch, and create vercel preview link.",
     "link": "https://clarmi.studio",
     "tags": ["Next"],
     "polaroids": [
-      { "frontSquareMedia": "./images/Clarmi/Clarmi.png", "frontCoverMedia": "", "caption": "website", "mediaStyle": { "fit": "contain-blur" } },
-      { "frontSquareMedia": "./images/Clarmi/0.png", "frontCoverMedia": "", "caption": "client", "mediaStyle": { "fit": "cover", "objectPosition": "top" } }
+      { "frontSquareMedia": "./images/Clarmi/Clarmi.png", "frontCoverMedia": "", "caption": "Clarmi Studios", "mediaStyle": { "fit": "contain-blur" } },
+      { "frontSquareMedia": "./images/Clarmi/0.png", "frontCoverMedia": "", "caption": "a client's site", "mediaStyle": { "fit": "cover", "objectPosition": "top" } }
     ]
   },
   {
     "year": "Feb 2026",
     "title": "useNemo.dev",
     "description": "Google for Agents. Discover & execute skills and MCP servers automatically. ==30k+ queries served in 3 weeks==.",
-    "fullDescription": "Sourced ==1.5k+ most-useful skills and MCP servers== and built a agent-native search engine as a skill allowing agents to invoke MCP servers & skills in a remote sandbox environment. ==30k+ queries served in 3 weeks==.",
+    "fullDescription": "Sourced ==1.5k+ most-useful skills and MCP servers== and built a agent-native search engine as a skill allowing agents to invoke MCP servers & skills in a remote environment for agent & host machine security. ==30k+ queries served in 3 weeks==.",
     "link": "https://usenemo.dev",
     "tags": ["Next", "Neon"],
     "badgesMt": -16,
@@ -31,8 +31,8 @@
   {
     "year": "Jan 2026",
     "title": "Tracky",
-    "description": "The feature-for-feature Flighty inspired Amtrak train logbook & tracker. ==Rail4Less.us partner (200k+ users)==.",
-    "fullDescription": "",
+    "description": "Built Flighty for Trains. ==Rail4Less.us partner (200k+ users)==.",
+    "fullDescription": "Passion project of mine building a train tracking app with the same level of polish & precision as Flighty. Built on Expo and Amtrak's public GTFS & -RT stream data, powering live train maps, station details, and IOS widgets / live activities. ==Partnered with Rail4Less.us (200k users)== to create a v2 with a Go backend improving performance.",
     "link": "https://trytracky.com/",
     "tags": ["Expo", "GTFS"],
     "badgesMt": -16,
@@ -48,8 +48,8 @@
   {
     "year": "Dec 2025",
     "title": "Flux IDE",
-    "description": "Agentic-coding IDE for creating & deploying iMessage agents in one click.",
-    "fullDescription": "",
+    "description": "Vibe-coding IDE for creating & deploying iMessage agents",
+    "fullDescription": "Built a containerized, web devleopment environment allowing entry-level developers to create iMessage-native, langchain agents. A fully-functional IDE with in-IDE iMessage sandbox, Google Calendar & GSuite integrations, and an one-click deployment to Photon's production servers. ==Launched on Product Hunt as #1 product of the day.==",
     "link": "https://www.producthunt.com/products/flux-14",
     "tags": ["Next", "Postgres", "GRPC"],
     "badgesMt": -4,
@@ -57,13 +57,13 @@
       {
         "href": "https://www.producthunt.com/products/flux-14?embed=true&utm_source=badge-top-post-badge&utm_medium=badge&utm_campaign=badge-flux-c4240f1a-2941-4e8f-b9c9-3aeeb45815fe",
         "src": "https://api.producthunt.com/widgets/embed-image/v1/top-post-badge.svg?post_id=1057545&theme=light&period=daily&t=1773040534132",
-        "alt": "Flux - Build your own agents in iMessage | Product Hunt",
+        "alt": "Product Hunt #1",
         "width": 188,
         "height": 41
       }
     ],
     "polaroids": [
-      { "frontSquareMedia": "./images/Flux/1.mp4", "frontCoverMedia": "", "caption": "Launch demo (ft. Gary)" },
+      { "frontSquareMedia": "./images/Flux/1.mp4", "frontCoverMedia": "", "caption": "Launch demo (ft. Gary - YCP26)" },
       { "frontSquareMedia": "./images/Flux/2.png", "frontCoverMedia": "", "caption": "Flux (in convo)" },
       { "frontSquareMedia": "./images/Flux/3.jpg", "frontCoverMedia": "", "caption": "the Photon Residency <3" }
     ]
@@ -71,20 +71,20 @@
   {
     "year": "Nov 2025",
     "title": "Cow Farm Simulator",
-    "description": "2018 Scratch game remastered. Manage your herd of cows and craft diary products",
+    "description": "2018 Scratch game remastered. Be the best cattle rancher you can!",
     "fullDescription": "",
     "link": "https://cow-farm-simulator-remastered.vercel.app/",
     "tags": ["Next", "Supabase", "Figma"],
     "polaroids": [
-      { "frontSquareMedia": "./images/Cow Farm Simulator/js.mp4", "frontCoverMedia": "", "caption": "2026 ver." },
-      { "frontSquareMedia": "./images/Cow Farm Simulator/scratch.mp4", "frontCoverMedia": "", "caption": "Scratch ver. (2018)" }
+      { "frontSquareMedia": "./images/Cow Farm Simulator/js.mp4", "frontCoverMedia": "", "caption": "2026" },
+      { "frontSquareMedia": "./images/Cow Farm Simulator/scratch.mp4", "frontCoverMedia": "", "caption": "2018" }
     ]
   },
   {
     "year": "Aug 2025",
     "title": "BrowserBase Clone",
-    "description": "Cloned Browserbase using DOM elements instead of screenshots before they did it. Meet Paul Klein (Founder & CEO) & got to interview.",
-    "fullDescription": "",
+    "description": "Cloned Browserbase using DOM elements instead of screenshots before they did it. Meet Paul Klein (Founder & CEO).",
+    "fullDescription": "Dissected web pages by interactable attributes (eg. <a>, <input> and <button> tags) and extracted them via Selenium. Fed to GPT4 for creation of action scripts then injected via chrome extention. Wrote an orchestration/planner with GPT-4o that calls the action layer to make it all come together. Successfully ordered family McDonalds to the USA from China.",
     "link": "https://github.com/Mootbing/Browser-Use-Clone-But-Dom-And-Not-Screenshots",
     "tags": ["Extension", "OpenAI"],
     "polaroids": [
@@ -92,9 +92,9 @@
     ]
   },
   {
-    "year": "Jun 2025",
-    "title": "YC AI Startup School Search",
-    "description": "Built vector-embedded search of YCombinator Startup School speaker transcripts & logs. Got ==300k+ LinkedIn views and 1M+ queries==",
+    "year": "June 2025",
+    "title": "YCAISUS Search",
+    "description": "Built vector-embedded search of YCombinator Startup School transcripts & logs. ==300k+ LinkedIn views and 1M+ queries==",
     "fullDescription": "",
     "link": "https://yc-ai-sus-search-engine.vercel.app/",
     "tags": ["Next", "Firebase Auth", "Pinecone"],
@@ -103,10 +103,10 @@
     ]
   },
   {
-    "year": "Jul 2025",
-    "title": "NORMA",
-    "description": "Open-source mocap software for pose-tracking & 3D playback. Used by researchers @ UPenn.",
-    "fullDescription": "",
+    "year": "May 2025",
+    "title": "N.O.R.M.A.",
+    "description": "Open-source mocap framework & software for pose-tracking & 3D playback. ==Used by researchers @ UPenn==.",
+    "fullDescription": "Developed a 3d pose recording & playback framework with Posenet.js to initially build surfing posture correction software. ==Adopted for use to monitor patient motor recovery at Penn Medicine (Perelman) == & cancer survivor (Empire Dragons) rowing team for a pose-tracked workout app.",
     "link": "https://norma.mootbing.dev",
     "tags": ["Next", "Posenet", "Expo"],
     "badgesMt": -16,
@@ -122,7 +122,7 @@
   {
     "year": "Jul 2023",
     "title": "17.JasonXu.me",
-    "description": "Frontend scrolling website that got glazed hella",
+    "description": "Frontend scrolling website that got glazed. ==Got sent $300k+ SWE offers at 17 & fanmail==",
     "fullDescription": "",
     "link": "https://17.jasonxu.me",
     "tags": ["Next", "Figma", "SVGs"],
