@@ -2,7 +2,7 @@
   {
     "year": "Apr 2026",
     "title": "Clarmi.studio",
-    "description": "$10k/mo automated design agency ran on Claude.",
+    "description": "$10k/mo automated web agency ran by Claude.",
     "fullDescription": "==100% automated web design agency== w/ automatic lead generation and maintenance. Built on a custom fork of Openclaw & Photon's iMessage kit service, allowing all tasks besides onboarding & intro call to be automated by end-clients texting a service agent. Eg. to change something on their website, the agent will automatic fix, branch, and create vercel preview link.",
     "link": "https://clarmi.studio",
     "tags": ["Next"],

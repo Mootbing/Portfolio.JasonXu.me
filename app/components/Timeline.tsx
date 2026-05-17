@@ -127,6 +127,59 @@ const STAGGER_MS_MAX = 7;
 const REVEAL_TOTAL_MAX_MS = 700;
 const BUTTON_FADE_MS = 110;
 const HEIGHT_SMOOTH_MS = 280;
+const HIGHLIGHT_FILL_MS = 420;
+const HIGHLIGHT_STAGGER_MS = 240;
+const HIGHLIGHT_DRAIN_MS = 200;
+
+// Highlight wrapper that slides its background image in from left to right
+// after the text inside has finished its typewriter, and drains the same way
+// (left edge disappears first). Animates background-size's width; the bg's
+// anchor point snaps between left (during fill, so the bg grows rightward
+// from x=0) and right (during drain, so the bg shrinks rightward from x=0,
+// leaving the right edge intact). Only affects the painted background —
+// chars stay fully visible the whole time.
+function AnimatedHighlight({
+  children,
+  active,
+  fillDelay = 0,
+}: {
+  children: React.ReactNode;
+  active: boolean;
+  fillDelay?: number;
+}) {
+  const svg = encodeURIComponent(
+    `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 30' preserveAspectRatio='none'><path d='M 3 7 C 60 3 120 8 160 5 S 197 7 198 9 L 196 24 C 140 28 90 23 50 26 S 4 25 3 23 Z' fill='rgb(253,224,71)' opacity='0.55'/></svg>`
+  );
+  return (
+    <motion.span
+      initial={false}
+      animate={{
+        backgroundSize: active ? "100% 92%" : "0% 92%",
+        backgroundPosition: active ? "0% 60%" : "100% 60%",
+      }}
+      transition={{
+        backgroundSize: {
+          duration: HIGHLIGHT_FILL_MS / 1000,
+          ease: "easeOut",
+          delay: active ? fillDelay : 0,
+        },
+        // Snap the anchor instantly when direction flips. The size at the
+        // snap moment matches (100% in either orientation = full width at
+        // the same pixels), so there's no visible jump.
+        backgroundPosition: { duration: 0 },
+      }}
+      style={{
+        backgroundImage: `url("data:image/svg+xml;utf8,${svg}")`,
+        backgroundRepeat: "no-repeat",
+        padding: "0 0.08em",
+        boxDecorationBreak: "clone",
+        WebkitBoxDecorationBreak: "clone",
+      } as React.CSSProperties}
+    >
+      {children}
+    </motion.span>
+  );
+}
 
 // Outer wrapper animates its own height to whatever the inner content's natural
 // height resolves to (tracked via ResizeObserver). Discrete reflow jumps — like
@@ -189,49 +242,67 @@ function AnimatedReveal({
     () => runs.reduce((acc, r) => acc + r.text.length, 0),
     [runs]
   );
+  // Stable highlight indices (in source order, left-to-right) for stagger.
+  const highlightIndexFor = useMemo(() => {
+    const out: number[] = [];
+    let hi = 0;
+    for (const r of runs) out.push(r.type === "highlight" ? hi++ : -1);
+    return out;
+  }, [runs]);
+
   const [count, setCount] = useState(show ? total : 0);
-  const [fadingOut, setFadingOut] = useState(false);
+  // eraser mode = per-char staggered fade-out on collapse (left-to-right).
+  const [eraserMode, setEraserMode] = useState(false);
+  // highlights paint AFTER text is settled — true once all chars are mounted
+  // (or initially if we mounted already-full, like a delete shown on page load).
+  const [highlightsActive, setHighlightsActive] = useState(show);
+
   const countRef = useRef(count);
   countRef.current = count;
 
+  // Skip motion.span's initial fade for chars present at first render — page
+  // load shouldn't animate the initially-shown text.
+  const hasRenderedRef = useRef(false);
+  const isFirstRender = !hasRenderedRef.current;
+  useEffect(() => {
+    hasRenderedRef.current = true;
+  });
+
   useEffect(() => {
     if (show) {
-      setFadingOut(false);
-      if (countRef.current >= total) return;
+      setEraserMode(false);
+      if (countRef.current >= total) {
+        // Already full; just make sure highlights are on.
+        setHighlightsActive(true);
+        return;
+      }
       const id = window.setInterval(() => {
         const next = countRef.current + 1;
         countRef.current = next;
         setCount(next);
-        if (next >= total) window.clearInterval(id);
+        if (next >= total) {
+          window.clearInterval(id);
+          // Wait for the last char to finish its deblur, then trigger
+          // highlights so they paint over a fully-settled line of text.
+          window.setTimeout(() => setHighlightsActive(true), CHAR_DURATION_MS);
+        }
       }, staggerMs);
       return () => window.clearInterval(id);
     }
+    // Collapse: highlights off first, chars run the per-char staggered eraser.
+    setHighlightsActive(false);
     if (countRef.current === 0) return;
-    setFadingOut(true);
+    setEraserMode(true);
+    const eraserTotalMs = total * staggerMs + CHAR_DURATION_MS;
     const timer = window.setTimeout(() => {
       countRef.current = 0;
       setCount(0);
-      setFadingOut(false);
-    }, CHAR_DURATION_MS);
+      setEraserMode(false);
+    }, eraserTotalMs);
     return () => window.clearTimeout(timer);
   }, [show, total, staggerMs]);
 
-  const renderChars = (chars: string[]) =>
-    chars.map((ch, i) => (
-      <motion.span
-        key={i}
-        initial={{ opacity: 0, filter: "blur(6px)" }}
-        animate={
-          fadingOut
-            ? { opacity: 0, filter: "blur(6px)" }
-            : { opacity: 1, filter: "blur(0px)" }
-        }
-        transition={{ duration: CHAR_DURATION_MS / 1000, ease: "easeOut" }}
-      >
-        {ch}
-      </motion.span>
-    ));
-
+  let globalCharIdx = 0;
   let offset = 0;
   return (
     <>
@@ -241,142 +312,115 @@ function AnimatedReveal({
         offset += runLen;
         if (visibleInRun === 0) return null;
         const chars = Array.from(run.text).slice(0, visibleInRun);
-        return run.type === "highlight" ? (
-          <Highlight key={ri}>{renderChars(chars)}</Highlight>
-        ) : (
-          <Fragment key={ri}>{renderChars(chars)}</Fragment>
-        );
+        const startCharIdx = globalCharIdx;
+        globalCharIdx += chars.length;
+        const renderedChars = chars.map((ch, ci) => {
+          const idx = startCharIdx + ci;
+          return (
+            <motion.span
+              key={ci}
+              initial={
+                isFirstRender ? false : { opacity: 0, filter: "blur(6px)" }
+              }
+              animate={
+                eraserMode
+                  ? { opacity: 0, filter: "blur(6px)" }
+                  : { opacity: 1, filter: "blur(0px)" }
+              }
+              transition={{
+                duration: CHAR_DURATION_MS / 1000,
+                ease: "easeOut",
+                // Per-char delay on eraser → left-to-right wipe.
+                delay: eraserMode ? (idx * staggerMs) / 1000 : 0,
+              }}
+            >
+              {ch}
+            </motion.span>
+          );
+        });
+        if (run.type === "highlight") {
+          const hlDelay = (highlightIndexFor[ri] * HIGHLIGHT_STAGGER_MS) / 1000;
+          return (
+            <AnimatedHighlight
+              key={ri}
+              active={highlightsActive}
+              fillDelay={hlDelay}
+            >
+              {renderedChars}
+            </AnimatedHighlight>
+          );
+        }
+        return <Fragment key={ri}>{renderedChars}</Fragment>;
       })}
     </>
   );
 }
 
-type DiffSegment = { type: "kept" | "new"; text: string };
-
-// Word-level LCS diff. If short's tokens are a subsequence of full's tokens,
-// returns segments interleaving "kept" (matched) and "new" (inserted) runs of
-// full. Otherwise returns the entire full as a single "new" segment.
-//
-// This lets the renderer keep old words anchored in place and only animate the
-// inserted portions — spaces between kept words naturally expand as new chars
-// typewriter into them and push the surrounding text apart.
-function diffSegments(short: string, full: string): {
-  segments: DiffSegment[];
-  isSubsequence: boolean;
-  totalNewLen: number;
-  longestNewLen: number;
-} {
-  const sToks = short.split(/(\s+)/).filter((t) => t.length > 0);
-  const fToks = full.split(/(\s+)/).filter((t) => t.length > 0);
-  const m = sToks.length;
-  const n = fToks.length;
-
-  if (m === 0) {
-    const len = visibleLength(full);
-    return {
-      segments: [{ type: "new", text: full }],
-      isSubsequence: true,
-      totalNewLen: len,
-      longestNewLen: len,
-    };
-  }
-
-  const dp: number[][] = Array.from({ length: m + 1 }, () =>
-    new Array(n + 1).fill(0)
-  );
-  for (let i = 1; i <= m; i++) {
-    for (let j = 1; j <= n; j++) {
-      dp[i][j] =
-        sToks[i - 1] === fToks[j - 1]
-          ? dp[i - 1][j - 1] + 1
-          : Math.max(dp[i - 1][j], dp[i][j - 1]);
-    }
-  }
-
-  const isSubsequence = dp[m][n] === m;
-
-  if (!isSubsequence) {
-    const len = visibleLength(full);
-    return {
-      segments: [{ type: "new", text: full }],
-      isSubsequence: false,
-      totalNewLen: len,
-      longestNewLen: len,
-    };
-  }
-
-  const matched = new Array<boolean>(n).fill(false);
-  let i = m;
-  let j = n;
-  while (i > 0 && j > 0) {
-    if (sToks[i - 1] === fToks[j - 1]) {
-      matched[j - 1] = true;
-      i--;
-      j--;
-    } else if (dp[i - 1][j] >= dp[i][j - 1]) {
-      i--;
-    } else {
-      j--;
-    }
-  }
-
-  const segments: DiffSegment[] = [];
-  for (let k = 0; k < n; k++) {
-    const type: "kept" | "new" = matched[k] ? "kept" : "new";
-    const last = segments[segments.length - 1];
-    if (last && last.type === type) last.text += fToks[k];
-    else segments.push({ type, text: fToks[k] });
-  }
-
-  let totalNewLen = 0;
-  let longestNewLen = 0;
-  for (const s of segments) {
-    if (s.type === "new") {
-      const len = visibleLength(s.text);
-      totalNewLen += len;
-      longestNewLen = Math.max(longestNewLen, len);
-    }
-  }
-  return { segments, isSubsequence, totalNewLen, longestNewLen };
-}
+const SHORT_FADE_MS = 320;
 
 function DescriptionWithMore({ short, full }: { short: string; full?: string }) {
   const [open, setOpen] = useState(false);
-  const [suffixOpen, setSuffixOpen] = useState(false);
+  const [textOpen, setTextOpen] = useState(false);
+  // True while the full text is still rendered in flow during a collapse —
+  // used to keep the short overlay positioned absolutely (so it doesn't
+  // displace the still-erasing full text). Flips back off the moment full
+  // unmounts its chars, at which point short flips to static (in flow) so it
+  // becomes the new height baseline.
+  const [fullErasing, setFullErasing] = useState(false);
 
   const trimmedShort = short.trim();
   const trimmedFull = full?.trim() ?? "";
   const hasMore = trimmedFull.length > 0 && trimmedFull !== trimmedShort;
 
-  const diff = useMemo(() => {
-    if (!hasMore) return null;
-    return diffSegments(trimmedShort, trimmedFull);
-  }, [trimmedShort, trimmedFull, hasMore]);
+  const startsWithShort = hasMore && trimmedFull.startsWith(trimmedShort);
+  const animatedText = startsWithShort
+    ? " " + trimmedFull.slice(trimmedShort.length).trimStart()
+    : trimmedFull;
 
-  // Stagger sized against the total new chars so the whole reveal fits inside
-  // REVEAL_TOTAL_MAX_MS even with multiple insertion points (each segment runs
-  // its own typewriter in parallel, but the budget is shared).
-  const totalNewLen = diff?.totalNewLen ?? 0;
-  const longestNewLen = diff?.longestNewLen ?? 0;
+  const animatedLen = visibleLength(animatedText);
   const staggerMs = useMemo(() => {
-    const len = Math.max(1, totalNewLen);
+    const len = Math.max(1, animatedLen);
     return Math.min(
       STAGGER_MS_MAX,
       Math.max(2, (REVEAL_TOTAL_MAX_MS - CHAR_DURATION_MS) / len)
     );
-  }, [totalNewLen]);
-  // Expand: wait for the longest segment's ramp + deblur tail. Collapse: all
-  // new segments fade out together in CHAR_DURATION_MS (plus a small buffer).
-  const rampMs = longestNewLen * staggerMs;
+  }, [animatedLen]);
+
+  const highlightCount = (animatedText.match(/==(.+?)==/g) ?? []).length;
+  const rampMs = animatedLen * staggerMs;
+  const highlightsCascadeMs =
+    highlightCount > 0
+      ? (highlightCount - 1) * HIGHLIGHT_STAGGER_MS + HIGHLIGHT_FILL_MS
+      : 0;
   const buttonEnterDelayMs = open
-    ? rampMs + CHAR_DURATION_MS
-    : CHAR_DURATION_MS + 30;
+    ? rampMs + CHAR_DURATION_MS + highlightsCascadeMs
+    : rampMs + CHAR_DURATION_MS + 30;
 
   useEffect(() => {
     if (!hasMore) return;
-    const t = setTimeout(() => setSuffixOpen(open), BUTTON_FADE_MS);
+    const t = setTimeout(() => setTextOpen(open), BUTTON_FADE_MS);
     return () => clearTimeout(t);
   }, [open, hasMore]);
+
+  // Track when the full text is mid-eraser so we can keep short as an absolute
+  // overlay (in front of, not displacing, the erasing text). Synced exactly to
+  // AnimatedReveal's eraser duration so the short flips into normal flow the
+  // same frame full unmounts → no zero-height gap.
+  const prevTextOpenRef = useRef(textOpen);
+  useEffect(() => {
+    const prev = prevTextOpenRef.current;
+    prevTextOpenRef.current = textOpen;
+    if (!hasMore) return;
+    if (prev && !textOpen) {
+      setFullErasing(true);
+      const eraserTotalMs = animatedLen * staggerMs + CHAR_DURATION_MS;
+      const timer = window.setTimeout(() => setFullErasing(false), eraserTotalMs);
+      return () => window.clearTimeout(timer);
+    }
+    if (!prev && textOpen) {
+      setFullErasing(false);
+    }
+  }, [textOpen, hasMore, animatedLen, staggerMs]);
 
   const button = hasMore && (
     <>
@@ -416,42 +460,56 @@ function DescriptionWithMore({ short, full }: { short: string; full?: string }) 
     </>
   );
 
-  if (!hasMore || !diff) {
+  if (!hasMore) {
     return <>{parseHighlights(short)}</>;
   }
 
-  // Mode A: short's tokens are a subsequence of full's. Render kept segments
-  // statically and animate each "new" run independently — inserted chars push
-  // the surrounding kept words apart organically as they type in.
-  if (diff.isSubsequence) {
+  if (startsWithShort) {
     return (
       <>
-        {diff.segments.map((seg, i) =>
-          seg.type === "kept" ? (
-            <Fragment key={i}>{parseHighlights(seg.text)}</Fragment>
-          ) : (
-            <AnimatedReveal
-              key={i}
-              text={seg.text}
-              show={suffixOpen}
-              staggerMs={staggerMs}
-            />
-          )
-        )}
+        {parseHighlights(short)}
+        <AnimatedReveal
+          text={animatedText}
+          show={textOpen}
+          staggerMs={staggerMs}
+        />
         {button}
       </>
     );
   }
 
-  // Mode B: full diverges from short — render short when collapsed, full
-  // (typewritten) when expanded. No interleaving since there's no structural
-  // alignment to preserve.
+  // Wholesale: short overlays the full text (above, doesn't displace) while
+  // full is being erased; once full unmounts, short flips into normal flow so
+  // it owns the container height. On expand, short moves to absolute the
+  // moment textOpen flips so it fades out without holding flow space.
+  const shortIsAbsolute = textOpen || fullErasing;
   return (
     <>
-      {!suffixOpen && parseHighlights(short)}
+      <motion.span
+        style={
+          shortIsAbsolute
+            ? {
+                position: "absolute",
+                top: 0,
+                left: 0,
+                right: 0,
+                zIndex: 2,
+                pointerEvents: "none",
+              }
+            : undefined
+        }
+        initial={false}
+        animate={{
+          opacity: textOpen ? 0 : 1,
+          filter: textOpen ? "blur(6px)" : "blur(0px)",
+        }}
+        transition={{ duration: SHORT_FADE_MS / 1000, ease: "easeOut" }}
+      >
+        {parseHighlights(short)}
+      </motion.span>
       <AnimatedReveal
-        text={trimmedFull}
-        show={suffixOpen}
+        text={animatedText}
+        show={textOpen}
         staggerMs={staggerMs}
       />
       {button}
@@ -766,6 +824,7 @@ function ProjectSlide({
             color: "#444444",
             fontSize: "1.25rem",
             lineHeight: 1.4,
+            position: "relative",
           }}
         >
           <DescriptionWithMore short={project.description} full={project.fullDescription} />
@@ -1092,6 +1151,7 @@ function CompactList() {
                   color: "#444444",
                   fontSize: "1.25rem",
                   lineHeight: 1.4,
+                  position: "relative",
                 }}
               >
                 <DescriptionWithMore short={project.description} full={project.fullDescription} />
