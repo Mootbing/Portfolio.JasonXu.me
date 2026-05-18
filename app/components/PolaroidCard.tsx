@@ -128,7 +128,8 @@ function PolaroidContent({
 }) {
   const ms = item.mediaStyle;
   const useBlurFill = ms?.fit === "contain-blur";
-  const effectiveFit = useBlurFill ? "contain" : ms?.fit;
+  const effectiveFit: React.CSSProperties["objectFit"] =
+    ms?.fit === "contain-blur" ? "contain" : ms?.fit;
   const hasConstraint = !!(ms?.maxWidth || ms?.maxHeight);
   const mediaInlineStyle: React.CSSProperties | undefined = ms
     ? {

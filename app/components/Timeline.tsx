@@ -4,7 +4,7 @@ import { Fragment, useRef, useState, useEffect, useLayoutEffect, useMemo, useCal
 import { motion, AnimatePresence } from "framer-motion";
 import PolaroidStack from "./PolaroidCard";
 import type { PolaroidItem } from "./PolaroidCard";
-import PROJECTS from "../../public/data/Work.json";
+import PROJECTS_RAW from "../../public/data/Work.json";
 
 // Carousel needs measurements committed before paint. SSR has no window —
 // fall back to useEffect there (it's a no-op since the carousel is gated
@@ -22,6 +22,8 @@ interface TimelineProject {
   badgesMt?: number;
   polaroids?: PolaroidItem[];
 }
+
+const PROJECTS = PROJECTS_RAW as TimelineProject[];
 
 // vh of vertical scroll required per project transition
 const SLIDE_VH = 90;
