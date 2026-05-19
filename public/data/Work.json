@@ -105,7 +105,7 @@
   {
     "year": "Aug 2025",
     "title": "BrowserBase Clone",
-    "description": "Cloned Browserbase using DOM elements instead of screenshots before they did it. Meet Paul Klein (Founder & CEO).",
+    "description": "Cloned Browserbase using DOM elements instead of screenshots before they did it. ==Met Paul Klein (Founder & CEO).==",
     "fullDescription": "Dissected web pages by interactable attributes (eg. <a>, <input> and <button> tags) and extracted them via Selenium. Fed to GPT4 for creation of action scripts then injected via chrome extention. Wrote an orchestration/planner with GPT-4o that calls the action layer to make it all come together. Successfully ordered family McDonalds to the USA from China.",
     "link": "https://github.com/Mootbing/Browser-Use-Clone-But-Dom-And-Not-Screenshots",
     "tags": ["Extension", "OpenAI"],
