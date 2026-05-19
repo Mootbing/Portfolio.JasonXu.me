@@ -3,6 +3,7 @@ const ARCHIVES = [
   { year: "Mar 2026", title: "Frontierer", description: "Multi-stop flight route explorer for Frontier Airlines. BFS over 854 routes across 96 cities with a dark-mode Leaflet map.", link: "https://github.com/Mootbing/Frontierer", tags: ["Next", "Leaflet", "TypeScript"] },
   { year: "Mar 2026", title: "LayOver Pods", description: "Pitch deck for self-cleaning automated nap pods at airports — no staff, no hassle.", link: "https://mootbing.github.io/Layover/", tags: ["HTML", "Deck"] },
   { year: "Nov 2025", title: "Raidar.net", description: "Open-sourced Gotham by Palantir for fun.", link: "https://raidar.net/", tags: ["Next", "OpenSky API"] },
+  { year: "Aug 2025", title: "Penn Job Mass Applier", description: "Mass-applied to every Penn student job listing. Auto-generated ChatGPT cover letters and ready-to-submit folders per job.", link: "https://www.instagram.com/reel/DNt4TMsXOYx/", tags: ["Python", "Tkinter", "OpenAI"] },
   { year: "Jul 2025", title: "Linge", description: "Tinder + Hinge = Linge. Swipe through weekly coffee chat matches", link: "", tags: ["Flutter", "Supabase", "Clado"] },
   { year: "Jun 2025", title: "Iron Empire", description: "Cloned my childhood's favorite game (中华铁路 @ QQ)", link: "", tags: ["Next", "Supabase", "Google Maps API"] },
   { year: "May 2025", title: "Moonbeam", description: "AI career planner. Build timelines on how to get your dream job based on your school's alumni who are there & their former stats", link: "", tags: ["Next", "Supabase", "Clado"] },
