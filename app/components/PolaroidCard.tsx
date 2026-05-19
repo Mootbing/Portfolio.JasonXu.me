@@ -20,7 +20,8 @@ export interface PolaroidMediaStyle {
 }
 
 export interface PolaroidItem {
-  frontSquareMedia: string;
+  frontSquareMedia?: string;
+  embedUrl?: string;
   frontCoverMedia: string;
   caption: string;
   backCoverMedia?: string;
@@ -167,7 +168,17 @@ function PolaroidContent({
             playing={playing}
           />
         )}
-        {item.frontSquareMedia ? (
+        {item.embedUrl ? (
+          <iframe
+            src={item.embedUrl}
+            title={item.caption}
+            className="w-full h-full"
+            style={{ border: 0, pointerEvents: large ? "auto" : "none" }}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerPolicy="strict-origin-when-cross-origin"
+            allowFullScreen
+          />
+        ) : item.frontSquareMedia ? (
           <MediaElement
             ref={videoRef}
             src={item.frontSquareMedia}

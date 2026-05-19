@@ -19,7 +19,7 @@
     "link": "",
     "tags": ["Expo", "Supabase"],
     "polaroids": [
-      { "frontSquareMedia": "./images/Moodle/demo.mp4", "frontCoverMedia": "", "caption": "long-press to talk" }
+      { "embedUrl": "https://www.youtube.com/embed/ly_n0o9iNxo", "frontCoverMedia": "", "caption": "long-press to talk" }
     ]
   },
   {
