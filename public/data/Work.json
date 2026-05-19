@@ -12,6 +12,17 @@
     ]
   },
   {
+    "year": "Mar 2026",
+    "title": "Moodle",
+    "description": "No-code mobile app builder driven by continuous voice. Hands-free from idea to TestFlight.",
+    "fullDescription": "Mobile-native Expo app where you build mobile apps. Continuous voice mode streams partial transcripts word-by-word into the AI, who edits the canvas live — drag-to-arrange components, visual edit overlays, data models, and workflows. Powered by an agent loop that auto-restarts after each AI response so you never touch a keyboard. Built on Expo + Supabase.",
+    "link": "",
+    "tags": ["Expo", "Supabase"],
+    "polaroids": [
+      { "frontSquareMedia": "./images/Moodle/demo.mp4", "frontCoverMedia": "", "caption": "long-press to talk" }
+    ]
+  },
+  {
     "year": "Feb 2026",
     "title": "useNemo.dev",
     "description": "Google for Agents. Discover & execute skills and MCP servers automatically. ==30k+ queries served in 3 weeks==.",
