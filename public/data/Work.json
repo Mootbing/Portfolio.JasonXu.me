@@ -19,7 +19,18 @@
     "link": "",
     "tags": ["Expo", "Supabase"],
     "polaroids": [
-      { "embedUrl": "https://www.youtube.com/embed/ly_n0o9iNxo", "frontCoverMedia": "", "caption": "long-press to talk" }
+      { "embedUrl": "https://www.youtube.com/embed/ly_n0o9iNxo", "frontCoverMedia": "", "caption": "taste-first app dev" }
+    ]
+  },
+  {
+    "year": "Feb 2026",
+    "title": "SkyHeart",
+    "description": "Autonomous drone that finds you in a crowd & delivers a message. ==TreeHacks 2026.==",
+    "fullDescription": "Streamed the drone manufacturer's app screen from an Android phone over USB to a PC running YOLOv8 person detection + AWS Rekognition face matching. The server sends back swipe gestures that get injected into the drone app via Android's Accessibility Service — phone's WiFi stays on the drone the whole time. All phone↔server traffic tunnels through `adb reverse` so no external network is needed.",
+    "link": "https://github.com/Mootbing/SkyHeart",
+    "tags": ["React Native", "FastAPI", "YOLOv8", "AWS Rekognition"],
+    "polaroids": [
+      { "embedUrl": "https://www.youtube.com/embed/DcMdC08CqSM", "frontCoverMedia": "", "caption": "SkyHeart @ TreeHacks 2026" }
     ]
   },
   {

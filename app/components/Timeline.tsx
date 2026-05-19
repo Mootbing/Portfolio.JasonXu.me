@@ -1211,7 +1211,7 @@ export default function Timeline() {
             textDecoration: "none",
           }}
         >
-          & 41 more from 2013 → 2026
+          & 52 more from 2013 → 2026
         </a>
       </div>
     </div>
