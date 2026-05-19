@@ -7,6 +7,7 @@ const ARCHIVES = [
   { year: "Jan 2025", title: "Poke", description: "Soft-\"where\" to nudge your friends to hang out based on physical proximity and calendar availability", link: "", tags: ["Expo", "Supabase"] },
   { year: "Jan 2025", title: "Repository Analyzer", description: "Creates line-by-line breakdown of codebase to be summarized in a Readme.md file attachment", link: "https://github.com/Mootbing/repository-analytics", tags: ["Python"] },
   { year: "Oct 2024", title: "Black Hole Racing Game", description: "Pose-based game for mobility-limited patient rehabilitation. Designed for clinical trials at UPenn Perelman School of Medicine", link: "", tags: ["UE5", "C++"] },
+  { year: "Apr 2024", title: "Waksman Presentation", description: "Interactive e-poster for our Advanced Waksman research on oil-bioremediating bacteria at Rutgers", link: "https://github.com/Mootbing/Waksman-Presentation-2024", tags: ["React"] },
   { year: "Dec 2023", title: "Browser Project", description: "Wrote glass-morphic browser 3 years before Apple got to it", link: "https://github.com/Mootbing/Lake-Browser-Project", tags: ["SwiftUI"] },
   { year: "Nov 2023", title: "Smarter", description: "Cluely in 2023", link: "https://github.com/Mootbing/Smart", tags: ["Python", "GPT"] },
   { year: "Sep 2023", title: "The Verse", description: "Landing page for a VR&AR startup using space for education", link: "", tags: ["Figma"] },
