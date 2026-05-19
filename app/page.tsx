@@ -161,7 +161,7 @@ function Hero() {
           color: STYLES.colors.primary,
         }}
       >
-        My Portfolio
+        Highlights & Projects
       </h1>
 
       {/* Subtitle */}

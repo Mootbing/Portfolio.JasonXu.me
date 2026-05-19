@@ -194,8 +194,8 @@ function PolaroidContent({
       <p
         className="mt-3 text-center pointer-events-none"
         style={{
-          fontFamily: "var(--font-caveat), cursive",
-          fontWeight: 700,
+          fontFamily: "var(--font-playfair), serif",
+          fontWeight: 300,
           color: "#333333",
           fontSize: large ? "1.6875rem" : "1.5rem",
         }}

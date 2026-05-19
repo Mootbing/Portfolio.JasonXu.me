@@ -797,14 +797,10 @@ function ProjectSlide({
       <h3
         className="text-3xl md:text-5xl leading-none"
         style={{
-          fontFamily: "var(--font-caveat), cursive",
-          fontWeight: 700,
+          fontFamily: "var(--font-playfair), serif",
+          fontWeight: 300,
           color: "#222222",
           marginBottom: "0.75rem",
-          // Caveat glyphs (especially trailing letters) extend slightly past
-          // their metric width. Add a tiny right padding so titles without a
-          // trailing link icon don't get clipped on the right edge.
-          paddingRight: "0.15em",
         }}
       >
         {project.link ? (
@@ -1128,8 +1124,8 @@ function CompactList() {
             <h3
               className="text-3xl mb-2 leading-tight"
               style={{
-                fontFamily: "var(--font-caveat), cursive",
-                fontWeight: 700,
+                fontFamily: "var(--font-playfair), serif",
+                fontWeight: 300,
                 color: "#222222",
               }}
             >
