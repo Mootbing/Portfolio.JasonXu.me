@@ -62,8 +62,6 @@
       { "frontSquareMedia": "./images/Tracky/live_activites_and_widgets.png", "frontCoverMedia": "", "caption": "live activites and widgets" },
       { "frontSquareMedia": "./images/Tracky/train_add_and_details.mp4", "frontCoverMedia": "", "caption": "adding train & train details" },
       { "frontSquareMedia": "./images/Tracky/List_and_passport.mp4", "frontCoverMedia": "", "caption": "trip history page" },
-      { "frontSquareMedia": "./images/Tracky/live_train_map.mp4", "frontCoverMedia": "", "caption": "live train map" },
-      { "frontSquareMedia": "./images/Tracky/station_details.mp4", "frontCoverMedia": "", "caption": "station details" },
       { "frontSquareMedia": "./images/Tracky/map_features.mp4", "frontCoverMedia": "", "caption": "map features" }
     ]
   },
@@ -155,9 +153,7 @@
       { "href": "", "src": "./images/17.jasonxu.me/best-innovation-white.png", "alt": "CSSDA Best Innovation", "width": 45, "height": 45 }
     ],
     "polaroids": [
-      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "the homepage" },
-      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "Awwwards Honoree" },
-      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "CSSDA Best UI / UX / Innovation" }
+      { "frontSquareMedia": "./images/17.jasonxu.me/design.png", "frontCoverMedia": "", "caption": "the design" }
     ]
   },
   {
@@ -172,6 +168,8 @@
       { "text": "merged to" },
       { "href": "", "src": "./images/Speech SDK/Microsoft-Azure-Logo.png", "alt": "Microsoft Azure", "width": 130, "height": 30 }
     ],
-    "polaroids": []
+    "polaroids": [
+      { "frontSquareMedia": "", "frontCoverMedia": "", "caption": "no photo :(" }
+    ]
   }
 ]
