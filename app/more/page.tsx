@@ -19,7 +19,7 @@ const ARCHIVES = [
   { year: "Jun 2025", title: "DSet-Image", description: "Selenium scraper that builds image datasets from Google Images.", link: "", tags: ["Python", "Selenium"] },
   { year: "May 2025", title: "Moonbeam", description: "AI career planner. Build timelines on how to get your dream job based on your school's alumni who are there & their former stats", link: "", tags: ["Next", "Supabase", "Clado"] },
   { year: "Mar 2025", title: "Canvas-Motion-Sync", description: "Pipes Canvas .ics into Motion's API so your homework auto-time-blocks itself.", link: "", tags: ["Python", "Motion API"] },
-  { year: "Feb 2025", title: "SNU-AI", description: "Facial-recognition for Sig Nu fraternity (OpenCV backend).", link: "", tags: ["Python", "OpenCV"] },
+  { year: "Feb 2025", title: "SNU-AI", description: "Facial-recognition for Sig Nu fraternity (OpenCV backend).", link: "https://snu-ai.vercel.app", tags: ["Python", "OpenCV"] },
   { year: "Feb 2025", title: "mygrandmacantusetech", description: "Self-explanatory — the site name alone justifies it.", link: "", tags: ["HTML", "JS"] },
   { year: "Jan 2025", title: "Poke", description: "Soft-\"where\" to nudge your friends to hang out based on physical proximity and calendar availability", link: "", tags: ["Expo", "Supabase"] },
   { year: "Jan 2025", title: "Repository Analyzer", description: "Creates line-by-line breakdown of codebase to be summarized in a Readme.md file attachment", link: "https://github.com/Mootbing/repository-analytics", tags: ["Python"] },

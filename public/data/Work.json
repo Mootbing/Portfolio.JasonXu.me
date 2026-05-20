@@ -129,7 +129,7 @@
     "title": "N.O.R.M.A.",
     "description": "Open-source mocap framework & software for pose-tracking & 3D playback. ==Used by researchers @ UPenn==.",
     "fullDescription": "Developed a 3d pose recording & playback framework with Posenet.js to initially build surfing posture correction software. ==Adopted for use to monitor patient motor recovery at Penn Medicine (Perelman) == & cancer survivor (Empire Dragons) rowing team for a pose-tracked workout app.",
-    "link": "https://norma.mootbing.dev",
+    "link": "",
     "tags": ["Next", "Posenet", "Expo"],
     "badgesMt": -16,
     "badges": [
