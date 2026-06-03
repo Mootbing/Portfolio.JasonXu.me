@@ -133,6 +133,19 @@ export default function BlobCursor() {
         }
       }
 
+      // Description text block — wrap the whole paragraph (it's click-to-expand).
+      const descBlob = target.closest(".description-blob") as HTMLElement | null;
+      if (descBlob) {
+        const rect = descBlob.getBoundingClientRect();
+        const descPadding = { top: 6, right: 12, bottom: 6, left: 12 };
+        if (isPointInRect(clientX, clientY, rect, descPadding)) {
+          return {
+            type: "header",
+            bounds: createBounds(rect, descPadding),
+          };
+        }
+      }
+
       // Polaroid cards (not in fullscreen/expanded mode)
       if (!document.body.classList.contains("polaroid-expanded")) {
         const polaroid = target.closest(".bg-white.p-3.pb-14") as HTMLElement | null;

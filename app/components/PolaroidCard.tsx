@@ -37,6 +37,11 @@ interface PolaroidStackProps {
 }
 
 const DRAG_THRESHOLD = 60;
+// On narrow screens, shrink the whole polaroid (frame + caption) with a CSS
+// transform so it never overflows the viewport. Scale = availableWidth /
+// naturalFrameWidth, capped at 1. SIDE_PADDING is the breathing room kept on
+// each side of the screen edge (so the polaroid never butts right up against it).
+const SIDE_PADDING = 20;
 const VIDEO_EXTENSIONS = [".mp4", ".webm", ".mov", ".ogg"];
 const isVideo = (src: string) =>
   VIDEO_EXTENSIONS.some((ext) => src.toLowerCase().endsWith(ext));
@@ -705,9 +710,37 @@ export default function PolaroidStack({
   const topVideoRef = useRef<HTMLVideoElement>(null);
   const topCardElRef = useRef<HTMLDivElement>(null);
   const [portalTarget, setPortalTarget] = useState<HTMLElement | null>(null);
+  // Fit-to-screen scaling. scaleRef wraps the spacer + cards; we measure its
+  // natural (pre-transform) width and shrink it if it would overflow.
+  const scaleRef = useRef<HTMLDivElement>(null);
+  const [scale, setScale] = useState(1);
+  const [naturalSize, setNaturalSize] = useState<{ w: number; h: number } | null>(null);
 
   useEffect(() => {
     setPortalTarget(document.body);
+  }, []);
+
+  useEffect(() => {
+    const inner = scaleRef.current;
+    if (!inner) return;
+    const compute = () => {
+      // offsetWidth/Height are pre-transform layout sizes, so they stay the
+      // natural frame size regardless of the scale we apply.
+      const w = inner.offsetWidth;
+      const h = inner.offsetHeight;
+      if (!w) return;
+      setNaturalSize({ w, h });
+      const available = window.innerWidth - SIDE_PADDING * 2;
+      setScale(Math.min(1, available / w));
+    };
+    compute();
+    window.addEventListener("resize", compute);
+    const ro = new ResizeObserver(compute);
+    ro.observe(inner);
+    return () => {
+      window.removeEventListener("resize", compute);
+      ro.disconnect();
+    };
   }, []);
 
   const baseRotation = ROTATIONS[index % ROTATIONS.length];
@@ -755,38 +788,54 @@ export default function PolaroidStack({
     <>
       <div
         ref={ref}
-        className="relative"
-        style={{ width: "fit-content", height: "fit-content", zIndex: 51 }}
+        style={{
+          // Outer box reflects the SCALED size so the surrounding layout
+          // reserves only the shrunk footprint (no horizontal overflow).
+          width: naturalSize ? naturalSize.w * scale : "fit-content",
+          height: naturalSize ? naturalSize.h * scale : "fit-content",
+          zIndex: 51,
+        }}
       >
-        {/* Invisible spacer to hold layout */}
-        <div className="invisible">
-          <div className="bg-white p-3 pb-14">
-            <div className="w-72 h-72 md:w-80 md:h-80" />
-            <p className="mt-3 text-sm">&nbsp;</p>
+        <div
+          ref={scaleRef}
+          className="relative"
+          style={{
+            width: "fit-content",
+            height: "fit-content",
+            transformOrigin: "top left",
+            transform: scale !== 1 ? `scale(${scale})` : undefined,
+          }}
+        >
+          {/* Invisible spacer to hold layout */}
+          <div className="invisible">
+            <div className="bg-white p-3 pb-14">
+              <div className="w-72 h-72 md:w-80 md:h-80" />
+              <p className="mt-3 text-sm">&nbsp;</p>
+            </div>
           </div>
-        </div>
 
-        {/* Stacked cards */}
-        {cardOrder.slice(0, visibleCount).map((itemIndex, stackPos) => (
-          <SinglePolaroid
-            key={`card-${itemIndex}`}
-            item={items[itemIndex]}
-            rotation={baseRotation}
-            stackOffset={stackPos}
-            zIndex={visibleCount - stackPos}
-            isDraggable={stackPos === 0 && items.length > 1}
-            side={side}
-            onSwipe={handleDismiss}
-            onTap={stackPos === 0 ? handleTapTopCard : undefined}
-            faded={stackPos === 0 && expandedIndex !== null}
-            year={year}
-            title={title}
-            photoIndex={itemIndex}
-            videoRef={stackPos === 0 ? topVideoRef : undefined}
-            cardElRef={stackPos === 0 ? topCardElRef : undefined}
-            playing={isInView}
-          />
-        ))}
+          {/* Stacked cards */}
+          {cardOrder.slice(0, visibleCount).map((itemIndex, stackPos) => (
+            <SinglePolaroid
+              key={`card-${itemIndex}`}
+              item={items[itemIndex]}
+              rotation={baseRotation}
+              stackOffset={stackPos}
+              zIndex={visibleCount - stackPos}
+              isDraggable={stackPos === 0 && items.length > 1}
+              side={side}
+              onSwipe={handleDismiss}
+              onTap={stackPos === 0 ? handleTapTopCard : undefined}
+              faded={stackPos === 0 && expandedIndex !== null}
+              year={year}
+              title={title}
+              photoIndex={itemIndex}
+              videoRef={stackPos === 0 ? topVideoRef : undefined}
+              cardElRef={stackPos === 0 ? topCardElRef : undefined}
+              playing={isInView}
+            />
+          ))}
+        </div>
       </div>
 
       {/* Expanded overlay via portal */}

@@ -1,7 +1,7 @@
 "use client";
 
 import { Fragment, useRef, useState, useEffect, useLayoutEffect, useMemo, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import PolaroidStack from "./PolaroidCard";
 import type { PolaroidItem } from "./PolaroidCard";
 import PROJECTS_RAW from "../../public/data/Work.json";
@@ -366,6 +366,13 @@ function AnimatedReveal({
 
 const SHORT_FADE_MS = 320;
 
+// Drop a trailing period from the short description so it flows into the "..."
+// expand affordance. Handles a period sitting just inside a closing `==`
+// highlight (==text.==) or right after one (==text==.).
+function stripTrailingPeriod(s: string): string {
+  return s.replace(/\s+$/, "").replace(/\.(==)?$/, "$1");
+}
+
 function DescriptionWithMore({ short, full }: { short: string; full?: string }) {
   const [open, setOpen] = useState(false);
   const [textOpen, setTextOpen] = useState(false);
@@ -394,17 +401,7 @@ function DescriptionWithMore({ short, full }: { short: string; full?: string }) 
     );
   }, [animatedLen]);
 
-  const highlightCount = (animatedText.match(/==(.+?)==/g) ?? []).length;
-  const rampMs = animatedLen * staggerMs;
-  const highlightsCascadeMs =
-    highlightCount > 0
-      ? (highlightCount - 1) * HIGHLIGHT_STAGGER_MS + HIGHLIGHT_FILL_MS
-      : 0;
-  const buttonEnterDelayMs = open
-    ? rampMs + CHAR_DURATION_MS + highlightsCascadeMs
-    : rampMs + CHAR_DURATION_MS + 30;
-
-  // After the button-fade lag, flip textOpen AND set fullErasing in the same
+  // After a short fade lag, flip textOpen AND set fullErasing in the same
   // tick so the next render has both consistent values. (Splitting them across
   // effects caused a one-frame stutter: textOpen would flip but fullErasing
   // wouldn't, so shortIsAbsolute briefly went false and the short flashed into
@@ -427,43 +424,9 @@ function DescriptionWithMore({ short, full }: { short: string; full?: string }) 
     setFullErasing(false);
   }, []);
 
-  const button = hasMore && (
-    <>
-      {" "}
-      <AnimatePresence mode="wait" initial={false}>
-        <motion.button
-          key={open ? "less" : "more"}
-          type="button"
-          className="inline-link"
-          onClick={(e) => {
-            e.stopPropagation();
-            setOpen((v) => !v);
-          }}
-          initial={{ opacity: 0 }}
-          animate={{
-            opacity: 1,
-            transition: {
-              duration: BUTTON_FADE_MS / 1000,
-              delay: buttonEnterDelayMs / 1000,
-            },
-          }}
-          exit={{ opacity: 0, transition: { duration: BUTTON_FADE_MS / 1000 } }}
-          style={{
-            fontFamily: "inherit",
-            fontSize: "inherit",
-            lineHeight: "inherit",
-            color: "#999999",
-            background: "none",
-            border: "none",
-            padding: 0,
-            cursor: "pointer",
-          }}
-        >
-          {open ? "[less]" : "[more]"}
-        </motion.button>
-      </AnimatePresence>
-    </>
-  );
+  // Trailing "..." cue that hints the short text is clickable to expand.
+  // Same color as the text, attached directly to the preceding word.
+  const moreCue = <span>...</span>;
 
   if (!hasMore) {
     return <>{parseHighlights(short)}</>;
@@ -472,13 +435,30 @@ function DescriptionWithMore({ short, full }: { short: string; full?: string }) 
   if (startsWithShort) {
     return (
       <>
-        {parseHighlights(short)}
-        <AnimatedReveal
-          text={animatedText}
-          show={textOpen}
-          staggerMs={staggerMs}
-        />
-        {button}
+        <span
+          onClick={(e) => {
+            e.stopPropagation();
+            setOpen(true);
+          }}
+          style={{ cursor: open ? "default" : "pointer" }}
+        >
+          {parseHighlights(short)}
+        </span>
+        <span
+          onClick={(e) => {
+            if (!open) return;
+            e.stopPropagation();
+            setOpen(false);
+          }}
+          style={{ cursor: open ? "pointer" : "default" }}
+        >
+          <AnimatedReveal
+            text={animatedText}
+            show={textOpen}
+            staggerMs={staggerMs}
+          />
+        </span>
+        {!open && moreCue}
       </>
     );
   }
@@ -487,10 +467,15 @@ function DescriptionWithMore({ short, full }: { short: string; full?: string }) 
   // full is being erased; once full unmounts, short flips into normal flow so
   // it owns the container height. On expand, short moves to absolute the
   // moment textOpen flips so it fades out without holding flow space.
+  // Clicking the short expands; clicking the full collapses.
   const shortIsAbsolute = textOpen || fullErasing;
   return (
     <>
       <motion.span
+        onClick={(e) => {
+          e.stopPropagation();
+          setOpen(true);
+        }}
         style={
           shortIsAbsolute
             ? {
@@ -501,7 +486,7 @@ function DescriptionWithMore({ short, full }: { short: string; full?: string }) 
                 zIndex: 2,
                 pointerEvents: "none",
               }
-            : undefined
+            : { cursor: "pointer" }
         }
         initial={false}
         animate={{
@@ -510,15 +495,24 @@ function DescriptionWithMore({ short, full }: { short: string; full?: string }) 
         }}
         transition={{ duration: SHORT_FADE_MS / 1000, ease: "easeOut" }}
       >
-        {parseHighlights(short)}
+        {parseHighlights(stripTrailingPeriod(short))}
+        {moreCue}
       </motion.span>
-      <AnimatedReveal
-        text={animatedText}
-        show={textOpen}
-        staggerMs={staggerMs}
-        onEraseComplete={handleEraseComplete}
-      />
-      {button}
+      <span
+        onClick={(e) => {
+          if (!textOpen) return;
+          e.stopPropagation();
+          setOpen(false);
+        }}
+        style={{ cursor: textOpen ? "pointer" : "default" }}
+      >
+        <AnimatedReveal
+          text={animatedText}
+          show={textOpen}
+          staggerMs={staggerMs}
+          onEraseComplete={handleEraseComplete}
+        />
+      </span>
     </>
   );
 }
@@ -820,6 +814,7 @@ function ProjectSlide({
       </h3>
       <HeightSmoother>
         <p
+          className="description-blob"
           style={{
             fontFamily: "var(--font-caveat), cursive",
             fontWeight: 400,
@@ -1146,7 +1141,7 @@ function CompactList() {
             </h3>
             <HeightSmoother>
               <p
-                className="mb-3"
+                className="mb-3 description-blob"
                 style={{
                   fontFamily: "var(--font-caveat), cursive",
                   fontWeight: 400,
@@ -1174,7 +1169,7 @@ function CompactList() {
               </div>
             ) : null}
             */}
-            <Badges project={project} align="left" />
+            <Badges project={project} align="left" marginTop="1.5rem" />
           </div>
           {project.polaroids?.length ? (
             <PolaroidStack
