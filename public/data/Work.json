@@ -2,24 +2,13 @@
   {
     "year": "Apr 2026",
     "title": "Clarmi.studio",
-    "description": "$10k/mo automated web agency that ran itself.",
+    "description": "==$10k/mo== automated web agency that ran itself.",
     "fullDescription": "==100% automated web design agency w/ automatic lead generation and maintenance.== Built on a custom fork of Openclaw & Photon's iMessage kit service, allowing all tasks besides onboarding & intro call to be automated by end-clients texting a service agent. Eg. to change something on their website, the agent will automatic fix, branch, and create vercel preview link.",
     "link": "https://clarmi.studio",
     "tags": ["Next"],
     "polaroids": [
       { "frontSquareMedia": "./images/Clarmi/Clarmi.png", "frontCoverMedia": "", "caption": "Clarmi Studios", "mediaStyle": { "fit": "contain-blur" } },
       { "frontSquareMedia": "./images/Clarmi/0.png", "frontCoverMedia": "", "caption": "a client's site", "mediaStyle": { "fit": "cover", "objectPosition": "top" } }
-    ]
-  },
-  {
-    "year": "Mar 2026",
-    "title": "Moodle",
-    "description": "No-code mobile app builder driven by continuous voice. Hands-free from idea to TestFlight.",
-    "fullDescription": "Mobile-native Expo app where you build mobile apps. Continuous voice mode streams partial transcripts word-by-word into the AI, who edits the canvas live — drag-to-arrange components, visual edit overlays, data models, and workflows. Powered by an agent loop that auto-restarts after each AI response so you never touch a keyboard. Built on Expo + Supabase.",
-    "link": "",
-    "tags": ["Expo", "Supabase"],
-    "polaroids": [
-      { "embedUrl": "https://www.youtube.com/embed/ly_n0o9iNxo", "frontCoverMedia": "", "caption": "taste-first app dev" }
     ]
   },
   {
@@ -68,8 +57,8 @@
   {
     "year": "Dec 2025",
     "title": "Flux IDE",
-    "description": "Vibe-coding IDE for creating & deploying iMessage agents",
-    "fullDescription": "Built a containerized, web devleopment environment allowing entry-level developers to create iMessage-native, langchain agents. A fully-functional IDE with in-IDE iMessage sandbox, Google Calendar & GSuite integrations, and an one-click deployment to Photon's production servers. ==Launched on Product Hunt as #1 product of the day.==",
+    "description": "Vibe-coding IDE for creating & deploying iMessage agents. ==1.5M+ launch views==.",
+    "fullDescription": "Built a containerized, web devleopment environment allowing entry-level developers to create iMessage-native, langchain agents. A fully-functional IDE with in-IDE iMessage sandbox, Google Calendar & GSuite integrations, and an one-click deployment to Photon's production servers. ==Launched on Product Hunt as #1 product of the day.== ==1.5M+ launch views across all social medias==.",
     "link": "https://www.producthunt.com/products/flux-14",
     "tags": ["Next", "Postgres", "GRPC"],
     "badgesMt": -4,
@@ -114,7 +103,7 @@
   {
     "year": "June 2025",
     "title": "YCAISUS Search",
-    "description": "Built vector-embedded search of YCombinator Startup School transcripts & logs. ==300k+ LinkedIn views and 1M+ queries==",
+    "description": "Built vector-embedded search of YCombinator Startup School transcripts & logs. ==300k+ LinkedIn impressions and 1M+ queries==",
     "fullDescription": "",
     "link": "https://yc-ai-sus-search-engine.vercel.app/",
     "tags": ["Next", "Firebase Auth", "Pinecone"],
@@ -142,7 +131,7 @@
   {
     "year": "Jul 2023",
     "title": "17.JasonXu.me",
-    "description": "Frontend scrolling website that got glazed. ==Got sent $300k+ SWE offers at 17 & fanmail==",
+    "description": "Frontend scrolling website that got glazed (no vibe coding). ==Got sent $300k+ SWE offers at 17 & fanmail==",
     "fullDescription": "",
     "link": "https://17.jasonxu.me",
     "tags": ["Next", "Figma", "SVGs"],

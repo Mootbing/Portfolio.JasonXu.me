@@ -34,6 +34,7 @@ interface PolaroidStackProps {
   index: number;
   year?: string;
   title?: string;
+  fanOnScroll?: boolean;
 }
 
 const DRAG_THRESHOLD = 60;
@@ -238,6 +239,7 @@ function SinglePolaroid({
   videoRef,
   playing,
   cardElRef,
+  fanOnScroll = false,
 }: {
   item: PolaroidItem;
   rotation: number;
@@ -254,6 +256,7 @@ function SinglePolaroid({
   videoRef?: React.Ref<HTMLVideoElement>;
   playing?: boolean;
   cardElRef?: React.Ref<HTMLDivElement>;
+  fanOnScroll?: boolean;
 }) {
   const x = useMotionValue(0);
   const rotateValue = useMotionValue(0);
@@ -266,8 +269,8 @@ function SinglePolaroid({
   const prevStackOffset = useRef(stackOffset);
 
   const getTargetX = useCallback(
-    (offset: number) => (offset === 0 ? 0 : offset * 18 * sideMultiplier),
-    [sideMultiplier]
+    (offset: number) => (fanOnScroll || offset === 0 ? 0 : offset * 18 * sideMultiplier),
+    [fanOnScroll, sideMultiplier]
   );
 
   // Animate x when stack position changes (e.g. card moves from front to back)
@@ -299,7 +302,9 @@ function SinglePolaroid({
       const unsub = dragRotate.on("change", (v) => rotateValue.set(v));
       return unsub;
     } else {
-      const target = rotation + stackOffset * 7 * sideMultiplier + (stackOffset === 0 ? baseTilt : 0);
+      const target = fanOnScroll
+        ? baseTilt
+        : rotation + stackOffset * 7 * sideMultiplier + (stackOffset === 0 ? baseTilt : 0);
       if (isFirstRotate.current || !prevIsDraggable.current) {
         if (isFirstRotate.current) {
           rotateValue.set(target);
@@ -324,7 +329,7 @@ function SinglePolaroid({
       }
     }
     prevIsDraggable.current = isDraggable;
-  }, [isDraggable, dragRotate, rotation, stackOffset, sideMultiplier, baseTilt, rotateValue]);
+  }, [isDraggable, dragRotate, rotation, stackOffset, sideMultiplier, baseTilt, rotateValue, fanOnScroll]);
 
   const handleDragEnd = useCallback(
     (_: unknown, info: PanInfo) => {
@@ -362,7 +367,7 @@ function SinglePolaroid({
     [onTap]
   );
 
-  return (
+  const card = (
     <motion.div
       ref={cardElRef}
       className="absolute top-0 left-0"
@@ -370,6 +375,7 @@ function SinglePolaroid({
         x,
         rotate: rotateValue,
         zIndex,
+        pointerEvents: "auto",
         cursor: isDraggable ? "grab" : "default",
         touchAction: isDraggable ? "none" : "auto",
       }}
@@ -379,7 +385,7 @@ function SinglePolaroid({
       onClick={onTap ? handleClick : undefined}
       initial={false}
       animate={{
-        y: stackOffset * 10,
+        y: fanOnScroll ? 0 : stackOffset * 10,
         scale: faded ? 1 : 1 - stackOffset * 0.06,
         opacity: faded ? 0 : 1,
       }}
@@ -408,6 +414,28 @@ function SinglePolaroid({
         videoRef={videoRef}
         playing={playing}
       />
+    </motion.div>
+  );
+
+  if (!fanOnScroll) return card;
+
+  return (
+    <motion.div
+      className="absolute inset-0"
+      data-stack-card
+      initial={false}
+      animate={{ "--stack-slot": stackOffset }}
+      transition={{ type: "spring", stiffness: 400, damping: 30, mass: 0.4 }}
+      style={{
+        zIndex,
+        pointerEvents: "none",
+        // Carousel supplies the scroll progress. Animate only the slot index
+        // here so reordering stays smooth without interfering with drag x.
+        transform: `translate3d(calc(var(--stack-slot, ${stackOffset}) * var(--stack-fan, 0) * ${42 * sideMultiplier}px), calc(var(--stack-slot, ${stackOffset}) * var(--stack-fan, 0) * 14px), 0) rotate(calc(var(--stack-slot, ${stackOffset}) * var(--stack-fan, 0) * 14deg))`,
+        transformOrigin: "center center",
+      }}
+    >
+      {card}
     </motion.div>
   );
 }
@@ -653,7 +681,13 @@ function ExpandedPolaroidOverlay({
               }}
               onClick={(e) => e.stopPropagation()}
             >
-              <div style={{ backfaceVisibility: "hidden" }}>
+              <div
+                style={{
+                  backfaceVisibility: "hidden",
+                  WebkitBackfaceVisibility: "hidden",
+                  transform: "translateZ(0.5px)",
+                }}
+              >
                 <PolaroidContent
                   item={item}
                   year={year}
@@ -665,25 +699,27 @@ function ExpandedPolaroidOverlay({
                   large={true}
                 />
               </div>
-              {/* Back face — only rendered when the polaroid actually has
-                  back-cover media to show. Otherwise the bg-white div leaks a
-                  subpixel sliver around the front face's edges. */}
-              {item.backCoverMedia && (
-                <div
-                  className="absolute inset-0 bg-white select-none overflow-hidden"
-                  style={{
-                    backfaceVisibility: "hidden",
-                    transform: "rotateY(180deg)",
-                    boxShadow:
-                      "0 4px 14px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.06)",
-                  }}
-                >
+              {/* A paper back is present on every card. Separate the two faces
+                  slightly to prevent coplanar edges from flickering as it turns. */}
+              <div
+                data-polaroid-back
+                className="absolute inset-0 bg-white select-none overflow-hidden"
+                style={{
+                  backfaceVisibility: "hidden",
+                  WebkitBackfaceVisibility: "hidden",
+                  transform: "rotateY(180deg) translateZ(0.5px)",
+                  backgroundImage: "url('/textures/polaroid-paper.svg')",
+                  boxShadow:
+                    "0 4px 14px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.06)",
+                }}
+              >
+                {item.backCoverMedia && (
                   <MediaElement
                     src={item.backCoverMedia}
                     className="w-full h-full object-cover"
                   />
-                </div>
-              )}
+                )}
+              </div>
             </motion.div>
           </div>
         </motion.div>
@@ -698,6 +734,7 @@ export default function PolaroidStack({
   index,
   year,
   title,
+  fanOnScroll = false,
 }: PolaroidStackProps) {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: false, margin: "-100px" });
@@ -832,6 +869,7 @@ export default function PolaroidStack({
               photoIndex={itemIndex}
               videoRef={stackPos === 0 ? topVideoRef : undefined}
               cardElRef={stackPos === 0 ? topCardElRef : undefined}
+              fanOnScroll={fanOnScroll}
               playing={isInView}
             />
           ))}

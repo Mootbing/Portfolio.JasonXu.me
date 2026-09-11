@@ -37,6 +37,9 @@ const TITLE_REVEAL_END = 0.07;
 // is lengthened by END_OVERSHOOT * SLIDE_VH so the trailing scroll feels natural
 // rather than abrupt.
 const END_OVERSHOOT = 0.07;
+const LANDING_OFFSET_VW = 13;
+const POLAROID_SCALE_MIN = 0.6;
+const POLAROID_SCALE_MAX = 1.5;
 
 function clamp(v: number, lo: number, hi: number) {
   return v < lo ? lo : v > hi ? hi : v;
@@ -355,13 +358,6 @@ function AnimatedReveal({
 
 const SHORT_FADE_MS = 320;
 
-// Drop a trailing period from the short description so it flows into the "..."
-// expand affordance. Handles a period sitting just inside a closing `==`
-// highlight (==text.==) or right after one (==text==.).
-function stripTrailingPeriod(s: string): string {
-  return s.replace(/\s+$/, "").replace(/\.(==)?$/, "$1");
-}
-
 function DescriptionWithMore({ short, full }: { short: string; full?: string }) {
   const [open, setOpen] = useState(false);
   const [textOpen, setTextOpen] = useState(false);
@@ -413,9 +409,8 @@ function DescriptionWithMore({ short, full }: { short: string; full?: string }) 
     setFullErasing(false);
   }, []);
 
-  // Trailing "..." cue that hints the short text is clickable to expand.
-  // Same color as the text, attached directly to the preceding word.
-  const moreCue = <span>...</span>;
+  // Keep the expand label together, separated from the description by a space.
+  const moreCue = <> <span style={{ whiteSpace: "nowrap" }}>[...]</span></>;
 
   if (!hasMore) {
     return <>{parseHighlights(short)}</>;
@@ -432,6 +427,7 @@ function DescriptionWithMore({ short, full }: { short: string; full?: string }) 
           style={{ cursor: open ? "default" : "pointer" }}
         >
           {parseHighlights(short)}
+          {!open && moreCue}
         </span>
         <span
           onClick={(e) => {
@@ -447,7 +443,6 @@ function DescriptionWithMore({ short, full }: { short: string; full?: string }) 
             staggerMs={staggerMs}
           />
         </span>
-        {!open && moreCue}
       </>
     );
   }
@@ -484,7 +479,7 @@ function DescriptionWithMore({ short, full }: { short: string; full?: string }) 
         }}
         transition={{ duration: SHORT_FADE_MS / 1000, ease: "easeOut" }}
       >
-        {parseHighlights(stripTrailingPeriod(short))}
+        {parseHighlights(short)}
         {moreCue}
       </motion.span>
       <span
@@ -876,10 +871,16 @@ function Carousel() {
       // Per-segment smoothstep so the polaroid decelerates into each landing.
       const p = easeP(pRaw, N);
       // Entry slide: polaroid 0 slides in horizontally from off-screen right
-      // (just like the other polaroids do during carousel scroll). entryT is
-      // the section's approach progress: 1 = section's top is one viewport
-      // below (polaroid 0 off-screen right), 0 = section pinned (centered).
-      const entryT = Math.max(0, Math.min(rect.top, winH)) / Math.max(winH, 1);
+      // (just like the other polaroids do during carousel scroll).
+      // On narrow desktops, start farther right so the enlarged, rotated stack
+      // clears the hero. The diagonal covers any rotation; 32px covers the
+      // rear cards and shadow. This extra travel ends at the same landing.
+      const firstPolaroid = polaroidItemRefs.current[0];
+      const entryRadius = firstPolaroid
+        ? (Math.hypot(firstPolaroid.offsetWidth, firstPolaroid.offsetHeight) / 2 + 32) * POLAROID_SCALE_MAX
+        : 0;
+      const entryStart = Math.max(1, 0.5 + LANDING_OFFSET_VW / 100 + entryRadius / window.innerWidth);
+      const entryT = clamp(rect.top / Math.max(winH, 1), 0, 1) * entryStart;
       const entryX = entryT * window.innerWidth;
       const polaroids = polaroidsRef.current;
       // Mirror of text positioning: text uses `right: 25% + translate(50%)`
@@ -889,7 +890,6 @@ function Carousel() {
       // right (analogous to the text container extending past its anchor).
       // Slot center = (- LANDING_OFFSET) + 50vw. For polaroid_left_edge = 25vw
       // → polaroid_center = 25 + 12 = 37vw → LANDING_OFFSET = 50 - 37 = 13vw.
-      const LANDING_OFFSET_VW = 13;
       if (polaroids) {
         polaroids.style.transform = `translate3d(calc(${-p * TRAVEL * 100}vw + ${entryX}px - ${LANDING_OFFSET_VW}vw), -50%, 0)`;
       }
@@ -917,7 +917,6 @@ function Carousel() {
         const rot = -dist * 216;
         // Spline arc: lifts up on the way in/out, exactly 0 at the centerline.
         const arcY = absD < 1 ? -absD * (1 - absD) * 180 : 0;
-        const scale = 1 - Math.min(absD * 0.12, 0.25);
         // Counter-translate: 0 until threshold, then grows linearly with how
         // far past the threshold the polaroid has traveled. At dist=-0.07: 0vw.
         // At dist=-1: ~55.8vw (right-ward pull, lagging behind the row).
@@ -925,6 +924,15 @@ function Carousel() {
           dist < LATE_X_THRESHOLD
             ? (LATE_X_THRESHOLD - dist) * 100 * LATE_X_SLOWDOWN
             : 0;
+        // Perspective follows the card's actual horizontal position, including
+        // its slower exit: large on the right, steadily smaller toward the left.
+        // At the reading position (37vw), it stays close to its natural size.
+        const viewportX = 0.5 - LANDING_OFFSET_VW / 100 + dist + offsetVw / 100;
+        const scale = POLAROID_SCALE_MIN + (POLAROID_SCALE_MAX - POLAROID_SCALE_MIN) * clamp(viewportX, 0, 1);
+        // Rear cards enter aligned beneath the front, then fan out clockwise
+        // as the stack crosses the viewport. Scrubbing back tucks them in again.
+        const stackFan = clamp((0.85 - viewportX) / 0.7, 0, 1) ** 2;
+        el.style.setProperty("--stack-fan", String(stackFan));
         el.style.transform = `translate3d(calc(${offsetVw}vw), ${arcY}px, 0) rotate(${rot}deg) scale(${scale})`;
       }
 
@@ -1002,7 +1010,8 @@ function Carousel() {
             top: "50%",
             left: 0,
             display: "flex",
-            // Initial transform = scroll-0 state (entryT=1, p=0, LANDING_OFFSET=13vw).
+            // Standard scroll-0 state (entryT=1, p=0, LANDING_OFFSET=13vw).
+            // The layout effect adds entry clearance on narrow desktops before paint.
             // entryX = 100vw, so translateX = 100vw - 13vw = 87vw → polaroid 0
             // sits off-screen right. Prevents flash on first paint before the
             // scroll handler runs.
@@ -1043,6 +1052,7 @@ function Carousel() {
                     index={i}
                     year={p.year}
                     title={p.title}
+                    fanOnScroll
                   />
                 ) : (
                   <div
@@ -1188,7 +1198,7 @@ export default function Timeline() {
             textDecoration: "none",
           }}
         >
-          & 67 more from 2013 → 2026
+          & 68 more from 2013 → 2026
         </a>
       </div>
     </div>

@@ -1,5 +1,6 @@
 const ARCHIVES = [
   { year: "Apr 2026", title: "LayOver Pods", description: "Pitch deck for self-cleaning automated nap pods at airports — no staff, no hassle.", link: "https://mootbing.github.io/Layover/", tags: ["HTML", "Deck"] },
+  { year: "Mar 2026", title: "Moodle", description: "No-code mobile app builder driven by continuous voice. Hands-free from idea to TestFlight.", link: "https://www.youtube.com/watch?v=ly_n0o9iNxo", tags: ["Expo", "Supabase"] },
   { year: "Mar 2026", title: "Ball Knowledge", description: "Intelligence platform for NBA matches built w/ AirBnB UI.", link: "https://ball-knowledge-theta.vercel.app/", tags: ["Next", "REST API", "Ticketmaster API"] },
   { year: "Mar 2026", title: "Frontierer", description: "Multi-stop flight route explorer for Frontier Airlines. BFS over 854 routes across 96 cities with a dark-mode Leaflet map.", link: "https://github.com/Mootbing/Frontierer", tags: ["Next", "Leaflet", "TypeScript"] },
   { year: "Mar 2026", title: "Blackdog", description: "Floorplan to 3D apartment, dropped IKEA furniture in AR, and one-click checkout.", link: "", tags: ["Next", "Three.js", "AR"] },
