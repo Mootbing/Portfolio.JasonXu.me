@@ -107,7 +107,7 @@ export default function CornerDate({ date, reveal }: { date: string; reveal: num
         zIndex: 3,
         pointerEvents: "none",
         visibility: visible ? "visible" : "hidden",
-        opacity: reveal * 0.1,
+        opacity: reveal * 0.05,
         color: "#000000",
         fontFamily: "var(--font-montserrat), sans-serif",
         fontSize: "clamp(80px, 12vw, 192px)",
