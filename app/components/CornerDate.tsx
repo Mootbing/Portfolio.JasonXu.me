@@ -21,15 +21,21 @@ function RollingCharacter({
 }) {
   const alphabet = DIGITS.includes(character) ? DIGITS : LETTERS;
   const previousDate = useRef(dateValue);
+  const direction = useRef(0);
   const position = useMotionValue(alphabet.length + alphabet.indexOf(character));
   const y = useTransform(position, (value) => `${-value * 1.15}em`);
 
+  // Track chronology without restarting a wheel whose character is unchanged.
   useEffect(() => {
-    const direction = Math.sign(dateValue - previousDate.current);
+    direction.current = Math.sign(dateValue - previousDate.current);
     previousDate.current = dateValue;
+  }, [dateValue]);
+
+  useEffect(() => {
+    const step = direction.current;
     const destination = alphabet.indexOf(character);
     const restingPosition = alphabet.length + destination;
-    if (!shouldAnimate || direction === 0) {
+    if (!shouldAnimate || step === 0) {
       position.set(restingPosition);
       return;
     }
@@ -38,11 +44,13 @@ function RollingCharacter({
     // Preserve fractional positions when scrolling interrupts an unfinished roll.
     const current = ((position.get() % alphabet.length) + alphabet.length) % alphabet.length;
     const start = alphabet.length + current;
-    const offset = ((direction * (destination - current)) % alphabet.length + alphabet.length) % alphabet.length;
-    // A matching character still makes a full turn on every date change.
-    const distance = offset < 0.001 ? alphabet.length : offset;
+    const distance = ((step * (destination - current)) % alphabet.length + alphabet.length) % alphabet.length;
+    if (distance < 0.001) {
+      position.set(restingPosition);
+      return;
+    }
     position.set(start);
-    const target = start + direction * distance;
+    const target = start + step * distance;
 
     const animation = animate(position, target, {
       duration: 0.85,
@@ -50,7 +58,7 @@ function RollingCharacter({
       onComplete: () => position.set(restingPosition),
     });
     return () => animation.stop();
-  }, [alphabet, character, dateValue, position, shouldAnimate]);
+  }, [alphabet, character, position, shouldAnimate]);
 
   return (
     <span
@@ -99,7 +107,7 @@ export default function CornerDate({ date, reveal }: { date: string; reveal: num
         zIndex: 3,
         pointerEvents: "none",
         visibility: visible ? "visible" : "hidden",
-        opacity: reveal * 0.2,
+        opacity: reveal * 0.1,
         color: "#000000",
         fontFamily: "var(--font-montserrat), sans-serif",
         fontSize: "clamp(80px, 12vw, 192px)",
