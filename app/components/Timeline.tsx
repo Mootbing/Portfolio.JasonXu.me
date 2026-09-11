@@ -28,6 +28,8 @@ const PROJECTS = PROJECTS_RAW as TimelineProject[];
 
 // vh of vertical scroll required per project transition
 const SLIDE_VH = 90;
+const TITLE_REVEAL_START = 0.52;
+const TITLE_REVEAL_END = 0.07;
 
 // At full carousel scroll, the last polaroid drifts this many viewport-widths
 // past its landing position (toward viewport-left). Picked to land its center
@@ -718,8 +720,8 @@ function ProjectSlide({
   //   hide:   next polaroid mirrors symmetrically  → starts ~-0.48, ends ~-0.93
   const CLIP_STOPS: [number, number, number][] = [
     [ 1.00,   100,    0 ],
-    [ 0.52,   100,    0 ],
-    [ 0.07,     0,    0 ],
+    [ TITLE_REVEAL_START, 100, 0 ],
+    [ TITLE_REVEAL_END,     0, 0 ],
     [-0.48,     0,    0 ],
     [-0.93,     0,  100 ],
     [-2.00,     0,  100 ],
@@ -822,6 +824,11 @@ function Carousel() {
   const sectionHeight = `${100 + TRAVEL * SLIDE_VH}vh`;
   // Switch when the incoming and outgoing descriptions are equally revealed.
   const activeDateIndex = clamp(Math.floor(progress * TRAVEL - entryProgress + 0.295), 0, N - 1);
+  const dateReveal = clamp(
+    (TITLE_REVEAL_START - entryProgress) / (TITLE_REVEAL_START - TITLE_REVEAL_END),
+    0,
+    1,
+  );
 
   // The pinned content is a real `position: fixed` element — browser anchors it
   // to the viewport natively (zero JS lag, no scroll jitter). The empty section
@@ -1067,7 +1074,7 @@ function Carousel() {
             />
           ))}
         </div>
-        <CornerDate date={PROJECTS[activeDateIndex].year} visible={entryProgress <= 0.295} />
+        <CornerDate date={PROJECTS[activeDateIndex].year} reveal={dateReveal} />
       </div>
     </>
   );

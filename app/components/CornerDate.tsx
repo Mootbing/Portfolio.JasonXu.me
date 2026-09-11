@@ -78,8 +78,9 @@ function RollingLabel({ text, dateValue, shouldAnimate }: { text: string; dateVa
   ));
 }
 
-export default function CornerDate({ date, visible }: { date: string; visible: boolean }) {
+export default function CornerDate({ date, reveal }: { date: string; reveal: number }) {
   const reducedMotion = useReducedMotion();
+  const visible = reveal > 0;
   const [month = "", year = ""] = date.trim().split(/\s+/);
   const monthIndex = MONTHS.findIndex((name) => name.slice(0, 3).toLowerCase() === month.slice(0, 3).toLowerCase());
   const dateValue = Number(year) * 12 + monthIndex;
@@ -98,10 +99,11 @@ export default function CornerDate({ date, visible }: { date: string; visible: b
         zIndex: 3,
         pointerEvents: "none",
         visibility: visible ? "visible" : "hidden",
+        opacity: reveal * 0.2,
         color: "#000000",
         fontFamily: "var(--font-montserrat), sans-serif",
-        fontSize: "clamp(28px, 4vw, 48px)",
-        fontWeight: 400,
+        fontSize: "clamp(80px, 12vw, 192px)",
+        fontWeight: 800,
         fontVariantNumeric: "tabular-nums",
         userSelect: "none",
       }}
