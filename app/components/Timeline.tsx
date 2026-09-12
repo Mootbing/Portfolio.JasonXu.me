@@ -910,11 +910,6 @@ function Carousel() {
         if (!el) continue;
         const dist = (i - p * TRAVEL) + entryT;
         const absD = Math.abs(dist);
-        // Linear rotation: constant rate across the whole travel — 60% slower
-        // than the original 540°/viewport-width (216°/viewport-width). Polaroid
-        // never goes upside down; the gentler spin reads from the moment it
-        // enters from the right instead of only easing after midpoint.
-        const rot = -dist * 216;
         // Spline arc: lifts up on the way in/out, exactly 0 at the centerline.
         const arcY = absD < 1 ? -absD * (1 - absD) * 180 : 0;
         // Counter-translate: 0 until threshold, then grows linearly with how
@@ -927,7 +922,13 @@ function Carousel() {
         // Perspective follows the card's actual horizontal position, including
         // its slower exit: large on the right, steadily smaller toward the left.
         // At the reading position (37vw), it stays close to its natural size.
-        const viewportX = 0.5 - LANDING_OFFSET_VW / 100 + dist + offsetVw / 100;
+        const landingX = 0.5 - LANDING_OFFSET_VW / 100;
+        const viewportX = landingX + dist + offsetVw / 100;
+        // Gradually remove 90° of rotation between the landing and left edge.
+        // Follow the card's actual position so the slower exit stays smooth.
+        const leftExit = clamp((landingX - viewportX) / landingX, 0, 1);
+        const rotationReduction = 90 * leftExit * leftExit * (3 - 2 * leftExit);
+        const rot = -dist * 216 - rotationReduction;
         const scale = POLAROID_SCALE_MIN + (POLAROID_SCALE_MAX - POLAROID_SCALE_MIN) * clamp(viewportX, 0, 1);
         // Rear cards enter aligned beneath the front, then fan out clockwise
         // as the stack crosses the viewport. Scrubbing back tucks them in again.

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { animate, motion, useMotionValue, useReducedMotion, useTransform } from "framer-motion";
+import { animate, motion, useMotionValue, useReducedMotion, useTransform, type MotionValue } from "framer-motion";
 
 const LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const DIGITS = "0123456789";
@@ -10,14 +10,32 @@ const MONTHS = [
   "July", "August", "September", "October", "November", "December",
 ];
 
+function RollingGlyph({ letter, index, position }: { letter: string; index: number; position: MotionValue<number> }) {
+  const opacity = useTransform(position, (value) => {
+    // Fade with distance from the reel's center, in either rolling direction.
+    const proximity = Math.max(0, 1 - Math.abs(index - value));
+    return proximity * proximity * (3 - 2 * proximity);
+  });
+
+  return (
+    <motion.span
+      style={{ display: "block", height: "1.15em", lineHeight: "1.15em", textAlign: "center", opacity }}
+    >
+      {letter}
+    </motion.span>
+  );
+}
+
 function RollingCharacter({
   character,
   dateValue,
   shouldAnimate,
+  isFirst,
 }: {
   character: string;
   dateValue: number;
   shouldAnimate: boolean;
+  isFirst: boolean;
 }) {
   const alphabet = DIGITS.includes(character) ? DIGITS : LETTERS;
   const previousDate = useRef(dateValue);
@@ -62,16 +80,23 @@ function RollingCharacter({
 
   return (
     <span
-      style={{ display: "inline-block", width: alphabet === DIGITS ? "0.8em" : "1.15em", height: "1.15em", overflow: "hidden" }}
+      style={{
+        display: "inline-block",
+        width: alphabet === DIGITS ? "0.8em" : "1.15em",
+        // Keep the full reel width for wide letters while tightening the spacing.
+        marginLeft: isFirst ? 0 : alphabet === DIGITS ? "-0.1em" : "-0.25em",
+        height: "1.15em",
+        overflow: "hidden",
+      }}
     >
       <motion.span style={{ display: "block", y }}>
         {alphabet.repeat(3).split("").map((letter, index) => (
-          <span
+          <RollingGlyph
             key={index}
-            style={{ display: "block", height: "1.15em", lineHeight: "1.15em", textAlign: "center" }}
-          >
-            {letter}
-          </span>
+            letter={letter}
+            index={index}
+            position={position}
+          />
         ))}
       </motion.span>
     </span>
@@ -81,7 +106,7 @@ function RollingCharacter({
 function RollingLabel({ text, dateValue, shouldAnimate }: { text: string; dateValue: number; shouldAnimate: boolean }) {
   return text.split("").map((character, index) => (
     LETTERS.includes(character) || DIGITS.includes(character)
-      ? <RollingCharacter key={index} character={character} dateValue={dateValue} shouldAnimate={shouldAnimate} />
+      ? <RollingCharacter key={index} character={character} dateValue={dateValue} shouldAnimate={shouldAnimate} isFirst={index === 0} />
       : <span key={index} style={{ lineHeight: "1.15em" }}>{character}</span>
   ));
 }
