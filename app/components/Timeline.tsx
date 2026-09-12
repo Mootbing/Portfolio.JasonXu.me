@@ -1187,6 +1187,7 @@ export default function Timeline() {
   return (
     <div className="relative">
       {compact ? <CompactList /> : <Carousel />}
+      {/* More-projects link hidden for now.
       <div className={compact ? "pb-3 text-center" : "pt-12 pb-3 text-center"}>
         <a
           href="/more"
@@ -1202,6 +1203,7 @@ export default function Timeline() {
           & 68 more from 2013 → 2026
         </a>
       </div>
+      */}
     </div>
   );
 }
