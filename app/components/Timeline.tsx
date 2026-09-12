@@ -40,6 +40,7 @@ const END_OVERSHOOT = 0.07;
 const LANDING_OFFSET_VW = 13;
 const POLAROID_SCALE_MIN = 0.6;
 const POLAROID_SCALE_MAX = 1.5;
+const POLAROID_SWIVEL_MAX = 42;
 
 function clamp(v: number, lo: number, hi: number) {
   return v < lo ? lo : v > hi ? hi : v;
@@ -845,6 +846,7 @@ function Carousel() {
     let lastProgress = -1;
     let lastEntryT = -1;
     let lastOpacity = -1;
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
     const update = () => {
       const section = sectionRef.current;
@@ -901,10 +903,11 @@ function Carousel() {
       // Once a polaroid's center crosses viewport X = 30vw (30% from left /
       // 70% from right) — i.e. dist < -0.07 — drag it back with a local X
       // offset so its visible leftward velocity drops to 40% of normal (60%
-      // slowdown, matching the rotation slowdown factor). The polaroid lingers
+      // slowdown). Rotation also slows but keeps a visible spin. The polaroid lingers
       // longer in the left half of the viewport before exiting.
       const LATE_X_THRESHOLD = -0.07;
       const LATE_X_SLOWDOWN = 0.6; // fraction by which X velocity is reduced
+      const LATE_ROTATION_SPEED = 0.6; // retain 60% of the incoming spin speed
       for (let i = 0; i < N; i++) {
         const el = polaroidItemRefs.current[i];
         if (!el) continue;
@@ -923,18 +926,26 @@ function Carousel() {
         // its slower exit: large on the right, steadily smaller toward the left.
         // At the reading position (37vw), it stays close to its natural size.
         const landingX = 0.5 - LANDING_OFFSET_VW / 100;
-        const viewportX = landingX + dist + offsetVw / 100;
-        // Gradually remove 90° of rotation between the landing and left edge.
-        // Follow the card's actual position so the slower exit stays smooth.
-        const leftExit = clamp((landingX - viewportX) / landingX, 0, 1);
-        const rotationReduction = 90 * leftExit * leftExit * (3 - 2 * leftExit);
-        const rot = -dist * 216 - rotationReduction;
+        const travelDist = dist + offsetVw / 100;
+        const viewportX = landingX + travelDist;
+        // Keep spinning throughout the slow exit. Anchor at the slowdown point
+        // so the angle stays continuous, with the original -90 degree offset.
+        const spinDist = dist < LATE_X_THRESHOLD
+          ? LATE_X_THRESHOLD + (dist - LATE_X_THRESHOLD) * LATE_ROTATION_SPEED
+          : dist;
+        const rot = -spinDist * 216 - 90;
         const scale = POLAROID_SCALE_MIN + (POLAROID_SCALE_MAX - POLAROID_SCALE_MIN) * clamp(viewportX, 0, 1);
+        // Stay front-on from the center to 25vw. Only then ease into the
+        // left-side swivel, with zero angular velocity at its start and end.
+        const leftSwivel = clamp((0.25 - viewportX) / 0.25, 0, 1);
+        const rightSwivel = clamp((viewportX - 0.5) * 2, 0, 1);
+        const swivel = reducedMotion.matches ? 0
+          : (leftSwivel * leftSwivel * (3 - 2 * leftSwivel) - rightSwivel) * POLAROID_SWIVEL_MAX;
         // Rear cards enter aligned beneath the front, then fan out clockwise
         // as the stack crosses the viewport. Scrubbing back tucks them in again.
         const stackFan = clamp((0.85 - viewportX) / 0.7, 0, 1) ** 2;
         el.style.setProperty("--stack-fan", String(stackFan));
-        el.style.transform = `translate3d(calc(${offsetVw}vw), ${arcY}px, 0) rotate(${rot}deg) scale(${scale})`;
+        el.style.transform = `translate3d(calc(${offsetVw}vw), ${arcY}px, 0) perspective(700px) rotateY(${swivel}deg) rotate(${rot}deg) scale(${scale})`;
       }
 
       if (p !== lastProgress) {
@@ -965,9 +976,11 @@ function Carousel() {
     // freshly-reflowed vw parts → polaroid and text clip drift out of sync
     // for a frame. Resize is infrequent enough that a sync update is fine.
     window.addEventListener("resize", update);
+    reducedMotion.addEventListener("change", update);
     return () => {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", update);
+      reducedMotion.removeEventListener("change", update);
       if (raf) cancelAnimationFrame(raf);
     };
   }, [N]);

@@ -118,7 +118,7 @@ export default function CornerDate({ date, reveal }: { date: string; reveal: num
   const monthIndex = MONTHS.findIndex((name) => name.slice(0, 3).toLowerCase() === month.slice(0, 3).toLowerCase());
   const dateValue = Number(year) * 12 + monthIndex;
   const fullDate = monthIndex >= 0 ? `${MONTHS[monthIndex]} ${year}` : date;
-  const monthLabel = month.slice(0, 3).toUpperCase();
+  const monthLabel = monthIndex >= 0 ? String(monthIndex + 1).padStart(2, "0") : month.slice(0, 3).toUpperCase();
   const yearLabel = `'${year.slice(-2)}`;
   const shouldAnimate = visible && !reducedMotion;
   const inset = "clamp(20px, 3vw, 48px)";
@@ -135,7 +135,7 @@ export default function CornerDate({ date, reveal }: { date: string; reveal: num
         opacity: reveal * 0.05,
         color: "#000000",
         fontFamily: "var(--font-montserrat), sans-serif",
-        fontSize: "clamp(80px, 12vw, 192px)",
+        fontSize: "clamp(160px, 24vw, 384px)",
         fontWeight: 800,
         fontVariantNumeric: "tabular-nums",
         userSelect: "none",
