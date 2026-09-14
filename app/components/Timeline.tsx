@@ -2,7 +2,6 @@
 
 import { Fragment, useRef, useState, useEffect, useLayoutEffect, useMemo, useCallback } from "react";
 import { motion } from "framer-motion";
-import CornerDate from "./CornerDate";
 import PolaroidStack from "./PolaroidCard";
 import type { PolaroidItem } from "./PolaroidCard";
 import PROJECTS_RAW from "../../public/data/Work.json";
@@ -44,6 +43,20 @@ const POLAROID_SWIVEL_MAX = 42;
 
 function clamp(v: number, lo: number, hi: number) {
   return v < lo ? lo : v > hi ? hi : v;
+}
+
+const MONTH_MAP: Record<string, string> = {
+  Jan: "January", Feb: "February", Mar: "March", Apr: "April",
+  May: "May", Jun: "June", Jul: "July", Aug: "August",
+  Sep: "September", Oct: "October", Nov: "November", Dec: "December",
+};
+
+function expandYear(year: string): string {
+  const parts = year.split(" ");
+  if (parts.length === 2 && MONTH_MAP[parts[0]]) {
+    return `${MONTH_MAP[parts[0]]} ${parts[1]}`;
+  }
+  return year;
 }
 
 // Rough hand-drawn-looking highlighter mark. Inline SVG background with a
@@ -758,6 +771,21 @@ function ProjectSlide({
         WebkitClipPath: clipPath,
       }}
     >
+      {project.year && (
+        <span
+          className="block"
+          style={{
+            fontFamily: "var(--font-caveat), cursive",
+            fontWeight: 400,
+            color: "#999999",
+            fontSize: "1.15rem",
+            letterSpacing: "0.02em",
+            marginBottom: "0.25rem",
+          }}
+        >
+          {expandYear(project.year)}
+        </span>
+      )}
       <h3
         className="text-3xl md:text-5xl leading-none"
         style={{
@@ -818,13 +846,6 @@ function Carousel() {
   // its landing so it ends at 30% from viewport-left.
   const TRAVEL = N - 1 + END_OVERSHOOT;
   const sectionHeight = `${100 + TRAVEL * SLIDE_VH}vh`;
-  // Switch when the incoming and outgoing descriptions are equally revealed.
-  const activeDateIndex = clamp(Math.floor(progress * TRAVEL - entryProgress + 0.295), 0, N - 1);
-  const dateReveal = clamp(
-    (TITLE_REVEAL_START - entryProgress) / (TITLE_REVEAL_START - TITLE_REVEAL_END),
-    0,
-    1,
-  );
 
   // The pinned content is a real `position: fixed` element — browser anchors it
   // to the viewport natively (zero JS lag, no scroll jitter). The empty section
@@ -1098,7 +1119,6 @@ function Carousel() {
             />
           ))}
         </div>
-        <CornerDate date={PROJECTS[activeDateIndex].year} reveal={dateReveal} />
       </div>
     </>
   );
